@@ -124,34 +124,34 @@ class _InfoTabelState extends State<InfoTabel> {
           label: Container(
             color: _headerColor,
             alignment: Alignment.center,
-            child: Text('Operation'),
+            child: Text('操作'),
           ),
         ),
       ],
-      stackedHeaderRows: [
-        StackedHeaderRow(
-          cells: [
-            StackedHeaderCell(
-              columnNames: ['id', 'name', 'designation', 'salary'],
-              child: Container(
-                color: Colors.white,
-                child: Center(
-                  child: Text('人员信息'),
-                ),
-              ),
-            ),
-            StackedHeaderCell(
-              columnNames: ['operation'],
-              child: Container(
-                color: Colors.white,
-                child: Center(
-                  child: Text('操作'),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
+      // stackedHeaderRows: [
+      //   StackedHeaderRow(
+      //     cells: [
+      //       StackedHeaderCell(
+      //         columnNames: ['id', 'name', 'designation', 'salary'],
+      //         child: Container(
+      //           color: Colors.white,
+      //           child: Center(
+      //             child: Text('人员信息'),
+      //           ),
+      //         ),
+      //       ),
+      //       StackedHeaderCell(
+      //         columnNames: ['operation'],
+      //         child: Container(
+      //           color: Colors.white,
+      //           child: Center(
+      //             child: Text('操作'),
+      //           ),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ],
       source: widget.employeeDataSource,
     );
   }

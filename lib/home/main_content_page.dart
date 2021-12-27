@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/menu/left_menu_page.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -63,76 +64,65 @@ class _MainContentPageState extends State<MainContentPage> {
 
   Widget _firstSection() {
     List<Widget> children = [];
-    children.add(Expanded(
-      child: InfoCardStyle1Widget(
-        title: '总销售额',
-        tip: '销售额',
-        data: '￥726,689',
-        bottomWidget: Text(
-          '日销售额 ￥42,245',
-          style: TextStyle(color: Colors.black45, fontSize: 12),
-        ),
+    children.add(InfoCardStyle1Widget(
+      title: '总销售额',
+      tip: '销售额',
+      data: '￥726,689',
+      bottomWidget: Text(
+        '日销售额 ￥42,245',
+        style: TextStyle(color: Colors.black45, fontSize: 12),
       ),
     ));
-    children.add(Expanded(
-      child: InfoCardStyle2Widget(
-        title: '访问量',
-        tip: '访问量',
-        data: '826,167',
-        bottomWidget: Text(
-          '日访问量 7,205',
-          style: TextStyle(color: Colors.black45, fontSize: 12),
-        ),
+    children.add(InfoCardStyle2Widget(
+      title: '访问量',
+      tip: '访问量',
+      data: '826,167',
+      bottomWidget: Text(
+        '日访问量 7,205',
+        style: TextStyle(color: Colors.black45, fontSize: 12),
       ),
     ));
-    children.add(Expanded(
-      child: InfoCardStyle2Widget(
-        title: '支付笔数',
-        tip: '支付笔数',
-        data: '52,745',
-        chartWidget: _chartStyle4Widget(),
-        bottomWidget: Text(
-          '转化率 60%',
-          style: TextStyle(color: Colors.black45, fontSize: 12),
-        ),
+    children.add(InfoCardStyle2Widget(
+      title: '支付笔数',
+      tip: '支付笔数',
+      data: '52,745',
+      chartWidget: _chartStyle4Widget(),
+      bottomWidget: Text(
+        '转化率 60%',
+        style: TextStyle(color: Colors.black45, fontSize: 12),
       ),
     ));
-    children.add(Expanded(
-      child: InfoCardStyle2Widget(
-        title: '运营活动效果',
-        tip: '运营活动效果',
-        data: '86%',
-        chartWidget: Center(
-          child: LinearProgressIndicator(
-            value: 0.86,
-            backgroundColor: Colors.grey.withAlpha(100),
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
-          ),
-        ),
-        bottomWidget: Text(
-          '周同比 12%',
-          style: TextStyle(color: Colors.black45, fontSize: 12),
+    children.add(InfoCardStyle2Widget(
+      title: '运营活动效果',
+      tip: '运营活动效果',
+      data: '86%',
+      chartWidget: Center(
+        child: LinearProgressIndicator(
+          value: 0.86,
+          backgroundColor: Colors.grey.withAlpha(100),
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
         ),
       ),
+      bottomWidget: Text(
+        '周同比 12%',
+        style: TextStyle(color: Colors.black45, fontSize: 12),
+      ),
     ));
-    return Container(
-      child: UniversalDashboard.isMobile()
-          ? Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: children.sublist(0, 2),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: children.sublist(2, 4),
-                ),
-              ],
-            )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: children,
-            ),
+    int column = UniversalDashboard.isMobile() ? 2 : 4;
+    double leftMenu = UniversalDashboard.isMobile() ? 0 : kMenuWidth;
+    double cellWidth = (MediaQuery.of(context).size.width - leftMenu) / column;
+    double cellHeight = 150;
+    double childAspectRatio = cellWidth / cellHeight;
+    return GridView.builder(
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: column,
+        childAspectRatio: childAspectRatio,
+      ),
+      itemBuilder: (c, idx) {
+        return children[idx];
+      },
+      itemCount: children.length,
     );
   }
 

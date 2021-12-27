@@ -3,6 +3,8 @@ import 'package:flutter_admin_universal/menu/model/menu_item.dart';
 
 /// @author jd
 
+const double kMenuWidth = 150;
+
 class LeftMenuPage extends StatefulWidget {
   const LeftMenuPage({
     this.itemChanged,
@@ -39,7 +41,7 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
+      width: kMenuWidth,
       color: const Color(0xff000066),
       child: Column(
         children: [

@@ -86,10 +86,11 @@ class _MainContentPageState extends State<MainContentPage> {
       ),
     ));
     children.add(Expanded(
-      child: InfoCardStyle1Widget(
+      child: InfoCardStyle2Widget(
         title: '支付笔数',
         tip: '支付笔数',
         data: '52,745',
+        chartWidget: _chartStyle4Widget(),
         bottomWidget: Text(
           '转化率 60%',
           style: TextStyle(color: Colors.black45, fontSize: 12),
@@ -97,10 +98,17 @@ class _MainContentPageState extends State<MainContentPage> {
       ),
     ));
     children.add(Expanded(
-      child: InfoCardStyle1Widget(
+      child: InfoCardStyle2Widget(
         title: '运营活动效果',
         tip: '运营活动效果',
         data: '86%',
+        chartWidget: Center(
+          child: LinearProgressIndicator(
+            value: 0.86,
+            backgroundColor: Colors.grey.withAlpha(100),
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+          ),
+        ),
         bottomWidget: Text(
           '周同比 12%',
           style: TextStyle(color: Colors.black45, fontSize: 12),
@@ -243,5 +251,11 @@ class _MainContentPageState extends State<MainContentPage> {
 
   String _getPointRadiusMapper(SalesData data, int index) {
     return '100%';
+  }
+
+  Widget _chartStyle4Widget() {
+    return SfSparkBarChart(
+      data: [1, 5, 6, 0, 1, 2, 7, 7, 4, 10, 13, 6, 7, 5, 11, 5, 3],
+    );
   }
 }

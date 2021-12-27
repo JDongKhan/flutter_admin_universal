@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/home/model/sales_data.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 /// @author jd
 
@@ -177,31 +178,77 @@ class _SecondSectionState extends State<SecondSection>
 
   void _showDateSelect() async {
     DateTime start = DateTime.now();
-    DateTime end = DateTime(
-      2021,
-      12,
-      31,
-    );
-    DateTimeRange selectTimeRange = await showDateRangePicker(
-      context: context,
-      // locale: Locale('zh', 'CH'),
-      initialEntryMode: DatePickerEntryMode.calendarOnly,
-      firstDate: DateTime(2021, 1),
-      lastDate: DateTime(2022, 12),
-      cancelText: '取消',
-      confirmText: '确定',
-      initialDateRange: DateTimeRange(start: start, end: end),
-    );
+    DateTime end = start.add(Duration(days: 7));
 
-    /// 此处时间需要格式化一下
-    String time = selectTimeRange.toString();
-    if (time != null && time.isNotEmpty) {
-      DateTime startTime = selectTimeRange.start;
-      DateTime endTime = selectTimeRange.end;
-      DateFormat format = DateFormat('yyyy-MM-dd');
-      _dateSelectText = '${format.format(startTime)} ${format.format(endTime)}';
-      setState(() {});
-    }
+    showDialog<DateTimeRange>(
+      context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            color: Colors.black.withAlpha(5),
+            child: Center(
+              child: Container(
+                color: Colors.white,
+                width: 500,
+                height: 300,
+                child: SfDateRangePicker(
+                  initialSelectedDate: start,
+                  showActionButtons: true,
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  },
+                  onSubmit: (obj) {
+                    PickerDateRange range = obj;
+
+                    /// 此处时间需要格式化一下
+                    String time = range.toString();
+                    if (time != null && time.isNotEmpty) {
+                      DateTime startTime = range.startDate;
+                      DateTime endTime = range.endDate;
+                      DateFormat format = DateFormat('yyyy-MM-dd');
+                      _dateSelectText =
+                          '${format.format(startTime)} ${format.format(endTime)}';
+                      setState(() {});
+                    }
+                    Navigator.of(context).pop();
+                  },
+                  initialSelectedRange: PickerDateRange(start, end),
+                  onSelectionChanged: (DateRangePickerSelectionChangedArgs
+                      dateRangePickerSelectionChangedArgs) {},
+                  selectionMode: DateRangePickerSelectionMode.range,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    //
+    // DateTimeRange selectTimeRange = await showDateRangePicker(
+    //   context: context,
+    //   // locale: Locale('zh', 'CH'),
+    //   initialEntryMode: DatePickerEntryMode.calendarOnly,
+    //   firstDate: DateTime(2021, 1),
+    //   lastDate: DateTime(2022, 12),
+    //   cancelText: '取消',
+    //   confirmText: '确定',
+    //   initialDateRange: DateTimeRange(start: start, end: end),
+    // );
+    //
+    // /// 此处时间需要格式化一下
+    // String time = selectTimeRange.toString();
+    // if (time != null && time.isNotEmpty) {
+    //   DateTime startTime = selectTimeRange.start;
+    //   DateTime endTime = selectTimeRange.end;
+    //   DateFormat format = DateFormat('yyyy-MM-dd');
+    //   _dateSelectText = '${format.format(startTime)} ${format.format(endTime)}';
+    //   setState(() {});
+    // }
   }
 
   Widget _contentWidget() {

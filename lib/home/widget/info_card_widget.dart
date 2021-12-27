@@ -161,8 +161,11 @@ class InfoCardStyle2Widget extends InfoCardStyleWidget {
     String title,
     String tip,
     String data,
+    this.chartWidget,
     this.bottomWidget,
   }) : super(title: title, tip: tip, data: data);
+
+  final Widget chartWidget;
 
   final Widget bottomWidget;
 
@@ -172,7 +175,7 @@ class InfoCardStyle2Widget extends InfoCardStyleWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: _chartStyle1Widget()),
+          Expanded(child: chartWidget ?? _chartStyle1Widget()),
           const SizedBox(
             height: 10,
           ),
@@ -194,7 +197,7 @@ class InfoCardStyle2Widget extends InfoCardStyleWidget {
 
   Widget _chartStyle1Widget() {
     return SfSparkAreaChart(
-        data: [1, 5, -6, 0, 1, -2, 7, -7, -4, -10, 13, -6, 7, 5, 11, 5, 3]);
+        data: [1, 5, 6, 0, 1, 2, 7, 7, 4, 10, 13, 6, 7, 5, 11, 5, 3]);
   }
 
   Widget _chartStyle2Widget() {

@@ -175,6 +175,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "19.4.38"
+  syncfusion_flutter_datagrid:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_datagrid
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "19.4.38"
+  syncfusion_flutter_datepicker:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_datepicker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "19.4.38"
   term_glyph:
     dependency: transitive
     description:

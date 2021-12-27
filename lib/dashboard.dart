@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/info/page/user_list_page.dart';
 
 import 'home/main_content_page.dart';
 import 'menu/left_menu_page.dart';
@@ -20,6 +21,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Map<String, WidgetBuilder> pageBuilder = {
     '/home': (_) => MainContentPage(),
     '/web': (_) => WebPage(),
+    '/user_list': (_) => UserListPage(),
   };
 
   @override

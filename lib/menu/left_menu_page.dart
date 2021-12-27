@@ -16,7 +16,7 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
   final List menus = [
     MenuItem.first('仪表盘', Icons.home_outlined, [
       MenuItem.second('首页', '/home'),
-      MenuItem.second('菜单1-2', '/web'),
+      MenuItem.second('用户列表', '/user_list'),
       MenuItem.second('菜单1-3', '/web'),
       MenuItem.second('菜单1-4', '/web'),
     ]),

@@ -31,6 +31,8 @@ dependencies:
   get: 4.6.1
   routemaster: ^0.9.5
   syncfusion_flutter_charts: 19.4.38
+  syncfusion_flutter_datagrid: 19.4.38
+  syncfusion_flutter_datepicker: 19.4.38
   intl: 0.17.0
   # 屏幕适配
   flutter_screenutil: 5.0.1+3

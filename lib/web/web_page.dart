@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/home/widget/main_top_widget.dart';
 
 /// @author jd
 
@@ -13,7 +14,12 @@ class _WebPageState extends State<WebPage> {
     return Container(
       child: Column(
         children: [
-          Text('我是Web页'),
+          MainTopWidget(),
+          Expanded(
+            child: Center(
+              child: Text('我是Web页'),
+            ),
+          ),
         ],
       ),
     );

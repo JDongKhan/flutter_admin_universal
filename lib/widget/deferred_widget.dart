@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 typedef LibraryLoader = Future<void> Function();
-typedef DeferredWidgetBuilder = Widget Function();
+typedef DeferredWidgetBuilder = Widget Function(Key key);
 
 /// @author jd
 class DeferredWidget extends StatefulWidget {
@@ -34,6 +34,7 @@ class DeferredWidget extends StatefulWidget {
 
 class _DeferredWidgetState extends State<DeferredWidget> {
   Widget? _loadedChild;
+  final GlobalKey<State> _childKey = GlobalKey();
   @override
   void initState() {
     if (DeferredWidget._loadedModules.contains(widget.libraryLoader)) {
@@ -48,8 +49,21 @@ class _DeferredWidgetState extends State<DeferredWidget> {
 
   void _onLibraryLoaded() {
     setState(() {
-      _loadedChild = widget.createWidget();
+      _loadedChild = widget.createWidget(_childKey);
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant DeferredWidget oldWidget) {
+    //目的是让其child也跟着变化
+
+    _onLibraryLoaded();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override

@@ -51,8 +51,7 @@ class _UniversalDashboardState extends State<UniversalDashboard> {
   void closeSetting() {
     bool isMobile = UniversalDashboard.isMobile();
     if (isMobile) {
-      ScaffoldState? state = _scaffoldKey.currentState;
-      state?.openEndDrawer();
+      Navigator.of(context).pop();
     } else {
       _openSetting = false;
       setState(() {});

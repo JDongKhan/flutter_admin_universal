@@ -12,6 +12,7 @@ import 'widget/universal_dashboard.dart';
 /// @author jd
 
 class DashboardPage extends StatefulWidget {
+  const DashboardPage({Key? key}) : super(key: key);
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }
@@ -23,7 +24,7 @@ class _DashboardPageState extends State<DashboardPage> {
     '/home': (_) => MainContentPage(),
     '/web': (_) => DeferredWidget(
           libraryLoader: () => web.loadLibrary(),
-          createWidget: () => web.WebPage(),
+          createWidget: (_) => web.WebPage(),
         ),
     '/user_list': (_) => UserListPage(),
   };
@@ -33,6 +34,9 @@ class _DashboardPageState extends State<DashboardPage> {
     return UniversalDashboard(
       leftMenu: LeftMenuPage(
         itemChanged: (MenuItem item) {
+          if (UniversalDashboard.isMobile()) {
+            Navigator.of(context).pop();
+          }
           WidgetBuilder? widgetBuilder = pageBuilder[item.route];
           _selectedPage = widgetBuilder!(context);
           setState(() {});

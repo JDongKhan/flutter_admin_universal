@@ -24,7 +24,7 @@ class _DashboardPageState extends State<DashboardPage> {
     '/home': (_) => MainContentPage(),
     '/web': (_) => DeferredWidget(
           libraryLoader: () => web.loadLibrary(),
-          createWidget: (_) => web.WebPage(),
+          createWidget: () => web.WebPage(),
         ),
     '/user_list': (_) => UserListPage(),
   };

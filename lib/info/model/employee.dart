@@ -8,9 +8,9 @@ class Employee {
     this.designation,
     this.salary,
   });
-  final int id;
-  final String face;
-  final String name;
-  final String designation;
-  final int salary;
+  final int? id;
+  final String? face;
+  final String? name;
+  final String? designation;
+  final int? salary;
 }

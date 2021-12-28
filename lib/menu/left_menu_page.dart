@@ -9,7 +9,7 @@ class LeftMenuPage extends StatefulWidget {
   const LeftMenuPage({
     this.itemChanged,
   });
-  final ValueChanged<MenuItem> itemChanged;
+  final ValueChanged<MenuItem>? itemChanged;
   @override
   _LeftMenuPageState createState() => _LeftMenuPageState();
 }
@@ -36,7 +36,7 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
     ]),
   ];
 
-  MenuItem _selectedItem;
+  MenuItem? _selectedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,7 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
               width: 10,
             ),
             Text(
-              firstItem.title,
+              firstItem.title ?? '',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 13,
@@ -116,7 +116,7 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
             ),
           ],
         ),
-        children: firstItem.items
+        children: firstItem.items!
             .map(
               (e) => _secondItemWidget(e),
             )
@@ -131,7 +131,9 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
       child: GestureDetector(
         onTap: () {
           _selectedItem = secondItem;
-          widget.itemChanged(secondItem);
+          if (widget.itemChanged != null) {
+            widget.itemChanged!(secondItem);
+          }
         },
         child: Container(
           padding: const EdgeInsets.only(top: 10),
@@ -144,7 +146,7 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
             child: Container(
               height: 30,
               child: Text(
-                secondItem.title,
+                secondItem.title ?? '',
                 style: TextStyle(
                   fontSize: 12,
                   color:

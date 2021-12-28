@@ -6,12 +6,12 @@ import '../model/employee.dart';
 /// @author jd
 class InfoTabel extends StatefulWidget {
   const InfoTabel({
-    this.employeeDataSource,
+    required this.employeeDataSource,
     this.rowsPerPage,
   });
 
   final EmployeeDataSource employeeDataSource;
-  final int rowsPerPage;
+  final int? rowsPerPage;
   @override
   State<InfoTabel> createState() => _InfoTabelState();
 }
@@ -80,7 +80,7 @@ class _InfoTabelState extends State<InfoTabel> {
       columns: <GridColumn>[
         GridColumn(
           columnName: 'id',
-          width: _columnWidths['id'],
+          width: _columnWidths['id']!,
           label: Container(
             color: _headerColor,
             alignment: Alignment.center,
@@ -89,7 +89,7 @@ class _InfoTabelState extends State<InfoTabel> {
         ),
         GridColumn(
           columnName: 'name',
-          width: _columnWidths['name'],
+          width: _columnWidths['name']!,
           label: Container(
             color: _headerColor,
             alignment: Alignment.center,
@@ -98,7 +98,7 @@ class _InfoTabelState extends State<InfoTabel> {
         ),
         GridColumn(
           columnName: 'designation',
-          width: _columnWidths['designation'],
+          width: _columnWidths['designation']!,
           label: Container(
             color: _headerColor,
             alignment: Alignment.center,
@@ -111,7 +111,7 @@ class _InfoTabelState extends State<InfoTabel> {
         ),
         GridColumn(
           columnName: 'salary',
-          width: _columnWidths['salary'],
+          width: _columnWidths['salary']!,
           label: Container(
             color: _headerColor,
             alignment: Alignment.center,
@@ -120,7 +120,7 @@ class _InfoTabelState extends State<InfoTabel> {
         ),
         GridColumn(
           columnName: 'operation',
-          width: _columnWidths['operation'],
+          width: _columnWidths['operation']!,
           label: Container(
             color: _headerColor,
             alignment: Alignment.center,
@@ -212,7 +212,7 @@ class EmployeeDataSource extends DataGridSource {
   @override
   Widget buildTableSummaryCellWidget(
       GridTableSummaryRow summaryRow,
-      GridSummaryColumn summaryColumn,
+      GridSummaryColumn? summaryColumn,
       RowColumnIndex rowColumnIndex,
       String summaryValue) {
     return Container(

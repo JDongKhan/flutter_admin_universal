@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 class InfoListCardWidget extends StatelessWidget {
   const InfoListCardWidget({
-    @required this.title,
-    @required this.tip,
-    @required this.content,
+    required this.title,
+    this.tip,
+    required this.content,
   });
 
   final String title;
-  final String tip;
+  final String? tip;
   final Widget content;
 
   @override
@@ -42,7 +42,7 @@ class InfoListCardWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            title ?? '',
+            title,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,

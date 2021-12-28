@@ -17,7 +17,7 @@ class _UserListPageState extends State<UserListPage> {
   int _currentPage = 0;
   int _rowsPerPage = 10;
 
-  EmployeeDataSource _employeeDataSource;
+  EmployeeDataSource? _employeeDataSource;
   final DataPagerController _dataPagerController = DataPagerController();
 
   @override
@@ -94,7 +94,7 @@ class _UserListPageState extends State<UserListPage> {
           ),
           Expanded(
             child: InfoTabel(
-                employeeDataSource: _employeeDataSource,
+                employeeDataSource: _employeeDataSource!,
                 rowsPerPage: _rowsPerPage),
           ),
           SfDataPager(
@@ -110,7 +110,7 @@ class _UserListPageState extends State<UserListPage> {
               },
               onRowsPerPageChanged: (count) {
                 setState(() {
-                  _rowsPerPage = count;
+                  _rowsPerPage = count!;
                 });
               }),
         ],

@@ -6,16 +6,16 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 ///base
 class InfoCardStyleWidget extends StatelessWidget {
   const InfoCardStyleWidget({
-    @required this.title,
-    @required this.tip,
-    @required this.data,
-    @required this.content,
+    this.title,
+    this.tip,
+    this.data,
+    this.content,
   });
 
-  final String title;
-  final String tip;
-  final String data;
-  final Widget content;
+  final String? title;
+  final String? tip;
+  final String? data;
+  final Widget? content;
 
   @override
   Widget build(BuildContext context) {
@@ -95,20 +95,20 @@ class InfoCardStyleWidget extends StatelessWidget {
 
   //内容
   Widget _contentWidget() {
-    return content;
+    return content ?? Container();
   }
 }
 
 ///style 1
 class InfoCardStyle1Widget extends InfoCardStyleWidget {
   const InfoCardStyle1Widget({
-    String title,
-    String tip,
-    String data,
+    String? title,
+    String? tip,
+    String? data,
     this.bottomWidget,
   }) : super(title: title, tip: tip, data: data);
 
-  final Widget bottomWidget;
+  final Widget? bottomWidget;
   @override
   Widget _contentWidget() {
     return Container(
@@ -158,16 +158,16 @@ class InfoCardStyle1Widget extends InfoCardStyleWidget {
 ///style 2
 class InfoCardStyle2Widget extends InfoCardStyleWidget {
   const InfoCardStyle2Widget({
-    String title,
-    String tip,
-    String data,
+    String? title,
+    String? tip,
+    String? data,
     this.chartWidget,
     this.bottomWidget,
   }) : super(title: title, tip: tip, data: data);
 
-  final Widget chartWidget;
+  final Widget? chartWidget;
 
-  final Widget bottomWidget;
+  final Widget? bottomWidget;
 
   @override
   Widget _contentWidget() {
@@ -216,15 +216,15 @@ enum InfoOrder {
 class ExpandButton extends StatelessWidget {
   const ExpandButton({
     this.iconSize = 12,
-    this.iconColor = Colors.red,
+    this.iconColor,
     this.order = InfoOrder.ascending,
-    @required this.title,
+    required this.title,
   });
 
   final InfoOrder order;
   final Widget title;
   final double iconSize;
-  final Color iconColor;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {

@@ -13,9 +13,9 @@ class SecondSection extends StatefulWidget {
 
 class _SecondSectionState extends State<SecondSection>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
-  String _dateSelectText;
-  List<SalesData> listData;
+  TabController? _tabController;
+  String? _dateSelectText;
+  List<SalesData>? listData;
 
   @override
   void initState() {
@@ -203,16 +203,16 @@ class _SecondSectionState extends State<SecondSection>
                     Navigator.of(context).pop();
                   },
                   onSubmit: (obj) {
-                    PickerDateRange range = obj;
+                    PickerDateRange range = obj as PickerDateRange;
 
                     /// 此处时间需要格式化一下
                     String time = range.toString();
                     if (time != null && time.isNotEmpty) {
-                      DateTime startTime = range.startDate;
-                      DateTime endTime = range.endDate;
+                      DateTime? startTime = range.startDate;
+                      DateTime? endTime = range.endDate;
                       DateFormat format = DateFormat('yyyy-MM-dd');
                       _dateSelectText =
-                          '${format.format(startTime)} ${format.format(endTime)}';
+                          '${format.format(startTime!)} ${format.format(endTime!)}';
                       setState(() {});
                     }
                     Navigator.of(context).pop();
@@ -277,14 +277,14 @@ class _SecondSectionState extends State<SecondSection>
       tooltipBehavior: TooltipBehavior(enable: true),
       series: <ColumnSeries<SalesData, String>>[
         ColumnSeries<SalesData, String>(
-          dataSource: listData,
+          dataSource: listData!,
           xValueMapper: (SalesData sales, _) => sales.year,
           yValueMapper: (sales, _) => sales.sales,
           width: 0.5,
           name: '男性',
         ),
         ColumnSeries<SalesData, String>(
-          dataSource: listData,
+          dataSource: listData!,
           xValueMapper: (SalesData sales, _) => sales.year,
           yValueMapper: (sales, _) => sales.sales,
           width: 0.5,

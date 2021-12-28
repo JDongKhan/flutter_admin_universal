@@ -5,9 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UniversalDashboard extends StatefulWidget {
   const UniversalDashboard({
-    this.leftMenu,
-    this.mainPage,
-    this.endDrawer,
+    required this.leftMenu,
+    required this.mainPage,
+    required this.endDrawer,
   });
   final Widget leftMenu;
 
@@ -22,8 +22,8 @@ class UniversalDashboard extends StatefulWidget {
 
   static bool isDesktop() => 1.sw > 1200;
 
-  static _UniversalDashboardState of(BuildContext context) {
-    _UniversalDashboardState state =
+  static _UniversalDashboardState? of(BuildContext context) {
+    _UniversalDashboardState? state =
         context.findAncestorStateOfType<_UniversalDashboardState>();
     return state;
   }
@@ -35,13 +35,13 @@ class UniversalDashboard extends StatefulWidget {
 class _UniversalDashboardState extends State<UniversalDashboard> {
   bool _openSetting = false;
 
-  GlobalKey _scaffoldKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   void openSetting() {
     bool isMobile = UniversalDashboard.isMobile();
     if (isMobile) {
-      ScaffoldState state = _scaffoldKey.currentState;
-      state.openEndDrawer();
+      ScaffoldState? state = _scaffoldKey.currentState;
+      state?.openEndDrawer();
     } else {
       _openSetting = true;
       setState(() {});
@@ -51,8 +51,8 @@ class _UniversalDashboardState extends State<UniversalDashboard> {
   void closeSetting() {
     bool isMobile = UniversalDashboard.isMobile();
     if (isMobile) {
-      ScaffoldState state = _scaffoldKey.currentState;
-      state.openEndDrawer();
+      ScaffoldState? state = _scaffoldKey.currentState;
+      state?.openEndDrawer();
     } else {
       _openSetting = false;
       setState(() {});

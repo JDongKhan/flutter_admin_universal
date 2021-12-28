@@ -18,9 +18,9 @@ class MainContentPage extends StatefulWidget {
 
 class _MainContentPageState extends State<MainContentPage> {
   ScrollController _scrollController = ScrollController();
-  TooltipBehavior _tooltipBehaviorRenderer;
+  TooltipBehavior? _tooltipBehaviorRenderer;
 
-  List<SalesData> listData;
+  List<SalesData>? listData;
 
   @override
   void initState() {
@@ -161,7 +161,7 @@ class _MainContentPageState extends State<MainContentPage> {
       tooltipBehavior: _tooltipBehaviorRenderer,
       series: <LineSeries<SalesData, String>>[
         LineSeries<SalesData, String>(
-          dataSource: listData,
+          dataSource: listData!,
           xValueMapper: (SalesData sales, _) => sales.year,
           yValueMapper: (sales, _) => sales.sales,
           dataLabelSettings: DataLabelSettings(isVisible: true),

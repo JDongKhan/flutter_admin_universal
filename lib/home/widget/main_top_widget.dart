@@ -58,7 +58,7 @@ class MainTopWidget extends StatelessWidget {
                   size: 16,
                 ),
                 onPressed: () {
-                  UniversalDashboard.of(context).openSetting();
+                  UniversalDashboard.of(context)?.openSetting();
                 },
               ),
             ],

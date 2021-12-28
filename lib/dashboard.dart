@@ -5,7 +5,8 @@ import 'home/main_content_page.dart';
 import 'menu/left_menu_page.dart';
 import 'menu/model/menu_item.dart';
 import 'setting/setting_page.dart';
-import 'web/web_page.dart';
+import 'web/web_page.dart' deferred as web;
+import 'widget/deferred_widget.dart';
 import 'widget/universal_dashboard.dart';
 
 /// @author jd
@@ -20,7 +21,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Map<String, WidgetBuilder> pageBuilder = {
     '/home': (_) => MainContentPage(),
-    '/web': (_) => WebPage(),
+    '/web': (_) => DeferredWidget(
+          libraryLoader: () => web.loadLibrary(),
+          createWidget: () => web.WebPage(),
+        ),
     '/user_list': (_) => UserListPage(),
   };
 
@@ -29,8 +33,8 @@ class _DashboardPageState extends State<DashboardPage> {
     return UniversalDashboard(
       leftMenu: LeftMenuPage(
         itemChanged: (MenuItem item) {
-          WidgetBuilder widgetBuilder = pageBuilder[item.route];
-          _selectedPage = widgetBuilder(context);
+          WidgetBuilder? widgetBuilder = pageBuilder[item.route];
+          _selectedPage = widgetBuilder!(context);
           setState(() {});
         },
       ),

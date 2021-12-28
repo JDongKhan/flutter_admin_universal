@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 
 /// @author jd
 class MenuItem {
-  final String title;
-  final IconData iconData;
-  final List<MenuItem> items;
-  final String route;
+  final String? title;
+  final IconData? iconData;
+  final List<MenuItem>? items;
+  final String? route;
   const MenuItem({
-    @required this.title,
+    required this.title,
     this.iconData,
     this.items,
     this.route,

@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/info/page/user_list_page.dart';
 
@@ -37,9 +39,15 @@ class _DashboardPageState extends State<DashboardPage> {
           if (UniversalDashboard.isMobile()) {
             Navigator.of(context).pop();
           }
+          if (item.route == '/to_other') {
+            html.window.open('https://www.baidu.com', 'baidu');
+            return;
+          }
           WidgetBuilder? widgetBuilder = pageBuilder[item.route];
-          _selectedPage = widgetBuilder!(context);
-          setState(() {});
+          if (widgetBuilder != null) {
+            _selectedPage = widgetBuilder!(context);
+            setState(() {});
+          }
         },
       ),
       mainPage: _selectedPage,

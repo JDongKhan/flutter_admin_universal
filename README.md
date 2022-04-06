@@ -23,14 +23,16 @@
 **开发环境**
 
 ```
-[✓] Flutter (Channel unknown, 2.8.1, on macOS 12.0 21A5543b darwin-x64, locale zh-Hans-CN)
-    • Flutter version 2.8.1 at /Users/jd/Documents/sdk/flutter/flutter
-    • Upstream repository unknown
-    • Framework revision 77d935af4d (9 天前), 2021-12-16 08:37:33 -0800
-    • Engine revision 890a5fca2e
-    • Dart version 2.15.1
+[✓] Flutter (Channel stable, 2.10.4, on macOS 12.2 21D5025f darwin-x64, locale zh-Hans-CN)
+    • Flutter version 2.10.4 at /Users/jd/Documents/sdk/flutter/flutter
+    • Upstream repository https://github.com/flutter/flutter.git
+    • Framework revision c860cba910 (12 天前), 2022-03-25 00:23:12 -0500
+    • Engine revision 57d3bac3dd
+    • Dart version 2.16.2
+    • DevTools version 2.9.2
     • Pub download mirror https://pub.flutter-io.cn
     • Flutter download mirror https://storage.flutter-io.cn
+
 [✓] Xcode - develop for iOS and macOS (Xcode 13.0)
     • Xcode at /Applications/Xcode.app/Contents/Developer
     • CocoaPods version 1.11.2

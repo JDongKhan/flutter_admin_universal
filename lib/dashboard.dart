@@ -1,4 +1,4 @@
-import 'dart:html' as html;
+// import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/info/page/user_list_page.dart';
@@ -6,6 +6,7 @@ import 'package:flutter_admin_universal/info/page/user_list_page.dart';
 import 'home/main_content_page.dart';
 import 'menu/left_menu_page.dart';
 import 'menu/model/menu_item.dart';
+import 'platform/platform_adapter.dart';
 import 'setting/setting_page.dart';
 import 'web/web_page.dart' deferred as web;
 import 'widget/deferred_widget.dart';
@@ -40,12 +41,13 @@ class _DashboardPageState extends State<DashboardPage> {
             Navigator.of(context).pop();
           }
           if (item.route == '/to_other') {
-            html.window.open('https://www.baidu.com', 'baidu');
+            platformAdapter.log('haha');
+            // html.window.open('https://www.baidu.com', 'baidu');
             return;
           }
           WidgetBuilder? widgetBuilder = pageBuilder[item.route];
           if (widgetBuilder != null) {
-            _selectedPage = widgetBuilder!(context);
+            _selectedPage = widgetBuilder.call(context);
             setState(() {});
           }
         },

@@ -36,6 +36,10 @@ dependencies:
   intl: 0.17.0
   # 屏幕适配
   flutter_screenutil: 5.0.1+3
+  #解决跨域问题
+#  shelf_proxy: ^1.0.1
+
+  dio: 4.0.6
 
 dev_dependencies:
   flutter_test:

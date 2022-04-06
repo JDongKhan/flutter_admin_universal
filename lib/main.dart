@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:routemaster/routemaster.dart';
 
 import 'route.dart';
+import 'service/environment.dart';
 
 void main() {
+  environment.init();
   runApp(MyApp());
 }
 

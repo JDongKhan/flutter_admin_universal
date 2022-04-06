@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/utils/login_util.dart';
 import 'package:routemaster/routemaster.dart';
 
+import 'network/network_utils.dart';
+import 'service/environment.dart';
+
 /// @author jd
 
 class LoginPage extends StatefulWidget {
@@ -159,11 +162,17 @@ class _LoginPageState extends State<LoginPage> {
 
   _login() {
     LoginUtil.isLoggedIn = true;
+    _callRequest();
     Routemaster.of(context).replace('/');
   }
 
   _register() {
     LoginUtil.isLoggedIn = true;
     Routemaster.of(context).replace('/');
+  }
+
+  void _callRequest() async {
+    var res = await Network.get(environment.path.hostConfig.baseUrl);
+    debugPrint('result:${res.data}');
   }
 }

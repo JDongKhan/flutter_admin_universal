@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/info/page/user_list_page.dart';
+import 'package:flutter_admin_universal/network/network_utils.dart';
+import 'package:flutter_admin_universal/service/environment.dart';
+import 'package:flutter_admin_universal/service/path/login_path.dart';
 
 import 'home/main_content_page.dart';
 import 'menu/left_menu_page.dart';
@@ -41,7 +44,7 @@ class _DashboardPageState extends State<DashboardPage> {
             Navigator.of(context).pop();
           }
           if (item.route == '/to_other') {
-            platformAdapter.log('haha');
+            _callJS();
             // html.window.open('https://www.baidu.com', 'baidu');
             return;
           }
@@ -55,5 +58,13 @@ class _DashboardPageState extends State<DashboardPage> {
       mainPage: _selectedPage,
       endDrawer: SettingPage(),
     );
+  }
+
+  void _callJS() {
+    platformAdapter.log('haha');
+  }
+
+  void _callRequest() async {
+    var res = await Network.get(environment.path.loginUrl);
   }
 }

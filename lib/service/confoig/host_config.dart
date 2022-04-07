@@ -11,7 +11,7 @@ class PrdHostConfig implements HostConfig {
 
 class SitHostConfig implements HostConfig {
   @override
-  String get baseUrl => 'https://baidu.com';
+  String get baseUrl => 'http://zr.cnsuning.com:8080';
 }
 
 class PreHostConfig implements HostConfig {
@@ -27,5 +27,5 @@ class LocalHostConfig implements HostConfig {
   void init() async {}
 
   @override
-  String get baseUrl => 'https://baidu.com';
+  String get baseUrl => 'http://zr.cnsuning.com:8080';
 }

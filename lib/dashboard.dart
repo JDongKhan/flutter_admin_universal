@@ -44,7 +44,7 @@ class _DashboardPageState extends State<DashboardPage> {
             Navigator.of(context).pop();
           }
           if (item.route == '/to_login') {
-            platformAdapter.login('');
+            platformAdapter.login(environment.path.loginUrl);
             return;
           }
           if (item.route == '/to_request') {
@@ -74,6 +74,6 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   void _callRequest() async {
-    var res = await Network.get(environment.path.loginUrl);
+    var res = await Network.get(environment.path.authAccess);
   }
 }

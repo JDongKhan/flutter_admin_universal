@@ -7,7 +7,7 @@ enum Environment { prd, sit, pre }
 Environments environment = Environments();
 
 class Environments {
-  void init({String env = 'prd'}) {
+  void init({String env = 'sit'}) {
     if (env == 'sit') {
       environment = Environment.sit;
     } else if (env == 'pre') {

@@ -64,7 +64,7 @@ class InfoCardStyleWidget extends StatelessWidget {
           ),
           tip != null
               ? Tooltip(
-                  message: tip,
+                  message: tip!,
                   child: Icon(
                     Icons.report_gmailerrorred_outlined,
                     color: Colors.grey,

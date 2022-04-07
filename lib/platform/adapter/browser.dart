@@ -31,7 +31,7 @@ class BrowserAdapter implements PlatformAdapter {
 
   @override
   void login(String url) {
-    String currentUrl = html.window.location.href;
+    String currentUrl = html.window.location.href + '/';
     currentUrl = Uri.encodeComponent(currentUrl);
     String loginUrl = '$url?service=$currentUrl';
     html.window.location.replace(loginUrl);

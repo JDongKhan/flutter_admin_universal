@@ -25,7 +25,6 @@ class PlatformCookieInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     _printResponse(response);
-    platformAdapter.alert(response.data);
     if (response.data is Map) {
       Map result = response.data;
       int? errorCode = int.tryParse(result['errorCode']);

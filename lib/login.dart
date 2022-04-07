@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_admin_universal/utils/login_util.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -19,6 +20,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setApplicationSwitcherDescription(
+        ApplicationSwitcherDescription(
+      label: '登录',
+      primaryColor: Theme.of(context).primaryColor.value,
+    ));
+    //或者套一个Title组件
     return Scaffold(
       body: Container(
         color: Colors.orange.withAlpha(10),

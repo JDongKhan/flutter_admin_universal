@@ -20,7 +20,9 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
       MenuItem.second('首页', '/home'),
       MenuItem.second('用户列表', '/user_list'),
       MenuItem.second('菜单1-3', '/web'),
-      MenuItem.second('百度', '/to_other'),
+      MenuItem.second('登录', '/to_login'),
+      MenuItem.second('请求', '/to_request'),
+      MenuItem.second('cookie', '/to_cookie'),
     ]),
     MenuItem.first('异常页', Icons.report_gmailerrorred_outlined, [
       MenuItem.second('菜单2-1', '/web'),

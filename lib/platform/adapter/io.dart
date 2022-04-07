@@ -10,4 +10,19 @@ class IOAdapter implements PlatformAdapter {
   void log(String message) {
     debugPrint('我的是io端');
   }
+
+  @override
+  String? cookies() {
+    throw UnimplementedError();
+  }
+
+  @override
+  void login(String url) {
+    // TODO: implement login
+  }
+
+  @override
+  void alert(String message) {
+    // TODO: implement alert
+  }
 }

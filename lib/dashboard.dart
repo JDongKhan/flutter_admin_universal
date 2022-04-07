@@ -43,11 +43,20 @@ class _DashboardPageState extends State<DashboardPage> {
           if (UniversalDashboard.isMobile()) {
             Navigator.of(context).pop();
           }
-          if (item.route == '/to_other') {
-            _callJS();
+          if (item.route == '/to_login') {
+            platformAdapter.login('');
+            return;
+          }
+          if (item.route == '/to_request') {
+            _callRequest();
             // html.window.open('https://www.baidu.com', 'baidu');
             return;
           }
+          if (item.route == '/to_cookie') {
+            platformAdapter.cookies();
+            return;
+          }
+
           WidgetBuilder? widgetBuilder = pageBuilder[item.route];
           if (widgetBuilder != null) {
             _selectedPage = widgetBuilder.call(context);

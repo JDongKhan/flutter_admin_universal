@@ -1,3 +1,4 @@
+import 'dart:html' as html;
 import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
@@ -26,5 +27,23 @@ class BrowserAdapter implements PlatformAdapter {
     // String jsString = getJSString();
     String jsString = js.context.callMethod('getJSString', [callback]);
     debugPrint('我的是web端:$jsString');
+  }
+
+  @override
+  void login(String url) {
+    String currentUrl = html.window.location.href;
+    currentUrl = Uri.encodeComponent(currentUrl);
+    String loginUrl = '$url?service=$currentUrl';
+    html.window.location.replace(loginUrl);
+  }
+
+  @override
+  String? cookies() {
+    return html.window.document.cookie;
+  }
+
+  @override
+  void alert(String message) {
+    js.context.callMethod('alert', [message]);
   }
 }

@@ -8,4 +8,10 @@ PlatformAdapter platformAdapter = createAdapter();
 
 abstract class PlatformAdapter {
   void log(String message);
+
+  void login(String url);
+
+  String? cookies();
+
+  void alert(String message);
 }

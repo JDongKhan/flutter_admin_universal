@@ -96,6 +96,7 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
       child: ExpansionTile(
         expandedAlignment: Alignment.bottomRight,
         collapsedIconColor: Colors.white,
+        initiallyExpanded: true,
         iconColor: Colors.white,
         tilePadding: const EdgeInsets.only(left: 25, right: 20),
         title: Row(

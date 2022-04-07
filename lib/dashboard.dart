@@ -6,7 +6,7 @@ import 'package:flutter_admin_universal/network/network_utils.dart';
 import 'package:flutter_admin_universal/service/environment.dart';
 import 'package:flutter_admin_universal/service/path/login_path.dart';
 
-import 'home/main_content_page.dart';
+import 'account/account_list_page.dart';
 import 'menu/left_menu_page.dart';
 import 'menu/model/menu_item.dart';
 import 'platform/platform_adapter.dart';
@@ -24,10 +24,10 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  Widget _selectedPage = MainContentPage();
+  Widget _selectedPage = AccountListPage();
 
   Map<String, WidgetBuilder> pageBuilder = {
-    '/home': (_) => MainContentPage(),
+    '/home': (_) => AccountListPage(),
     '/web': (_) => DeferredWidget(
           libraryLoader: () => web.loadLibrary(),
           createWidget: () => web.WebPage(),

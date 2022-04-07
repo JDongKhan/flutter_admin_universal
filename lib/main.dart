@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:routemaster/routemaster.dart';
 
 import 'route.dart';
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(360, 690),
-      builder: () => GetMaterialApp.router(
+      builder: () => MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         routerDelegate: RoutemasterDelegate(

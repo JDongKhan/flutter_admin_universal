@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/home/model/sales_data.dart';
-import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 /// @author jd
 
@@ -180,54 +177,54 @@ class _SecondSectionState extends State<SecondSection>
     DateTime start = DateTime.now();
     DateTime end = start.add(Duration(days: 7));
 
-    showDialog<DateTimeRange>(
-      context: context,
-      useRootNavigator: true,
-      useSafeArea: true,
-      builder: (BuildContext context) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            color: Colors.black.withAlpha(5),
-            child: Center(
-              child: Container(
-                color: Colors.white,
-                width: 500,
-                height: 300,
-                child: SfDateRangePicker(
-                  initialSelectedDate: start,
-                  showActionButtons: true,
-                  onCancel: () {
-                    Navigator.of(context).pop();
-                  },
-                  onSubmit: (obj) {
-                    PickerDateRange range = obj as PickerDateRange;
-
-                    /// 此处时间需要格式化一下
-                    String time = range.toString();
-                    if (time != null && time.isNotEmpty) {
-                      DateTime? startTime = range.startDate;
-                      DateTime? endTime = range.endDate;
-                      DateFormat format = DateFormat('yyyy-MM-dd');
-                      _dateSelectText =
-                          '${format.format(startTime!)} ${format.format(endTime!)}';
-                      setState(() {});
-                    }
-                    Navigator.of(context).pop();
-                  },
-                  initialSelectedRange: PickerDateRange(start, end),
-                  onSelectionChanged: (DateRangePickerSelectionChangedArgs
-                      dateRangePickerSelectionChangedArgs) {},
-                  selectionMode: DateRangePickerSelectionMode.range,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+    // showDialog<DateTimeRange>(
+    //   context: context,
+    //   useRootNavigator: true,
+    //   useSafeArea: true,
+    //   builder: (BuildContext context) {
+    //     return GestureDetector(
+    //       onTap: () {
+    //         Navigator.of(context).pop();
+    //       },
+    //       child: Container(
+    //         color: Colors.black.withAlpha(5),
+    //         child: Center(
+    //           child: Container(
+    //             color: Colors.white,
+    //             width: 500,
+    //             height: 300,
+    //             child: SfDateRangePicker(
+    //               initialSelectedDate: start,
+    //               showActionButtons: true,
+    //               onCancel: () {
+    //                 Navigator.of(context).pop();
+    //               },
+    //               onSubmit: (obj) {
+    //                 PickerDateRange range = obj as PickerDateRange;
+    //
+    //                 /// 此处时间需要格式化一下
+    //                 String time = range.toString();
+    //                 if (time != null && time.isNotEmpty) {
+    //                   DateTime? startTime = range.startDate;
+    //                   DateTime? endTime = range.endDate;
+    //                   DateFormat format = DateFormat('yyyy-MM-dd');
+    //                   _dateSelectText =
+    //                       '${format.format(startTime!)} ${format.format(endTime!)}';
+    //                   setState(() {});
+    //                 }
+    //                 Navigator.of(context).pop();
+    //               },
+    //               initialSelectedRange: PickerDateRange(start, end),
+    //               onSelectionChanged: (DateRangePickerSelectionChangedArgs
+    //                   dateRangePickerSelectionChangedArgs) {},
+    //               selectionMode: DateRangePickerSelectionMode.range,
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
     //
     // DateTimeRange selectTimeRange = await showDateRangePicker(
     //   context: context,
@@ -266,31 +263,8 @@ class _SecondSectionState extends State<SecondSection>
   }
 
   Widget _chartStyle1Widget() {
-    return SfCartesianChart(
-      primaryXAxis: CategoryAxis(
-        majorGridLines: MajorGridLines(width: 0),
-        labelIntersectAction: AxisLabelIntersectAction.hide,
-      ),
-      // title: ChartTitle(text: '热门搜索'),
-      legend:
-          Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
-      tooltipBehavior: TooltipBehavior(enable: true),
-      series: <ColumnSeries<SalesData, String>>[
-        ColumnSeries<SalesData, String>(
-          dataSource: listData!,
-          xValueMapper: (SalesData sales, _) => sales.year,
-          yValueMapper: (sales, _) => sales.sales,
-          width: 0.5,
-          name: '男性',
-        ),
-        ColumnSeries<SalesData, String>(
-          dataSource: listData!,
-          xValueMapper: (SalesData sales, _) => sales.year,
-          yValueMapper: (sales, _) => sales.sales,
-          width: 0.5,
-          name: '女性',
-        ),
-      ],
+    return Container(
+      child: Text('没有图标库'),
     );
   }
 }

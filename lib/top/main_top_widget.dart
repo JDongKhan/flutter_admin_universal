@@ -9,7 +9,23 @@ class MainTopWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(
+            width: 1,
+            color: Color(0xFFF5F5F5),
+          ),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(2.0, 5.0), //阴影xy轴偏移量
+            blurRadius: 15.0, //阴影模糊程度
+            spreadRadius: 1.0, //阴影扩散程度
+          ),
+        ],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -26,15 +42,10 @@ class MainTopWidget extends StatelessWidget {
               SizedBox(
                 width: 100,
                 height: 20,
-                child: CupertinoSearchTextField(
-                  itemSize: 14,
-                  prefixInsets:
-                      const EdgeInsetsDirectional.fromSTEB(6, 4, 0, 4),
-                  padding: const EdgeInsets.only(
-                    top: 0,
-                    bottom: 0,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: '站内搜索',
                   ),
-                  placeholder: '站内搜索',
                   style: TextStyle(fontSize: 10),
                 ),
               ),

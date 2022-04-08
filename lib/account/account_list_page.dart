@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/top/main_top_widget.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 ///@Description TODO
@@ -75,19 +76,24 @@ class AccountListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(30),
-        child: PlutoGrid(
-            columns: columns,
-            rows: rows,
-            onChanged: (PlutoGridOnChangedEvent event) {
-              print(event);
-            },
-            onLoaded: (PlutoGridOnLoadedEvent event) {
-              print(event);
-            }),
-      ),
+    return Column(
+      children: [
+        MainTopWidget(),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            child: PlutoGrid(
+                columns: columns,
+                rows: rows,
+                onChanged: (PlutoGridOnChangedEvent event) {
+                  print(event);
+                },
+                onLoaded: (PlutoGridOnLoadedEvent event) {
+                  print(event);
+                }),
+          ),
+        ),
+      ],
     );
   }
 }

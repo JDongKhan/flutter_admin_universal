@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 /// @author jd
 
@@ -196,13 +195,8 @@ class InfoCardStyle2Widget extends InfoCardStyleWidget {
   }
 
   Widget _chartStyle1Widget() {
-    return SfSparkAreaChart(
-        data: [1, 5, 6, 0, 1, 2, 7, 7, 4, 10, 13, 6, 7, 5, 11, 5, 3]);
-  }
-
-  Widget _chartStyle2Widget() {
-    return SfSparkLineChart(
-      data: [1, 5, -6, 0, 1, -2, 7, -7, -4, -10, 13, -6, 7, 5, 11, 5, 3],
+    return Container(
+      child: Text('没有图标库'),
     );
   }
 }

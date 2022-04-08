@@ -4,81 +4,71 @@ import 'package:flutter_admin_universal/menu/model/menu_item.dart';
 /// @author jd
 
 const double kMenuWidth = 150;
+const Color _kMenuBackgroundColor = Color(0xFFB3E5FF);
+const Color _kMenuTextColor = Color(0xff121E34);
+const Color _kMenuSubTextColor = Color(0xff999999);
 
-class LeftMenuPage extends StatefulWidget {
-  const LeftMenuPage({
+// ignore: must_be_immutable
+class LeftMenuPage extends StatelessWidget {
+  LeftMenuPage({
+    Key? key,
     this.itemChanged,
-  });
+    MenuItem? selectedItem,
+    required this.items,
+  }) : super(key: key) {
+    selectedItem ??= items.first.items?.first;
+    this.selectedItem = selectedItem;
+  }
   final ValueChanged<MenuItem>? itemChanged;
-  @override
-  _LeftMenuPageState createState() => _LeftMenuPageState();
-}
-
-class _LeftMenuPageState extends State<LeftMenuPage> {
-  final List menus = [
-    MenuItem.first('仪表盘', Icons.home_outlined, [
-      MenuItem.second('首页', '/home'),
-      MenuItem.second('用户列表', '/user_list'),
-      MenuItem.second('菜单1-3', '/web'),
-      MenuItem.second('登录', '/to_login'),
-      MenuItem.second('请求', '/to_request'),
-      MenuItem.second('cookie', '/to_cookie'),
-    ]),
-    MenuItem.first('异常页', Icons.report_gmailerrorred_outlined, [
-      MenuItem.second('菜单2-1', '/web'),
-      MenuItem.second('菜单2-2', '/web'),
-      MenuItem.second('菜单2-3', '/web'),
-      MenuItem.second('菜单2-4', '/web'),
-    ]),
-    MenuItem.first('设置', Icons.settings, [
-      MenuItem.second('菜单3-1', '/web'),
-      MenuItem.second('菜单3-2', '/web'),
-      MenuItem.second('菜单3-3', '/web'),
-      MenuItem.second('菜单3-4', '/web'),
-    ]),
-  ];
-
-  MenuItem? _selectedItem;
+  MenuItem? selectedItem;
+  final List<MenuItem> items;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: kMenuWidth,
-      color: const Color(0xff000066),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            color: const Color(0xff000055),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.my_library_books,
-                  color: Colors.white,
-                  size: 16,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  '后台管理系统',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+      // color: const Color(0xff000066),
+      child: Drawer(
+        child: Column(
+          children: [
+            _topTitleWidget(),
+            Expanded(
+              child: ListView(
+                children: items
+                    .map(
+                      (e) => _firstItemWidget(e),
+                    )
+                    .toList(),
+              ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _topTitleWidget() {
+    return Container(
+      height: 60,
+      alignment: Alignment.center,
+      color: _kMenuBackgroundColor,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.my_library_books,
+            color: _kMenuTextColor,
+            size: 16,
           ),
-          Expanded(
-            child: ListView(
-              children: menus
-                  .map(
-                    (e) => _firstItemWidget(e),
-                  )
-                  .toList(),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            '后台管理系统',
+            style: TextStyle(
+              color: _kMenuTextColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             ),
           ),
         ],
@@ -90,20 +80,22 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
     /// 更改ExpansionTile主题 可使用Theme或collapsedIconColor
     return Theme(
       data: ThemeData(
-        colorScheme: ColorScheme.light(primary: Colors.white),
-        unselectedWidgetColor: Colors.white,
+        colorScheme: ColorScheme.light(primary: _kMenuTextColor),
+        unselectedWidgetColor: _kMenuTextColor,
       ),
       child: ExpansionTile(
         expandedAlignment: Alignment.bottomRight,
-        collapsedIconColor: Colors.white,
+        collapsedIconColor: _kMenuTextColor,
         initiallyExpanded: true,
-        iconColor: Colors.white,
+        iconColor: _kMenuTextColor,
+        backgroundColor: _kMenuBackgroundColor,
+        collapsedBackgroundColor: _kMenuBackgroundColor,
         tilePadding: const EdgeInsets.only(left: 25, right: 20),
         title: Row(
           children: [
             Icon(
               firstItem.iconData,
-              color: Colors.white,
+              color: _kMenuTextColor,
               size: 16,
             ),
             const SizedBox(
@@ -112,7 +104,7 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
             Text(
               firstItem.title ?? '',
               style: TextStyle(
-                color: Colors.white,
+                color: _kMenuTextColor,
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
               ),
@@ -133,17 +125,16 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
       widthFactor: 1,
       child: GestureDetector(
         onTap: () {
-          _selectedItem = secondItem;
-          if (widget.itemChanged != null) {
-            widget.itemChanged!(secondItem);
+          if (itemChanged != null) {
+            itemChanged!(secondItem);
           }
         },
         child: Container(
           padding: const EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
-            color: _selectedItem == secondItem
+            color: selectedItem == secondItem
                 ? const Color(0xffff00aa)
-                : const Color(0xff000044),
+                : _kMenuBackgroundColor,
           ),
           child: Center(
             child: Container(
@@ -152,8 +143,9 @@ class _LeftMenuPageState extends State<LeftMenuPage> {
                 secondItem.title ?? '',
                 style: TextStyle(
                   fontSize: 12,
-                  color:
-                      _selectedItem == secondItem ? Colors.white : Colors.grey,
+                  color: selectedItem == secondItem
+                      ? Colors.white
+                      : _kMenuSubTextColor,
                 ),
               ),
             ),

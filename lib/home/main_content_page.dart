@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/menu/left_menu_page.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
+import '../top/main_top_widget.dart';
 import 'model/sales_data.dart';
 import 'widget/info_card_widget.dart';
 import 'widget/info_list_card_widget.dart';
-import 'widget/main_top_widget.dart';
 import 'widget/second_section.dart';
 
 /// @author jd
@@ -18,13 +16,9 @@ class MainContentPage extends StatefulWidget {
 
 class _MainContentPageState extends State<MainContentPage> {
   ScrollController _scrollController = ScrollController();
-  TooltipBehavior? _tooltipBehaviorRenderer;
-
   List<SalesData>? listData;
-
   @override
   void initState() {
-    _tooltipBehaviorRenderer = TooltipBehavior(enable: true);
     listData = <SalesData>[
       SalesData('浙江', 35),
       SalesData('江苏', 28),
@@ -36,16 +30,22 @@ class _MainContentPageState extends State<MainContentPage> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(minWidth: 1000),
-      child: Column(
-        children: [
-          MainTopWidget(),
-          const SizedBox(
-            height: 10,
-          ),
-          Expanded(
+    return Column(
+      children: [
+        MainTopWidget(),
+        const SizedBox(
+          height: 10,
+        ),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.only(left: 5),
             child: SingleChildScrollView(
               controller: _scrollController,
               child: Column(
@@ -57,8 +57,8 @@ class _MainContentPageState extends State<MainContentPage> {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -155,97 +155,26 @@ class _MainContentPageState extends State<MainContentPage> {
   }
 
   Widget _chartStyle1Widget() {
-    return SfCartesianChart(
-      primaryXAxis: CategoryAxis(),
-      // title: ChartTitle(text: '热门搜索'),
-      tooltipBehavior: _tooltipBehaviorRenderer,
-      series: <LineSeries<SalesData, String>>[
-        LineSeries<SalesData, String>(
-          dataSource: listData!,
-          xValueMapper: (SalesData sales, _) => sales.year,
-          yValueMapper: (sales, _) => sales.sales,
-          dataLabelSettings: DataLabelSettings(isVisible: true),
-        ),
-      ],
+    return Container(
+      child: Text('没有引入图标库'),
     );
   }
 
   Widget _chartStyle2Widget() {
-    return SfSparkLineChart(
-      data: [1, 5, -6, 0, 1, -2, 7, -7, -4, -10, 13, -6, 7, 5, 11, 5, 3],
+    return Container(
+      child: Text('没有引入图标库'),
     );
   }
 
   Widget _chartStyle3Widget() {
-    ChartTypeCircular type = ChartTypeCircular.pie;
-    return SfCircularChart(
-      title: ChartTitle(text: '中国各省人口统计'),
-      legend:
-          Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
-      series: type == ChartTypeCircular.pie
-          ? _getPieSeries()
-          : type == ChartTypeCircular.doughnut
-              ? _getDoughnutSeries()
-              : _getRadialBarSeries(),
-      tooltipBehavior: TooltipBehavior(enable: true),
+    return Container(
+      child: Text('没有引入图标库'),
     );
   }
 
-  List<RadialBarSeries<SalesData, String>> _getRadialBarSeries() {
-    return <RadialBarSeries<SalesData, String>>[
-      RadialBarSeries<SalesData, String>(
-        dataSource: listData,
-        xValueMapper: (SalesData data, _) => data.year,
-        yValueMapper: (SalesData data, _) => data.sales,
-        dataLabelMapper: (SalesData data, _) => data.year,
-        // pointRadiusMapper: _getPointRadiusMapper,
-        dataLabelSettings: DataLabelSettings(
-            isVisible: true, labelPosition: ChartDataLabelPosition.outside),
-        maximumValue: 10000,
-        innerRadius: '1%',
-      )
-    ];
-  }
-
-  List<DoughnutSeries<SalesData, String>> _getDoughnutSeries() {
-    return <DoughnutSeries<SalesData, String>>[
-      DoughnutSeries<SalesData, String>(
-          explode: true,
-          dataSource: listData,
-          xValueMapper: (SalesData data, _) => data.year,
-          yValueMapper: (SalesData data, _) => data.sales,
-          dataLabelMapper: (SalesData data, _) => data.year,
-          // startAngle: 100,
-          // endAngle: 100,
-          pointRadiusMapper: _getPointRadiusMapper,
-          dataLabelSettings: DataLabelSettings(
-              isVisible: true, labelPosition: ChartDataLabelPosition.outside))
-    ];
-  }
-
-  List<PieSeries<SalesData, String>> _getPieSeries() {
-    return <PieSeries<SalesData, String>>[
-      PieSeries<SalesData, String>(
-          explode: true,
-          dataSource: listData,
-          xValueMapper: (SalesData data, _) => data.year,
-          yValueMapper: (SalesData data, _) => data.sales,
-          dataLabelMapper: (SalesData data, _) => data.year,
-          // startAngle: 100,
-          // endAngle: 100,
-          pointRadiusMapper: _getPointRadiusMapper,
-          dataLabelSettings: DataLabelSettings(
-              isVisible: true, labelPosition: ChartDataLabelPosition.outside))
-    ];
-  }
-
-  String _getPointRadiusMapper(SalesData data, int index) {
-    return '100%';
-  }
-
   Widget _chartStyle4Widget() {
-    return SfSparkBarChart(
-      data: [1, 5, 6, 0, 1, 2, 7, 7, 4, 10, 13, 6, 7, 5, 11, 5, 3],
+    return Container(
+      child: Text('没有引入图标库'),
     );
   }
 }

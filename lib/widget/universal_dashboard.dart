@@ -35,27 +35,36 @@ class UniversalDashboard extends StatefulWidget {
 
 class _UniversalDashboardState extends State<UniversalDashboard> {
   bool _openSetting = false;
+  bool _openLeftMenu = true;
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  void openSetting() {
+  void openOrCloseLeftMenu() {
     bool isMobile = UniversalDashboard.isMobile();
     if (isMobile) {
       ScaffoldState? state = _scaffoldKey.currentState;
-      state?.openEndDrawer();
+      state?.openDrawer();
     } else {
-      _openSetting = true;
-      setState(() {});
+      setState(() {
+        _openLeftMenu = !_openLeftMenu;
+      });
     }
   }
 
-  void closeSetting() {
+  void openOrCloseSetting() {
     bool isMobile = UniversalDashboard.isMobile();
     if (isMobile) {
-      Navigator.of(context).pop();
+      if (_openSetting == false) {
+        ScaffoldState? state = _scaffoldKey.currentState;
+        state?.openEndDrawer();
+      } else {
+        Navigator.of(context).pop();
+      }
+      _openSetting = !_openSetting;
     } else {
-      _openSetting = false;
-      setState(() {});
+      setState(() {
+        _openSetting = !_openSetting;
+      });
     }
   }
 
@@ -69,9 +78,9 @@ class _UniversalDashboardState extends State<UniversalDashboard> {
       contentWidget = Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          widget.leftMenu,
+          if (_openLeftMenu) widget.leftMenu,
           Expanded(child: widget.mainPage),
-          _openSetting ? widget.endDrawer : Container()
+          if (_openSetting) widget.endDrawer,
         ],
       );
     } else {

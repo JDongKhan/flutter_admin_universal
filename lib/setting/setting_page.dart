@@ -28,7 +28,7 @@ class _SettingPageState extends State<SettingPage> {
                     size: 18,
                   ),
                   onPressed: () {
-                    UniversalDashboard.of(context)?.closeSetting();
+                    UniversalDashboard.of(context)?.openOrCloseSetting();
                   },
                 ),
               ),

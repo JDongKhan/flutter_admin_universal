@@ -29,13 +29,12 @@ class MainTopWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          UniversalDashboard.isMobile()
-              ? IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  })
-              : Container(),
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              UniversalDashboard.of(context)?.openOrCloseLeftMenu();
+            },
+          ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -69,7 +68,7 @@ class MainTopWidget extends StatelessWidget {
                   size: 16,
                 ),
                 onPressed: () {
-                  UniversalDashboard.of(context)?.openSetting();
+                  UniversalDashboard.of(context)?.openOrCloseSetting();
                 },
               ),
             ],

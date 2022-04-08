@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/menu/left_menu_page.dart';
+import 'package:flutter_admin_universal/left_menu/left_menu_page.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 
 import '../top/main_top_widget.dart';

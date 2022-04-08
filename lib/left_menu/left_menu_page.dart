@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/menu/model/menu_item.dart';
+import 'package:flutter_admin_universal/left_menu/model/menu_item.dart';
 
 /// @author jd
 
 const double kMenuWidth = 150;
-const Color _kMenuBackgroundColor = Color(0xFFB3E5FF);
-const Color _kMenuTextColor = Color(0xff121E34);
+const Color _kMenuBackgroundColor = Color(0xFF495060);
+const Color _kMenuMainTextColor = Color(0xffffffff);
+const Color _kMenuTextColor = Color(0xffbcbfcb);
+const Color _kMenuSelectedTextColor = Color(0xffffffff);
 const Color _kMenuSubTextColor = Color(0xff999999);
+
+const Color _kMenuSubBackgroundColor = Color(0xff363e4);
 
 // ignore: must_be_immutable
 class LeftMenuPage extends StatelessWidget {
@@ -36,7 +40,7 @@ class LeftMenuPage extends StatelessWidget {
               child: ListView(
                 children: items
                     .map(
-                      (e) => _firstItemWidget(e),
+                      (e) => _firstItemWidget(context, e),
                     )
                     .toList(),
               ),
@@ -57,7 +61,7 @@ class LeftMenuPage extends StatelessWidget {
         children: [
           Icon(
             Icons.my_library_books,
-            color: _kMenuTextColor,
+            color: _kMenuMainTextColor,
             size: 16,
           ),
           const SizedBox(
@@ -66,7 +70,7 @@ class LeftMenuPage extends StatelessWidget {
           Text(
             '后台管理系统',
             style: TextStyle(
-              color: _kMenuTextColor,
+              color: _kMenuMainTextColor,
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
@@ -76,18 +80,18 @@ class LeftMenuPage extends StatelessWidget {
     );
   }
 
-  Widget _firstItemWidget(MenuItem firstItem) {
+  Widget _firstItemWidget(BuildContext context, MenuItem firstItem) {
     /// 更改ExpansionTile主题 可使用Theme或collapsedIconColor
     return Theme(
       data: ThemeData(
-        colorScheme: ColorScheme.light(primary: _kMenuTextColor),
-        unselectedWidgetColor: _kMenuTextColor,
+        colorScheme: ColorScheme.light(primary: _kMenuMainTextColor),
+        unselectedWidgetColor: _kMenuMainTextColor,
       ),
       child: ExpansionTile(
         expandedAlignment: Alignment.bottomRight,
-        collapsedIconColor: _kMenuTextColor,
+        collapsedIconColor: _kMenuMainTextColor,
         initiallyExpanded: true,
-        iconColor: _kMenuTextColor,
+        iconColor: _kMenuMainTextColor,
         backgroundColor: _kMenuBackgroundColor,
         collapsedBackgroundColor: _kMenuBackgroundColor,
         tilePadding: const EdgeInsets.only(left: 25, right: 20),
@@ -95,7 +99,7 @@ class LeftMenuPage extends StatelessWidget {
           children: [
             Icon(
               firstItem.iconData,
-              color: _kMenuTextColor,
+              color: _kMenuMainTextColor,
               size: 16,
             ),
             const SizedBox(
@@ -104,7 +108,7 @@ class LeftMenuPage extends StatelessWidget {
             Text(
               firstItem.title ?? '',
               style: TextStyle(
-                color: _kMenuTextColor,
+                color: _kMenuMainTextColor,
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
               ),
@@ -113,14 +117,14 @@ class LeftMenuPage extends StatelessWidget {
         ),
         children: firstItem.items!
             .map(
-              (e) => _secondItemWidget(e),
+              (e) => _secondItemWidget(context, e),
             )
             .toList(),
       ),
     );
   }
 
-  Widget _secondItemWidget(MenuItem secondItem) {
+  Widget _secondItemWidget(BuildContext context, MenuItem secondItem) {
     return FractionallySizedBox(
       widthFactor: 1,
       child: GestureDetector(
@@ -133,8 +137,8 @@ class LeftMenuPage extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
             color: selectedItem == secondItem
-                ? const Color(0xffff00aa)
-                : _kMenuBackgroundColor,
+                ? Theme.of(context).primaryColor
+                : _kMenuSubBackgroundColor,
           ),
           child: Center(
             child: Container(
@@ -144,7 +148,7 @@ class LeftMenuPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   color: selectedItem == secondItem
-                      ? Colors.white
+                      ? _kMenuSelectedTextColor
                       : _kMenuSubTextColor,
                 ),
               ),

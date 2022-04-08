@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/network/network_utils.dart';
 import 'package:flutter_admin_universal/service/environment.dart';
 import 'package:flutter_admin_universal/service/path/login_path.dart';
+import 'package:flutter_admin_universal/user/user_list_page.dart';
 import 'package:flutter_admin_universal/widget/deferred_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,7 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
   final List<MenuItem> menus = [
     MenuItem.first('仪表盘', Icons.home_outlined, [
       MenuItem.second('首页', '/home', builder: (_) => MainContentPage()),
-      MenuItem.second('用户列表', '/user_list'),
+      MenuItem.second('用户列表', '/user_list', builder: (_) => UserListPage()),
       MenuItem.second('Account', '/account', builder: (_) => AccountListPage()),
       MenuItem.second('登录', '/to_login'),
       MenuItem.second('请求', '/to_request'),

@@ -4,6 +4,7 @@ export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 #获取上层目录
 cur_dir=$(dirname $(pwd))
 #cur_dir=$(dirname $cur_dir)
+useCanvasKit=0
 
 #脚本目录
 flutter_module_path=$(pwd)
@@ -22,9 +23,14 @@ echo "清理缓存文件:$build_dir"
 rm -rf $build_dir
 
 echo "开始打包..."
-#flutter build aar --no-profile --no-pub --build-number 1.0.2 --output-dir=$build_dir
-flutter build web --web-renderer=canvaskit --dart-define=FLUTTER_WEB_CANVASKIT_URL=http://dev.cnsuning.com:8000/package/bin/
-#flutter build web --web-renderer=html --release
+if [ $useCanvasKit == 1 ]; then
+  echo "build for canvaskit"
+  flutter build web --web-renderer=canvaskit --dart-define=FLUTTER_WEB_CANVASKIT_URL=http://dev.cnsuning.com:8000/package/bin/
+else
+  echo "build for html"
+  flutter build web --web-renderer=html --release
+fi
+
 if [ $? -ne 0 ]; then
     echo "打包失败"
     exit 0
@@ -33,9 +39,11 @@ fi
 #flutter build aar --no-debug --no-profile --no-pub --target-platform android-arm,android-arm64 --build-number 1.0.1
 echo "打包完成"
 
-echo "copy ${target_web_package} to $build_dir"
-cp -r $target_web_package $build_dir
-if [ $? -ne 0 ]; then
-    echo "拷贝失败"
-    exit 0
+if [ $useCanvasKit == 1 ]; then
+  echo "copy ${target_web_package} to $build_dir"
+  cp -r $target_web_package $build_dir
+  if [ $? -ne 0 ]; then
+      echo "拷贝失败"
+      exit 0
+  fi
 fi

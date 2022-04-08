@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/style/constants.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// @author jd
@@ -90,7 +89,6 @@ class _UniversalDashboardState extends State<UniversalDashboard> {
       key: _scaffoldKey,
       drawer: isMobile ? widget.leftMenu : null,
       endDrawer: isMobile ? widget.endDrawer : null,
-      backgroundColor: bgColor,
       body: contentWidget,
     );
   }

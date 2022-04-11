@@ -35,7 +35,8 @@ dependencies:
   fl_chart: ^0.50.1
   provider: ^6.0.2
   pluto_grid: ^2.9.3
-  flutter_icons: ^1.1.0
+#  file_picker: ^4.5.1
+
 #  intl: 0.17.0
   # 屏幕适配
   flutter_screenutil: ^5.3.1

@@ -11,22 +11,15 @@ PlatformAdapter createAdapter() => BrowserAdapter();
 class BrowserAdapter implements PlatformAdapter {
   BrowserAdapter() {
     js.context['flutterMethod'] = flutterMethod;
-    js.context['callback'] = callback;
   }
 
   String flutterMethod() {
     return '我是flutter代码';
   }
 
-  String callback() {
-    return '我是callback代码';
-  }
-
   @override
   void log(String message) {
-    // String jsString = getJSString();
-    String jsString = js.context.callMethod('getJSString', [callback]);
-    debugPrint('我的是web端:$jsString');
+    js.context.callMethod('log', [message]);
   }
 
   @override
@@ -45,5 +38,45 @@ class BrowserAdapter implements PlatformAdapter {
   @override
   void alert(String message) {
     js.context.callMethod('alert', [message]);
+  }
+
+  @override
+  void selectFileAndUpload() {
+    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
+    uploadInput.multiple = false; // 是否允许选择多文件
+    uploadInput.draggable = true;
+    uploadInput.click();
+    uploadInput.onChange.listen((e) {
+      final files = uploadInput.files;
+      debugPrint('选择文件:$files');
+      if (files != null && files.isNotEmpty) {
+        html.File? file = files.single;
+        final html.FormData formData = html.FormData()
+          ..appendBlob('file', file.slice(), file.name);
+        var url = 'http://localhost:8088/api/file/upload';
+        html.HttpRequest.request(
+          url,
+          method: 'POST',
+          sendData: formData,
+        ).then((httpRequest) {
+          debugPrint('上传成功');
+        }).catchError((e) {});
+      }
+      // var fileItem = UploadFileItem(files[0]);
+    });
+  }
+
+  @override
+  void downloadFile(String url) {
+    debugPrint('下载$url');
+    html.AnchorElement downloadElemment = html.AnchorElement(href: url);
+    downloadElemment.download = url;
+    downloadElemment.click();
+    downloadElemment.onClick.listen((event) {});
+  }
+
+  @override
+  String userAgent() {
+    return html.window.navigator.userAgent;
   }
 }

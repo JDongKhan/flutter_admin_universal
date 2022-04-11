@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/platform/platform_adapter.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 
 /// @author jd
@@ -56,14 +57,19 @@ class MainTopWidget extends StatelessWidget {
                       Icons.query_builder_outlined,
                       size: 16,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      platformAdapter.downloadFile(
+                          "https://imgservice.suning.cn/uimg1/b2c/image/j3RBQIEvtmT2JMD7wJ9-rQ.jpg_800w_800h_4e");
+                    },
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.notifications_none,
                       size: 16,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _openFile();
+                    },
                   ),
                   IconButton(
                     icon: Icon(
@@ -81,5 +87,19 @@ class MainTopWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _openFile() async {
+    platformAdapter.selectFileAndUpload();
+    // FilePickerResult? result = await FilePicker.platform.pickFiles();
+    //
+    // if (result != null) {
+    //   debugPrint('${result.files.length}');
+    //   PlatformFile file = result.files.single;
+    //   File srcfile = File(file.bytes!.toList(), file.name);
+    //   debugPrint('${srcfile}');
+    // } else {
+    //   // User canceled the picker
+    // }
   }
 }

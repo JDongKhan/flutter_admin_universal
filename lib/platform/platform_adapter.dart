@@ -7,11 +7,17 @@ import 'adapter/create_adapter.dart'
 PlatformAdapter platformAdapter = createAdapter();
 
 abstract class PlatformAdapter {
+  void selectFileAndUpload();
+
+  void downloadFile(String url);
+
   void log(String message);
 
   void login(String url);
 
   String? cookies();
+
+  String userAgent();
 
   void alert(String message);
 }

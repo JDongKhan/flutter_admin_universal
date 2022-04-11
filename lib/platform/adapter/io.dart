@@ -8,7 +8,7 @@ PlatformAdapter createAdapter() => IOAdapter();
 class IOAdapter implements PlatformAdapter {
   @override
   void log(String message) {
-    debugPrint('我的是io端');
+    debugPrint(message);
   }
 
   @override
@@ -24,5 +24,21 @@ class IOAdapter implements PlatformAdapter {
   @override
   void alert(String message) {
     // TODO: implement alert
+  }
+
+  @override
+  void selectFileAndUpload() {
+    // TODO: implement selectFileAndUpload
+  }
+
+  @override
+  void downloadFile(String url) {
+    // TODO: implement downloadFile
+  }
+
+  @override
+  String userAgent() {
+    // TODO: implement userAgent
+    throw UnimplementedError();
   }
 }

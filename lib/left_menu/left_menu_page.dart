@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/left_menu/model/menu_item.dart';
-import 'package:flutter_admin_universal/style/constants.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 
 /// @author jd
@@ -33,9 +32,8 @@ class LeftMenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: kMenuWidth,
-      // color: const Color(0xff000066),
-      color: bgColor,
       child: Drawer(
+        backgroundColor: _kMenuBackgroundColor,
         child: Column(
           children: [
             _topTitleWidget(),
@@ -90,6 +88,8 @@ class LeftMenuPage extends StatelessWidget {
   }
 
   Widget _firstItemWidget(BuildContext context, MenuItem firstItem) {
+    int index = items.indexOf(firstItem);
+
     /// 更改ExpansionTile主题 可使用Theme或collapsedIconColor
     return Theme(
       data: ThemeData(
@@ -99,7 +99,7 @@ class LeftMenuPage extends StatelessWidget {
       child: ExpansionTile(
         expandedAlignment: Alignment.bottomRight,
         collapsedIconColor: _kMenuMainTextColor,
-        initiallyExpanded: true,
+        initiallyExpanded: index == 0 ? true : false,
         iconColor: _kMenuMainTextColor,
         backgroundColor: _kMenuBackgroundColor,
         collapsedBackgroundColor: _kMenuBackgroundColor,

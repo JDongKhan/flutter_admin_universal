@@ -12,10 +12,25 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withAlpha(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          left: BorderSide(
+            width: 1,
+            color: Color(0xFFF5F5F5),
+          ),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(5.0, 2.0), //阴影xy轴偏移量
+            blurRadius: 15.0, //阴影模糊程度
+            spreadRadius: 1.0, //阴影扩散程度
+          ),
+        ],
+      ),
       child: Container(
         width: 60,
-        color: Colors.blueGrey,
         child: Column(
           children: [
             Container(

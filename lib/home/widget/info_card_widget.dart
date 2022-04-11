@@ -28,7 +28,7 @@ class InfoCardStyleWidget extends StatelessWidget {
           children: [
             _topTitleWidget(),
             _dataWidget(),
-            Container(height: 60, child: _contentWidget()),
+            Expanded(child: Container(child: _contentWidget())),
           ],
         ),
       ),

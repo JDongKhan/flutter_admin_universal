@@ -30,19 +30,22 @@ class _SecondSectionState extends State<SecondSection>
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Card(
-        color: Colors.white,
-        child: Container(
-          height: 200,
-          // margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-          child: Column(
-            children: [
-              _topWidget(),
-              const Divider(
-                height: 1,
-              ),
-              Expanded(child: _contentWidget()),
-            ],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 3, right: 3),
+        child: Card(
+          color: Colors.white,
+          child: Container(
+            height: 200,
+            // margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+            child: Column(
+              children: [
+                _topWidget(),
+                const Divider(
+                  height: 1,
+                ),
+                Expanded(child: _contentWidget()),
+              ],
+            ),
           ),
         ),
       ),

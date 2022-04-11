@@ -22,7 +22,7 @@ class InfoCardStyleWidget extends StatelessWidget {
       color: Colors.white,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

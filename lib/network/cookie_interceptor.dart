@@ -3,20 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_admin_universal/platform/platform_adapter.dart';
 
 ///@author JD
-class PlatformCookieInterceptor extends Interceptor {
-  static String? cookies;
-
-  ///请求拦截
-  @override
-  void onRequest(
-    RequestOptions options,
-    RequestInterceptorHandler handler,
-  ) {
-    String? cookie = platformAdapter.cookies();
-    debugPrint('获取cookies:$cookie');
-    handler.next(options);
-  }
-
+class CookieInterceptor extends Interceptor {
   ///响应拦截
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
@@ -26,15 +13,7 @@ class PlatformCookieInterceptor extends Interceptor {
       int? errorCode = int.tryParse(result['errorCode']);
       //登录失效
       if (errorCode == 302) {
-        _printResponse(response);
         debugPrint('登录超时,开始续期重新请求');
-        // PlatformUtils.login();
-        // handler.reject(
-        //   DioError(
-        //     requestOptions: response.requestOptions,
-        //     error: '登录超时',
-        //   ),
-        // );
         //续期登录
         _dealWithRedirect(response, handler);
         return;
@@ -64,7 +43,6 @@ class PlatformCookieInterceptor extends Interceptor {
         }
       }
     } else if (response.data == '') {
-      _printResponse(response);
       handler.reject(
         DioError(
           requestOptions: response.requestOptions,
@@ -90,7 +68,6 @@ class PlatformCookieInterceptor extends Interceptor {
         error: '登录超时，请重新登录',
       ),
     );
-    //flutter自己续期
     return false;
   }
 

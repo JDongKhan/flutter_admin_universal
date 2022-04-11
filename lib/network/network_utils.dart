@@ -45,8 +45,6 @@ class Network {
 
   Dio? _dio;
 
-  static String? _proxyIpAddress;
-
   static bool retryEnable = false;
 
   ///添加拦截器

@@ -9,6 +9,7 @@ class MainTopWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 3),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(

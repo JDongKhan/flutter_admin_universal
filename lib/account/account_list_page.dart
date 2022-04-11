@@ -89,7 +89,7 @@ class _AccountListPageState extends State<AccountListPage> {
         MainTopWidget(),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             child: PlutoGrid(
                 configuration: PlutoGridConfiguration(
                   localeText: PlutoGridLocaleText.china(),
@@ -101,7 +101,7 @@ class _AccountListPageState extends State<AccountListPage> {
                 createFooter: (PlutoGridStateManager stateManager) {
                   return PlutoPagination(stateManager);
                 },
-                columnGroups: columnGroups,
+                // columnGroups: columnGroups,
                 columns: columns,
                 rows: rows!,
                 onChanged: (PlutoGridOnChangedEvent event) {

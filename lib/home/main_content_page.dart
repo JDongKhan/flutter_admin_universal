@@ -40,12 +40,8 @@ class _MainContentPageState extends State<MainContentPage> {
     return Column(
       children: [
         MainTopWidget(),
-        const SizedBox(
-          height: 10,
-        ),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(left: 5),
             child: CustomScrollView(
               // controller: _scrollController,
               slivers: [
@@ -111,43 +107,49 @@ class _MainContentPageState extends State<MainContentPage> {
     double cellWidth = (MediaQuery.of(context).size.width - leftMenu) / column;
     double cellHeight = 150;
     double childAspectRatio = cellWidth / cellHeight;
-    return SliverGrid(
-      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-        return children[index];
-      }, childCount: children.length),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: column,
-        childAspectRatio: childAspectRatio,
+    return SliverPadding(
+      padding: const EdgeInsets.only(left: 3, right: 3),
+      sliver: SliverGrid(
+        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+          return children[index];
+        }, childCount: children.length),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: column,
+          childAspectRatio: childAspectRatio,
+        ),
       ),
     );
   }
 
   Widget _thirdSection() {
     return SliverToBoxAdapter(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Expanded(
-            child: InfoListCardWidget(
-              title: '线上热门搜索',
-              tip: '线上热门搜索',
-              content: Container(
-                height: 200,
-                child: _chartStyle1Widget(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 3),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Expanded(
+              child: InfoListCardWidget(
+                title: '线上热门搜索',
+                tip: '线上热门搜索',
+                content: Container(
+                  height: 200,
+                  child: _chartStyle1Widget(),
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: InfoListCardWidget(
-              title: '销售额类别占比',
-              tip: '销售额类别占比',
-              content: Container(
-                height: 200,
-                child: _chartStyle3Widget(),
+            Expanded(
+              child: InfoListCardWidget(
+                title: '销售额类别占比',
+                tip: '销售额类别占比',
+                content: Container(
+                  height: 200,
+                  child: _chartStyle3Widget(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

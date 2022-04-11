@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/network/network_utils.dart';
 import 'package:flutter_admin_universal/service/environment.dart';
 import 'package:flutter_admin_universal/service/path/login_path.dart';
+import 'package:flutter_admin_universal/style/constants.dart';
 import 'package:flutter_admin_universal/widget/deferred_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -118,6 +119,7 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       mainPage: Container(
         constraints: BoxConstraints(minWidth: 1000),
+        color: bgColor,
         child: _selectedPage ??
             (menus.first.items?.first?.builder?.call(context) ?? Container()),
       ),

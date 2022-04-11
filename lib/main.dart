@@ -3,6 +3,7 @@ import 'package:routemaster/routemaster.dart';
 
 import 'route.dart';
 import 'service/environment.dart';
+import 'style/constants.dart';
 
 void main() {
   environment.init();
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primaryColor: const Color(0xff2d8cf0),
+        primaryColor: primaryColor,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,

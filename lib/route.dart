@@ -12,8 +12,8 @@ final Map<String, PageBuilder> routes = {
   '/': (_) {
     return MaterialPage(
       child: DeferredWidget(
-        libraryLoaderFuture: home.loadLibrary(),
-        createWidget: () => home.DashboardPage(),
+        future: home.loadLibrary(),
+        builder: () => home.DashboardPage(),
       ),
     );
   },

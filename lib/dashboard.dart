@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/network/network_utils.dart';
 import 'package:flutter_admin_universal/service/environment.dart';
 import 'package:flutter_admin_universal/service/path/login_path.dart';
-import 'package:flutter_admin_universal/user/user_list_page.dart';
 import 'package:flutter_admin_universal/widget/deferred_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../web/web_page.dart' deferred as web;
-import 'account/account_list_page.dart';
+import 'account/account_list_page.dart' deferred as account;
 import 'home/main_content_page.dart';
 import 'left_menu/left_menu_page.dart';
 import 'left_menu/model/menu_item.dart';
 import 'platform/platform_adapter.dart';
 import 'setting/setting_page.dart';
+import 'user/user_list_page.dart' deferred as user;
 import 'widget/universal_dashboard.dart';
 
 /// @author jd
@@ -28,9 +28,27 @@ class _DashboardPageState extends State<DashboardPage> {
   MenuItem? _selectedMenuItem;
   final List<MenuItem> menus = [
     MenuItem.first('仪表盘', Icons.home_outlined, [
-      MenuItem.second('首页', '/home', builder: (_) => MainContentPage()),
-      MenuItem.second('用户列表', '/user_list', builder: (_) => UserListPage()),
-      MenuItem.second('Account', '/account', builder: (_) => AccountListPage()),
+      MenuItem.second(
+        '首页',
+        '/home',
+        builder: (_) => MainContentPage(),
+      ),
+      MenuItem.second(
+        '用户列表',
+        '/user_list',
+        builder: (_) => DeferredWidget(
+          future: user.loadLibrary(),
+          builder: () => user.UserListPage(),
+        ),
+      ),
+      MenuItem.second(
+        'Account',
+        '/account',
+        builder: (_) => DeferredWidget(
+          future: account.loadLibrary(),
+          builder: () => account.AccountListPage(),
+        ),
+      ),
       MenuItem.second('登录', '/to_login'),
       MenuItem.second('请求', '/to_request'),
       MenuItem.second('cookie', '/to_cookie'),
@@ -40,8 +58,8 @@ class _DashboardPageState extends State<DashboardPage> {
         '菜单2-1',
         '/web',
         builder: (_) => DeferredWidget(
-          libraryLoader: () => web.loadLibrary(),
-          createWidget: () => web.WebPage(),
+          future: web.loadLibrary(),
+          builder: () => web.WebPage(),
         ),
       ),
       MenuItem.second('菜单2-2', '/web'),

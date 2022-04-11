@@ -23,12 +23,7 @@ class MyApp extends StatelessWidget {
       routeInformationParser: RoutemasterParser(),
       builder: (BuildContext context, Widget? child) {
         //设置字体大小不随系统设置改变
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaleFactor: 1.0,
-          ),
-          child: child!,
-        );
+        return child!;
       },
       theme: ThemeData(
         // This is the theme of your application.

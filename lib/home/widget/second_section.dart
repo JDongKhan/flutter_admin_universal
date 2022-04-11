@@ -29,19 +29,21 @@ class _SecondSectionState extends State<SecondSection>
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      child: Container(
-        height: 200,
-        // margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-        child: Column(
-          children: [
-            _topWidget(),
-            const Divider(
-              height: 1,
-            ),
-            Expanded(child: _contentWidget()),
-          ],
+    return SliverToBoxAdapter(
+      child: Card(
+        color: Colors.white,
+        child: Container(
+          height: 200,
+          // margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+          child: Column(
+            children: [
+              _topWidget(),
+              const Divider(
+                height: 1,
+              ),
+              Expanded(child: _contentWidget()),
+            ],
+          ),
         ),
       ),
     );
@@ -71,101 +73,104 @@ class _SecondSectionState extends State<SecondSection>
           ),
         ),
         Expanded(
-          child: Container(
-            alignment: Alignment.centerRight,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    minimumSize: Size(1, 1),
-                    padding: const EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  child: Text(
-                    '今日',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 12,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              alignment: Alignment.centerRight,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(1, 1),
+                      padding: const EdgeInsets.only(left: 8, right: 8),
                     ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    minimumSize: Size(1, 1),
-                    padding: const EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  child: Text(
-                    '本周',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    minimumSize: Size(1, 1),
-                    padding: const EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  child: Text(
-                    '本月',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    minimumSize: Size(1, 1),
-                    padding: const EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  child: Text(
-                    '全年',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _showDateSelect();
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey.withAlpha(100),
+                    child: Text(
+                      '今日',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 12,
                       ),
                     ),
-                    padding: const EdgeInsets.only(
-                        left: 5, right: 5, top: 2, bottom: 2),
-                    child: Row(
-                      children: [
-                        Text(
-                          _dateSelectText ?? '2018-01-01 2018-12-31',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Icon(
-                          Icons.date_range_outlined,
-                          size: 12,
-                          color: Colors.grey,
-                        ),
-                      ],
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(1, 1),
+                      padding: const EdgeInsets.only(left: 8, right: 8),
+                    ),
+                    child: Text(
+                      '本周',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
-                )
-              ],
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(1, 1),
+                      padding: const EdgeInsets.only(left: 8, right: 8),
+                    ),
+                    child: Text(
+                      '本月',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(1, 1),
+                      padding: const EdgeInsets.only(left: 8, right: 8),
+                    ),
+                    child: Text(
+                      '全年',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _showDateSelect();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey.withAlpha(100),
+                        ),
+                      ),
+                      padding: const EdgeInsets.only(
+                          left: 5, right: 5, top: 2, bottom: 2),
+                      child: Row(
+                        children: [
+                          Text(
+                            _dateSelectText ?? '2018-01-01 2018-12-31',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.date_range_outlined,
+                            size: 12,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

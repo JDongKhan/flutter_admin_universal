@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/left_menu/model/menu_item.dart';
+import 'package:flutter_admin_universal/style/constants.dart';
+import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 
 /// @author jd
 
@@ -32,12 +34,14 @@ class LeftMenuPage extends StatelessWidget {
     return Container(
       width: kMenuWidth,
       // color: const Color(0xff000066),
+      color: bgColor,
       child: Drawer(
         child: Column(
           children: [
             _topTitleWidget(),
             Expanded(
               child: ListView(
+                padding: EdgeInsets.zero,
                 children: items
                     .map(
                       (e) => _firstItemWidget(context, e),
@@ -53,29 +57,34 @@ class LeftMenuPage extends StatelessWidget {
 
   Widget _topTitleWidget() {
     return Container(
-      height: 60,
-      alignment: Alignment.center,
       color: _kMenuBackgroundColor,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.my_library_books,
-            color: _kMenuMainTextColor,
-            size: 16,
+      child: SafeArea(
+        bottom: false,
+        child: Container(
+          height: UniversalDashboard.isMobile() ? 44 : 60,
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.my_library_books,
+                color: _kMenuMainTextColor,
+                size: 16,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                '后台管理系统',
+                style: TextStyle(
+                  color: _kMenuMainTextColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(
-            width: 5,
-          ),
-          Text(
-            '后台管理系统',
-            style: TextStyle(
-              color: _kMenuMainTextColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

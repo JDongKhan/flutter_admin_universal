@@ -46,15 +46,13 @@ class _MainContentPageState extends State<MainContentPage> {
         Expanded(
           child: Container(
             padding: const EdgeInsets.only(left: 5),
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  _firstSection(),
-                  SecondSection(),
-                  _thirdSection(),
-                ],
-              ),
+            child: CustomScrollView(
+              // controller: _scrollController,
+              slivers: [
+                _firstSection(),
+                SecondSection(),
+                _thirdSection(),
+              ],
             ),
           ),
         ),
@@ -113,68 +111,72 @@ class _MainContentPageState extends State<MainContentPage> {
     double cellWidth = (MediaQuery.of(context).size.width - leftMenu) / column;
     double cellHeight = 150;
     double childAspectRatio = cellWidth / cellHeight;
-    return GridView.builder(
-      shrinkWrap: true,
+    return SliverGrid(
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+        return children[index];
+      }, childCount: children.length),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: column,
         childAspectRatio: childAspectRatio,
       ),
-      itemBuilder: (c, idx) {
-        return children[idx];
-      },
-      itemCount: children.length,
     );
   }
 
   Widget _thirdSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Expanded(
-          child: InfoListCardWidget(
-            title: '线上热门搜索',
-            tip: '线上热门搜索',
-            content: Container(
-              height: 200,
-              child: _chartStyle1Widget(),
+    return SliverToBoxAdapter(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Expanded(
+            child: InfoListCardWidget(
+              title: '线上热门搜索',
+              tip: '线上热门搜索',
+              content: Container(
+                height: 200,
+                child: _chartStyle1Widget(),
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: InfoListCardWidget(
-            title: '销售额类别占比',
-            tip: '销售额类别占比',
-            content: Container(
-              height: 200,
-              child: _chartStyle3Widget(),
+          Expanded(
+            child: InfoListCardWidget(
+              title: '销售额类别占比',
+              tip: '销售额类别占比',
+              content: Container(
+                height: 200,
+                child: _chartStyle3Widget(),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _chartStyle1Widget() {
     return Container(
-      child: Text('没有引入图标库'),
+      alignment: Alignment.center,
+      child: Text('没有引入图表库'),
     );
   }
 
   Widget _chartStyle2Widget() {
     return Container(
-      child: Text('没有引入图标库'),
+      alignment: Alignment.center,
+      child: Text('没有引入图表库'),
     );
   }
 
   Widget _chartStyle3Widget() {
     return Container(
-      child: Text('没有引入图标库'),
+      alignment: Alignment.center,
+      child: Text('没有引入图表库'),
     );
   }
 
   Widget _chartStyle4Widget() {
     return Container(
-      child: Text('没有引入图标库'),
+      alignment: Alignment.center,
+      child: Text('没有引入图表库'),
     );
   }
 }

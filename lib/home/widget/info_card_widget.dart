@@ -196,7 +196,7 @@ class InfoCardStyle2Widget extends InfoCardStyleWidget {
 
   Widget _chartStyle1Widget() {
     return Container(
-      child: Text('没有图标库'),
+      child: Text('没有图表库'),
     );
   }
 }

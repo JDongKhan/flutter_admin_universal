@@ -8,7 +8,6 @@ class MainTopWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border(
@@ -26,54 +25,60 @@ class MainTopWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              UniversalDashboard.of(context)?.openOrCloseLeftMenu();
-            },
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
+      child: SafeArea(
+        bottom: false,
+        child: Container(
+          height: UniversalDashboard.isMobile() ? 44 : 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: 100,
-                height: 20,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: '站内搜索',
-                  ),
-                  style: TextStyle(fontSize: 10),
-                ),
-              ),
               IconButton(
-                icon: Icon(
-                  Icons.query_builder_outlined,
-                  size: 16,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.notifications_none,
-                  size: 16,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  size: 16,
-                ),
+                icon: Icon(Icons.menu),
                 onPressed: () {
-                  UniversalDashboard.of(context)?.openOrCloseSetting();
+                  UniversalDashboard.of(context)?.openOrCloseLeftMenu();
                 },
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 20,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: '站内搜索',
+                      ),
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.query_builder_outlined,
+                      size: 16,
+                    ),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.notifications_none,
+                      size: 16,
+                    ),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.settings,
+                      size: 16,
+                    ),
+                    onPressed: () {
+                      UniversalDashboard.of(context)?.openOrCloseSetting();
+                    },
+                  ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

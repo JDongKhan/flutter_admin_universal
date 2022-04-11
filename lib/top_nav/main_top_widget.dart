@@ -21,8 +21,8 @@ class MainTopWidget extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
-            offset: Offset(2.0, 5.0), //阴影xy轴偏移量
-            blurRadius: 15.0, //阴影模糊程度
+            offset: Offset(2.0, 3.0), //阴影xy轴偏移量
+            blurRadius: 5.0, //阴影模糊程度
             spreadRadius: 1.0, //阴影扩散程度
           ),
         ],

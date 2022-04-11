@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/top/main_top_widget.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 ///@Description TODO
@@ -19,45 +18,6 @@ class _AccountListPageState extends State<AccountListPage> {
       title: 'Id',
       field: 'id',
       type: PlutoColumnType.text(),
-      renderer: (rendererContext) {
-        return Row(
-          children: [
-            IconButton(
-              icon: const Icon(
-                Icons.add_circle,
-              ),
-              onPressed: () {
-                rendererContext.stateManager.insertRows(
-                  rendererContext.rowIdx,
-                  [rendererContext.stateManager.getNewRow()],
-                );
-              },
-              iconSize: 18,
-              color: Colors.green,
-              padding: const EdgeInsets.all(0),
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.remove_circle_outlined,
-              ),
-              onPressed: () {
-                rendererContext.stateManager.removeRows([rendererContext.row]);
-              },
-              iconSize: 18,
-              color: Colors.red,
-              padding: const EdgeInsets.all(0),
-            ),
-            Expanded(
-              child: Text(
-                rendererContext.row.cells[rendererContext.column.field]!.value
-                    .toString(),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        );
-      },
     ),
     PlutoColumn(
       title: 'Name',
@@ -88,6 +48,34 @@ class _AccountListPageState extends State<AccountListPage> {
       field: 'working_time',
       type: PlutoColumnType.time(),
     ),
+    PlutoColumn(
+      title: '操作',
+      field: 'op',
+      readOnly: true,
+      enableEditingMode: false,
+      type: PlutoColumnType.text(),
+      renderer: (rendererContext) {
+        return Row(
+          children: [
+            TextButton(
+              onPressed: () {
+                rendererContext.stateManager.insertRows(
+                  rendererContext.rowIdx,
+                  [rendererContext.stateManager.getNewRow()],
+                );
+              },
+              child: Text('添加'),
+            ),
+            TextButton(
+              onPressed: () {
+                rendererContext.stateManager.removeRows([rendererContext.row]);
+              },
+              child: Text('删除'),
+            ),
+          ],
+        );
+      },
+    ),
   ];
 
   /// columnGroups that can group columns can be omitted.
@@ -115,6 +103,7 @@ class _AccountListPageState extends State<AccountListPage> {
           'role': PlutoCell(value: 'Programmer'),
           'joined': PlutoCell(value: '2021-01-01'),
           'working_time': PlutoCell(value: '09:00'),
+          'op': PlutoCell(),
         },
       ),
     );
@@ -123,36 +112,29 @@ class _AccountListPageState extends State<AccountListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        MainTopWidget(),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-            child: PlutoGrid(
-                configuration: PlutoGridConfiguration(
-                  localeText: PlutoGridLocaleText.china(),
-                  enableColumnBorder: true,
-                  enableGridBorderShadow: true,
-                  gridBorderRadius: BorderRadius.circular(10),
-                  gridBorderColor: Color(0xFFDDE2EB),
-                ),
-                createFooter: (PlutoGridStateManager stateManager) {
-                  return PlutoPagination(stateManager);
-                },
-                // columnGroups: columnGroups,
-                columns: columns,
-                rows: rows!,
-                onChanged: (PlutoGridOnChangedEvent event) {
-                  print(event);
-                },
-                onLoaded: (PlutoGridOnLoadedEvent event) {
-                  stateManager = event.stateManager;
-                  print(event);
-                }),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      child: PlutoGrid(
+          configuration: PlutoGridConfiguration(
+            localeText: PlutoGridLocaleText.china(),
+            enableColumnBorder: true,
+            enableGridBorderShadow: true,
+            gridBorderRadius: BorderRadius.circular(10),
+            gridBorderColor: Color(0xFFDDE2EB),
           ),
-        ),
-      ],
+          createFooter: (PlutoGridStateManager stateManager) {
+            return PlutoPagination(stateManager);
+          },
+          // columnGroups: columnGroups,
+          columns: columns,
+          rows: rows!,
+          onChanged: (PlutoGridOnChangedEvent event) {
+            print(event);
+          },
+          onLoaded: (PlutoGridOnLoadedEvent event) {
+            stateManager = event.stateManager;
+            print(event);
+          }),
     );
   }
 }

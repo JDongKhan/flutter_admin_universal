@@ -2,6 +2,7 @@
 ///@Author jd
 
 class CompressUtils {
+  //flutter_luban https://juejin.cn/post/6847902207572967432
   //鲁班压缩库核心代码
   // static String _lubanCompress(CompressObject object) {
   //   //根据CompressObject对象中的File通过Uint8List的readAsBytesSync()方法获取到List<int>数组

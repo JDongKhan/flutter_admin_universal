@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/left_menu/left_menu_page.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 
-import '../top/main_top_widget.dart';
 import 'model/sales_data.dart';
 import 'widget/info_card_widget.dart';
 import 'widget/info_list_card_widget.dart';
@@ -37,21 +36,12 @@ class _MainContentPageState extends State<MainContentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        MainTopWidget(),
-        Expanded(
-          child: Container(
-            child: CustomScrollView(
-              // controller: _scrollController,
-              slivers: [
-                _firstSection(),
-                SecondSection(),
-                _thirdSection(),
-              ],
-            ),
-          ),
-        ),
+    return CustomScrollView(
+      // controller: _scrollController,
+      slivers: [
+        _firstSection(),
+        SecondSection(),
+        _thirdSection(),
       ],
     );
   }

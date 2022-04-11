@@ -19,6 +19,8 @@ class UserListPage extends StatefulWidget {
 class _UserListPageState extends State<UserListPage> {
   List<User> _data = [];
 
+  ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     List.generate(100, (index) {
@@ -30,26 +32,28 @@ class _UserListPageState extends State<UserListPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
-      child: PaginatedDataTable(
-        columnSpacing: 1,
-        header: Text('header'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {},
-          ),
-        ],
-        columns: [
-          DataColumn(label: Text('姓名')),
-          DataColumn(label: Text('性别')),
-          DataColumn(label: Text('年龄')),
-        ],
-        source: MyDataTableSource(_data),
+      padding: const EdgeInsets.all(3),
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        child: PaginatedDataTable(
+          header: Text('header'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {},
+            ),
+          ],
+          columns: [
+            DataColumn(label: Text('姓名')),
+            DataColumn(label: Text('性别')),
+            DataColumn(label: Text('年龄')),
+          ],
+          source: MyDataTableSource(_data),
+        ),
       ),
     );
   }

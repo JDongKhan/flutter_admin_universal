@@ -13,6 +13,7 @@ import 'left_menu/left_menu_page.dart';
 import 'left_menu/model/menu_item.dart';
 import 'platform/platform_adapter.dart';
 import 'setting/setting_page.dart';
+import 'top_nav/main_top_widget.dart';
 import 'user/user_list_page.dart' deferred as user;
 import 'widget/universal_dashboard.dart';
 
@@ -120,8 +121,16 @@ class _DashboardPageState extends State<DashboardPage> {
       mainPage: Container(
         constraints: BoxConstraints(minWidth: 1000),
         color: bgColor,
-        child: _selectedPage ??
-            (menus.first.items?.first?.builder?.call(context) ?? Container()),
+        child: Column(
+          children: [
+            MainTopWidget(),
+            Expanded(
+              child: _selectedPage ??
+                  (menus.first.items?.first?.builder?.call(context) ??
+                      Container()),
+            ),
+          ],
+        ),
       ),
       endDrawer: SettingPage(),
     );

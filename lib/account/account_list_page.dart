@@ -19,6 +19,45 @@ class _AccountListPageState extends State<AccountListPage> {
       title: 'Id',
       field: 'id',
       type: PlutoColumnType.text(),
+      renderer: (rendererContext) {
+        return Row(
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.add_circle,
+              ),
+              onPressed: () {
+                rendererContext.stateManager.insertRows(
+                  rendererContext.rowIdx,
+                  [rendererContext.stateManager.getNewRow()],
+                );
+              },
+              iconSize: 18,
+              color: Colors.green,
+              padding: const EdgeInsets.all(0),
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.remove_circle_outlined,
+              ),
+              onPressed: () {
+                rendererContext.stateManager.removeRows([rendererContext.row]);
+              },
+              iconSize: 18,
+              color: Colors.red,
+              padding: const EdgeInsets.all(0),
+            ),
+            Expanded(
+              child: Text(
+                rendererContext.row.cells[rendererContext.column.field]!.value
+                    .toString(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        );
+      },
     ),
     PlutoColumn(
       title: 'Name',

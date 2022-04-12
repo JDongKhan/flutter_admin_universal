@@ -29,3 +29,13 @@ const purple = Color.fromRGBO(165, 80, 179, 1);
 const orange = Color.fromRGBO(251, 137, 13, 1);
 const green = Color.fromRGBO(51, 173, 127, 1);
 const red = Colors.red;
+
+const double kMenuWidth = 150;
+
+const Color kMenuBackgroundColor = Color(0xFF495060);
+const Color kMenuPrimaryTextColor = Color(0xffffffff);
+const Color kMenuTextColor = Color(0xffbcbfcb);
+const Color kMenuSelectedTextColor = Color(0xffffffff);
+const Color kMenuSubTextColor = Color(0xff999999);
+
+const Color kMenuSubBackgroundColor = Color(0xff363e4);

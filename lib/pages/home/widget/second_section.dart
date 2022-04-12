@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/home/model/sales_data.dart';
+
+import '../model/sales_data.dart';
 
 /// @author jd
 

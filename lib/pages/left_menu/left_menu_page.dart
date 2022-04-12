@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/left_menu/model/menu_item.dart';
+import 'package:flutter_admin_universal/style/constants.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'model/menu_item.dart';
+
 /// @author jd
-
-const double kMenuWidth = 150;
-const Color _kMenuBackgroundColor = Color(0xFF495060);
-const Color _kMenuPrimaryTextColor = Color(0xffffffff);
-const Color _kMenuTextColor = Color(0xffbcbfcb);
-const Color _kMenuSelectedTextColor = Color(0xffffffff);
-const Color _kMenuSubTextColor = Color(0xff999999);
-
-const Color _kMenuSubBackgroundColor = Color(0xff363e4);
 
 // ignore: must_be_immutable
 class LeftMenuPage extends StatelessWidget {
@@ -34,7 +27,7 @@ class LeftMenuPage extends StatelessWidget {
     return Container(
       width: kMenuWidth,
       child: Drawer(
-        backgroundColor: _kMenuBackgroundColor,
+        backgroundColor: kMenuBackgroundColor,
         child: Column(
           children: [
             _topTitleWidget(),
@@ -56,7 +49,7 @@ class LeftMenuPage extends StatelessWidget {
 
   Widget _topTitleWidget() {
     return Container(
-      color: _kMenuBackgroundColor,
+      color: kMenuBackgroundColor,
       child: SafeArea(
         bottom: false,
         child: Container(
@@ -76,7 +69,7 @@ class LeftMenuPage extends StatelessWidget {
               Text(
                 '后台管理系统',
                 style: TextStyle(
-                  color: _kMenuPrimaryTextColor,
+                  color: kMenuPrimaryTextColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -94,23 +87,23 @@ class LeftMenuPage extends StatelessWidget {
     /// 更改ExpansionTile主题 可使用Theme或collapsedIconColor
     return Theme(
       data: ThemeData(
-        colorScheme: ColorScheme.light(primary: _kMenuPrimaryTextColor),
-        unselectedWidgetColor: _kMenuPrimaryTextColor,
+        colorScheme: ColorScheme.light(primary: kMenuPrimaryTextColor),
+        unselectedWidgetColor: kMenuPrimaryTextColor,
       ),
       child: ExpansionTile(
         expandedAlignment: Alignment.bottomRight,
-        collapsedIconColor: _kMenuPrimaryTextColor,
+        collapsedIconColor: kMenuPrimaryTextColor,
         initiallyExpanded: index == 0 ? true : false,
-        iconColor: _kMenuPrimaryTextColor,
-        backgroundColor: _kMenuBackgroundColor,
-        collapsedBackgroundColor: _kMenuBackgroundColor,
+        iconColor: kMenuPrimaryTextColor,
+        backgroundColor: kMenuBackgroundColor,
+        collapsedBackgroundColor: kMenuBackgroundColor,
         tilePadding: const EdgeInsets.only(left: 25, right: 20),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               firstItem.iconData,
-              color: _kMenuPrimaryTextColor,
+              color: kMenuPrimaryTextColor,
               size: 16,
             ),
             const SizedBox(
@@ -119,7 +112,7 @@ class LeftMenuPage extends StatelessWidget {
             Text(
               firstItem.title ?? '',
               style: TextStyle(
-                color: _kMenuPrimaryTextColor,
+                color: kMenuPrimaryTextColor,
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
               ),
@@ -149,7 +142,7 @@ class LeftMenuPage extends StatelessWidget {
           decoration: BoxDecoration(
             color: selectedItem == secondItem
                 ? Theme.of(context).primaryColor
-                : _kMenuSubBackgroundColor,
+                : kMenuSubBackgroundColor,
           ),
           child: Center(
             child: Container(
@@ -159,8 +152,8 @@ class LeftMenuPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   color: selectedItem == secondItem
-                      ? _kMenuSelectedTextColor
-                      : _kMenuSubTextColor,
+                      ? kMenuSelectedTextColor
+                      : kMenuSubTextColor,
                 ),
               ),
             ),

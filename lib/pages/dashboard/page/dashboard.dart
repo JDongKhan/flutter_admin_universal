@@ -4,18 +4,18 @@ import 'package:flutter_admin_universal/service/environment.dart';
 import 'package:flutter_admin_universal/service/path/login_path.dart';
 import 'package:flutter_admin_universal/style/constants.dart';
 import 'package:flutter_admin_universal/widget/deferred_widget.dart';
+import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../web/web_page.dart' deferred as web;
-import 'account/account_list_page.dart' deferred as account;
-import 'home/main_content_page.dart';
-import 'left_menu/left_menu_page.dart';
-import 'left_menu/model/menu_item.dart';
-import 'platform/platform_adapter.dart';
-import 'setting/setting_page.dart';
-import 'top_nav/main_top_widget.dart';
-import 'user/user_list_page.dart' deferred as user;
-import 'widget/universal_dashboard.dart';
+import '../../../platform/platform_adapter.dart';
+import '../../account/account_list_page.dart' deferred as account;
+import '../../home/main_content_page.dart';
+import '../../left_menu/left_menu_page.dart';
+import '../../left_menu/model/menu_item.dart';
+import '../../setting/setting_page.dart';
+import '../../top_nav/main_top_widget.dart';
+import '../../user/user_list_page.dart' deferred as user;
+import '../../web/web_page.dart' deferred as web;
 
 /// @author jd
 

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/left_menu/model/menu_item.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// @author jd
 
 const double kMenuWidth = 150;
 const Color _kMenuBackgroundColor = Color(0xFF495060);
-const Color _kMenuMainTextColor = Color(0xffffffff);
+const Color _kMenuPrimaryTextColor = Color(0xffffffff);
 const Color _kMenuTextColor = Color(0xffbcbfcb);
 const Color _kMenuSelectedTextColor = Color(0xffffffff);
 const Color _kMenuSubTextColor = Color(0xff999999);
@@ -64,10 +65,10 @@ class LeftMenuPage extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.my_library_books,
-                color: _kMenuMainTextColor,
-                size: 16,
+              SvgPicture.asset(
+                'assets/images/app_head.svg',
+                width: 18,
+                height: 18,
               ),
               const SizedBox(
                 width: 5,
@@ -75,7 +76,7 @@ class LeftMenuPage extends StatelessWidget {
               Text(
                 '后台管理系统',
                 style: TextStyle(
-                  color: _kMenuMainTextColor,
+                  color: _kMenuPrimaryTextColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -93,31 +94,32 @@ class LeftMenuPage extends StatelessWidget {
     /// 更改ExpansionTile主题 可使用Theme或collapsedIconColor
     return Theme(
       data: ThemeData(
-        colorScheme: ColorScheme.light(primary: _kMenuMainTextColor),
-        unselectedWidgetColor: _kMenuMainTextColor,
+        colorScheme: ColorScheme.light(primary: _kMenuPrimaryTextColor),
+        unselectedWidgetColor: _kMenuPrimaryTextColor,
       ),
       child: ExpansionTile(
         expandedAlignment: Alignment.bottomRight,
-        collapsedIconColor: _kMenuMainTextColor,
+        collapsedIconColor: _kMenuPrimaryTextColor,
         initiallyExpanded: index == 0 ? true : false,
-        iconColor: _kMenuMainTextColor,
+        iconColor: _kMenuPrimaryTextColor,
         backgroundColor: _kMenuBackgroundColor,
         collapsedBackgroundColor: _kMenuBackgroundColor,
         tilePadding: const EdgeInsets.only(left: 25, right: 20),
         title: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               firstItem.iconData,
-              color: _kMenuMainTextColor,
+              color: _kMenuPrimaryTextColor,
               size: 16,
             ),
             const SizedBox(
-              width: 10,
+              width: 5,
             ),
             Text(
               firstItem.title ?? '',
               style: TextStyle(
-                color: _kMenuMainTextColor,
+                color: _kMenuPrimaryTextColor,
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
               ),

@@ -37,7 +37,7 @@ class _MainContentPageState extends State<MainContentPage> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      // controller: _scrollController,
+      controller: _scrollController,
       slivers: [
         _firstSection(),
         SecondSection(),

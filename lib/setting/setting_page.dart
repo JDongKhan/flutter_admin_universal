@@ -29,43 +29,58 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ],
       ),
-      child: Container(
-        width: 60,
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              child: Center(
-                child: IconButton(
-                  highlightColor: Colors.transparent,
-                  icon: Icon(
-                    Icons.close,
-                    size: 18,
+      child: SafeArea(
+        bottom: false,
+        child: Container(
+          width: 60,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                child: Center(
+                  child: IconButton(
+                    highlightColor: Colors.transparent,
+                    icon: Icon(
+                      Icons.close,
+                      size: 20,
+                    ),
+                    onPressed: () {
+                      UniversalDashboard.of(context)?.openOrCloseSetting();
+                    },
                   ),
-                  onPressed: () {
-                    UniversalDashboard.of(context)?.openOrCloseSetting();
-                  },
+                ),
+                height: 60,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.people_alt_outlined,
+                  size: 18,
                 ),
               ),
-              height: 60,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.people_alt_outlined),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.my_library_books),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.subject_outlined),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.compass_calibration_outlined),
-            ),
-          ],
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.my_library_books,
+                  size: 18,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.subject_outlined,
+                  size: 18,
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.logout,
+                  size: 18,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

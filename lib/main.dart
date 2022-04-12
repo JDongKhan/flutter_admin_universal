@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: appName,
       routerDelegate: RoutemasterDelegate(
           routesBuilder: (content) => RouteMap(
                 routes: routes,

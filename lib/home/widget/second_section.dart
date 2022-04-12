@@ -78,6 +78,7 @@ class _SecondSectionState extends State<SecondSection>
         Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            reverse: true,
             child: Container(
               alignment: Alignment.centerRight,
               child: Row(

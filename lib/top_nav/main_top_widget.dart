@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/platform/platform_adapter.dart';
+import 'package:flutter_admin_universal/style/constants.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 
 /// @author jd
@@ -53,14 +53,17 @@ class MainTopWidget extends StatelessWidget {
                       style: TextStyle(fontSize: 10),
                     ),
                   ),
+                  _buildUserHead(),
                   IconButton(
                     icon: Icon(
-                      Icons.query_builder_outlined,
+                      Icons.fullscreen,
                       size: 16,
                     ),
                     onPressed: () {
-                      platformAdapter.downloadFile(
-                          "https://imgservice.suning.cn/uimg1/b2c/image/j3RBQIEvtmT2JMD7wJ9-rQ.jpg_800w_800h_4e");
+                      UniversalDashboard.of(context)
+                          ?.openOrCloseLeftMenu(open: false);
+                      UniversalDashboard.of(context)
+                          ?.openOrCloseSetting(open: false);
                     },
                   ),
                   IconButton(
@@ -102,5 +105,33 @@ class MainTopWidget extends StatelessWidget {
     // } else {
     //   // User canceled the picker
     // }
+  }
+
+  _buildUserHead() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 3),
+      child: Row(
+        children: [
+          Text(
+            'Admin',
+            style: TextStyle(color: primaryColor, fontSize: 14),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Image.asset(
+              'assets/images/3.0x/userHead.png',
+              width: 30,
+              height: 30,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -52,10 +52,16 @@ class _AccountListPageState extends State<AccountListPage> {
       title: '操作',
       field: 'op',
       readOnly: true,
+      enableContextMenu: false,
+      enableColumnDrag: false,
+      enableDropToResize: false,
+      titleTextAlign: PlutoColumnTextAlign.center,
+      enableSorting: false,
       enableEditingMode: false,
       type: PlutoColumnType.text(),
       renderer: (rendererContext) {
         return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
               onPressed: () {

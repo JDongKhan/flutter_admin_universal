@@ -38,32 +38,47 @@ class _UniversalDashboardState extends State<UniversalDashboard> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  void openOrCloseLeftMenu() {
+  void openOrCloseLeftMenu({bool? open}) {
     bool isMobile = UniversalDashboard.isMobile();
     if (isMobile) {
       ScaffoldState? state = _scaffoldKey.currentState;
-      state?.openDrawer();
+      if (state?.isDrawerOpen ?? false) {
+        Navigator.of(context).pop();
+      } else {
+        state?.openDrawer();
+      }
     } else {
-      setState(() {
-        _openLeftMenu = !_openLeftMenu;
-      });
+      if (open != null) {
+        setState(() {
+          _openLeftMenu = open;
+        });
+      } else {
+        setState(() {
+          _openLeftMenu = !_openLeftMenu;
+        });
+      }
     }
   }
 
-  void openOrCloseSetting() {
+  void openOrCloseSetting({bool? open}) {
     bool isMobile = UniversalDashboard.isMobile();
     if (isMobile) {
-      if (_openSetting == false) {
-        ScaffoldState? state = _scaffoldKey.currentState;
-        state?.openEndDrawer();
-      } else {
+      ScaffoldState? state = _scaffoldKey.currentState;
+      if (state?.isEndDrawerOpen ?? false) {
         Navigator.of(context).pop();
+      } else {
+        state?.openEndDrawer();
       }
-      _openSetting = !_openSetting;
     } else {
-      setState(() {
-        _openSetting = !_openSetting;
-      });
+      if (open != null) {
+        setState(() {
+          _openSetting = open;
+        });
+      } else {
+        setState(() {
+          _openSetting = !_openSetting;
+        });
+      }
     }
   }
 

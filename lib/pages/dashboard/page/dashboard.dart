@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_universal/network/network_utils.dart';
-import 'package:flutter_admin_universal/service/environment.dart';
-import 'package:flutter_admin_universal/service/path/login_path.dart';
-import 'package:flutter_admin_universal/style/constants.dart';
+import 'package:flutter_admin_universal/style/app_theme.dart';
 import 'package:flutter_admin_universal/widget/deferred_widget.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../../platform/platform_adapter.dart';
 import '../../account/account_list_page.dart' deferred as account;
@@ -95,19 +94,19 @@ class _DashboardPageState extends State<DashboardPage> {
           if (UniversalDashboard.isMobile()) {
             Navigator.of(context).pop();
           }
-          if (item.route == '/to_login') {
-            platformAdapter.login(environment.path.loginUrl);
-            return;
-          }
-          if (item.route == '/to_request') {
-            _callRequest();
-            // html.window.open('https://www.baidu.com', 'baidu');
-            return;
-          }
-          if (item.route == '/to_cookie') {
-            platformAdapter.cookies();
-            return;
-          }
+          // if (item.route == '/to_login') {
+          //   platformAdapter.login(environment.path.loginUrl);
+          //   return;
+          // }
+          // if (item.route == '/to_request') {
+          //   _callRequest();
+          //   // html.window.open('https://www.baidu.com', 'baidu');
+          //   return;
+          // }
+          // if (item.route == '/to_cookie') {
+          //   platformAdapter.cookies();
+          //   return;
+          // }
 
           WidgetBuilder? widgetBuilder = item.builder;
           if (widgetBuilder != null) {
@@ -120,7 +119,7 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       mainPage: Container(
         constraints: BoxConstraints(minWidth: 1000),
-        color: bgColor,
+        color: context.watch<AppTheme>().theme.bgColor,
         child: Column(
           children: [
             MainTopWidget(),

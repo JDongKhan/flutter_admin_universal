@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/pages/dashboard/model/dashboard_model.dart';
 import 'package:flutter_admin_universal/platform/platform_adapter.dart';
-import 'package:flutter_admin_universal/style/constants.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
+import 'package:provider/provider.dart';
 
 /// @author jd
 
@@ -56,14 +57,15 @@ class MainTopWidget extends StatelessWidget {
                   _buildUserHead(),
                   IconButton(
                     icon: Icon(
-                      Icons.fullscreen,
+                      context.watch<DashboardModel>().openFullScreen
+                          ? Icons.fullscreen_exit
+                          : Icons.fullscreen,
                       size: 16,
                     ),
                     onPressed: () {
-                      UniversalDashboard.of(context)
-                          ?.openOrCloseLeftMenu(open: false);
-                      UniversalDashboard.of(context)
-                          ?.openOrCloseSetting(open: false);
+                      context
+                          .read<DashboardModel>()
+                          .openOrCloseFullScreen(context);
                     },
                   ),
                   IconButton(
@@ -114,7 +116,7 @@ class MainTopWidget extends StatelessWidget {
         children: [
           Text(
             'Admin',
-            style: TextStyle(color: primaryColor, fontSize: 14),
+            style: TextStyle(color: Colors.lightBlue, fontSize: 14),
           ),
           const SizedBox(
             width: 5,

@@ -13,7 +13,7 @@ import 'widget/deferred_widget.dart';
 final Map<String, PageBuilder> routes = {
   '/': (_) {
     return MaterialPage(
-      child: Provider(
+      child: ChangeNotifierProvider(
         create: (BuildContext context) => DashboardModel(),
         child: DeferredWidget(
           future: home.loadLibrary(),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/style/app_theme.dart';
 import 'package:flutter_admin_universal/style/constants.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import 'model/menu_item.dart';
 
@@ -24,19 +26,20 @@ class LeftMenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppTheme model = context.watch<AppTheme>();
     return Container(
       width: kMenuWidth,
       child: Drawer(
-        backgroundColor: kMenuBackgroundColor,
+        backgroundColor: model.theme.menuBackgroundColor,
         child: Column(
           children: [
-            _topTitleWidget(),
+            _topTitleWidget(model),
             Expanded(
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: items
                     .map(
-                      (e) => _firstItemWidget(context, e),
+                      (e) => _firstItemWidget(context, e, model),
                     )
                     .toList(),
               ),
@@ -47,9 +50,8 @@ class LeftMenuPage extends StatelessWidget {
     );
   }
 
-  Widget _topTitleWidget() {
+  Widget _topTitleWidget(AppTheme model) {
     return Container(
-      color: kMenuBackgroundColor,
       child: SafeArea(
         bottom: false,
         child: Container(
@@ -69,7 +71,7 @@ class LeftMenuPage extends StatelessWidget {
               Text(
                 '后台管理系统',
                 style: TextStyle(
-                  color: kMenuPrimaryTextColor,
+                  color: model.theme.menuPrimaryTextColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
@@ -81,29 +83,31 @@ class LeftMenuPage extends StatelessWidget {
     );
   }
 
-  Widget _firstItemWidget(BuildContext context, MenuItem firstItem) {
+  Widget _firstItemWidget(
+      BuildContext context, MenuItem firstItem, AppTheme model) {
     int index = items.indexOf(firstItem);
 
     /// 更改ExpansionTile主题 可使用Theme或collapsedIconColor
     return Theme(
-      data: ThemeData(
-        colorScheme: ColorScheme.light(primary: kMenuPrimaryTextColor),
-        unselectedWidgetColor: kMenuPrimaryTextColor,
+      data: Theme.of(context).copyWith(
+        colorScheme:
+            ColorScheme.light(primary: model.theme.menuPrimaryTextColor),
+        unselectedWidgetColor: model.theme.menuPrimaryTextColor,
       ),
       child: ExpansionTile(
         expandedAlignment: Alignment.bottomRight,
-        collapsedIconColor: kMenuPrimaryTextColor,
+        collapsedIconColor: model.theme.menuPrimaryTextColor,
         initiallyExpanded: index == 0 ? true : false,
-        iconColor: kMenuPrimaryTextColor,
-        backgroundColor: kMenuBackgroundColor,
-        collapsedBackgroundColor: kMenuBackgroundColor,
+        iconColor: model.theme.menuPrimaryTextColor,
+        backgroundColor: Colors.transparent,
+        collapsedBackgroundColor: Colors.transparent,
         tilePadding: const EdgeInsets.only(left: 25, right: 20),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               firstItem.iconData,
-              color: kMenuPrimaryTextColor,
+              color: model.theme.menuPrimaryTextColor,
               size: 16,
             ),
             const SizedBox(
@@ -112,7 +116,7 @@ class LeftMenuPage extends StatelessWidget {
             Text(
               firstItem.title ?? '',
               style: TextStyle(
-                color: kMenuPrimaryTextColor,
+                color: model.theme.menuPrimaryTextColor,
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
               ),
@@ -121,14 +125,15 @@ class LeftMenuPage extends StatelessWidget {
         ),
         children: firstItem.items!
             .map(
-              (e) => _secondItemWidget(context, e),
+              (e) => _secondItemWidget(context, e, model),
             )
             .toList(),
       ),
     );
   }
 
-  Widget _secondItemWidget(BuildContext context, MenuItem secondItem) {
+  Widget _secondItemWidget(
+      BuildContext context, MenuItem secondItem, AppTheme model) {
     return FractionallySizedBox(
       widthFactor: 1,
       child: GestureDetector(
@@ -141,8 +146,8 @@ class LeftMenuPage extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
             color: selectedItem == secondItem
-                ? Theme.of(context).primaryColor
-                : kMenuSubBackgroundColor,
+                ? model.theme.menuSubSelectedBackgroundColor
+                : model.theme.menuSubBackgroundColor,
           ),
           child: Center(
             child: Container(
@@ -152,8 +157,8 @@ class LeftMenuPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   color: selectedItem == secondItem
-                      ? kMenuSelectedTextColor
-                      : kMenuSubTextColor,
+                      ? model.theme.menuSelectedTextColor
+                      : model.theme.menuSubTextColor,
                 ),
               ),
             ),

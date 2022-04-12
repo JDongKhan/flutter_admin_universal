@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/style/app_theme.dart';
+import 'package:flutter_admin_universal/style/theme.dart';
 import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
+import 'package:provider/provider.dart';
 
 /// @author jd
 
@@ -59,9 +62,11 @@ class _SettingPageState extends State<SettingPage> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  _showThemeDialog(context);
+                },
                 icon: Icon(
-                  Icons.my_library_books,
+                  Icons.replay,
                   size: 18,
                 ),
               ),
@@ -83,6 +88,78 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ),
       ),
+    );
+  }
+
+  List<Map> themeColorMap = [
+    {
+      'color': const Color(0xFF495060),
+      'theme': MyTheme.defaultTheme(),
+    },
+    {
+      'color': Colors.black87,
+      'theme': MyTheme.black87Theme(),
+    },
+    {
+      'color': Colors.redAccent,
+      'theme': MyTheme.redAccentTheme(),
+    },
+    {
+      'color': Colors.blueAccent,
+      'theme': MyTheme.blueAccentTheme(),
+    },
+  ];
+
+  Color? _selectedColor;
+
+  void _showThemeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (c) {
+        return Dialog(
+          child: Container(
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+            color: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '更改主题',
+                  style: TextStyle(fontSize: 20, color: Colors.black87),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: themeColorMap.map((e) {
+                    Color value = (e['color'] as Color);
+                    return InkWell(
+                      onTap: () {
+                        Navigator.of(c).pop();
+                        context.read<AppTheme>().changTheme(e['theme']);
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        color: value,
+                        child: _selectedColor == value
+                            ? Icon(
+                                Icons.done,
+                                color: Colors.white,
+                              )
+                            : null,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

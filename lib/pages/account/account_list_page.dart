@@ -120,27 +120,32 @@ class _AccountListPageState extends State<AccountListPage> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      child: PlutoGrid(
-          configuration: PlutoGridConfiguration(
-            localeText: PlutoGridLocaleText.china(),
-            enableColumnBorder: true,
-            enableGridBorderShadow: true,
-            gridBorderRadius: BorderRadius.circular(10),
-            gridBorderColor: Color(0xFFDDE2EB),
-          ),
-          createFooter: (PlutoGridStateManager stateManager) {
-            return PlutoPagination(stateManager);
-          },
-          // columnGroups: columnGroups,
-          columns: columns,
-          rows: rows!,
-          onChanged: (PlutoGridOnChangedEvent event) {
-            print(event);
-          },
-          onLoaded: (PlutoGridOnLoadedEvent event) {
-            stateManager = event.stateManager;
-            print(event);
-          }),
+      child: MediaQuery.removePadding(
+        //适配手机端
+        removeTop: true,
+        context: context,
+        child: PlutoGrid(
+            configuration: PlutoGridConfiguration(
+              localeText: PlutoGridLocaleText.china(),
+              enableColumnBorder: true,
+              enableGridBorderShadow: true,
+              gridBorderRadius: BorderRadius.circular(10),
+              gridBorderColor: Color(0xFFDDE2EB),
+            ),
+            createFooter: (PlutoGridStateManager stateManager) {
+              return PlutoPagination(stateManager);
+            },
+            // columnGroups: columnGroups,
+            columns: columns,
+            rows: rows!,
+            onChanged: (PlutoGridOnChangedEvent event) {
+              print(event);
+            },
+            onLoaded: (PlutoGridOnLoadedEvent event) {
+              stateManager = event.stateManager;
+              print(event);
+            }),
+      ),
     );
   }
 }

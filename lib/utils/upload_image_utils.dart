@@ -1,51 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_admin_universal/network/network_utils.dart';
-import 'package:flutter_admin_universal/platform/platform_adapter.dart';
 import 'package:flutter_admin_universal/service/environment.dart';
 import 'package:http_parser/http_parser.dart';
 
-/// @author jd
+///@Description TODO
+///@Author jd
 
-PlatformAdapter createAdapter() => IOAdapter();
-
-class IOAdapter implements PlatformAdapter {
-  @override
-  void log(String message) {
-    debugPrint(message);
-  }
-
-  @override
-  String? cookies() {
-    throw UnimplementedError();
-  }
-
-  @override
-  void login(String url) {
-    // TODO: implement login
-  }
-
-  @override
-  void alert(String message) {
-    // TODO: implement alert
-  }
-
-  @override
-  void selectFileAndUpload() {
-    _uploadImage('');
-  }
-
-  @override
-  void downloadFile(String url) {
-    // TODO: implement downloadFile
-  }
-
-  @override
-  String userAgent() {
-    // TODO: implement userAgent
-    throw UnimplementedError();
-  }
-
+class UploadImageUtils {
+  ///获取验证信息
   Future _getAuthenticationInfo(String fileName) async {
     String authUrl = 'https://apicarrefourlsy.suning.com';
     if (environment.environment == Environment.sit) {
@@ -60,7 +22,8 @@ class IOAdapter implements PlatformAdapter {
     return null;
   }
 
-  Future _uploadImage(String filePath) async {
+  ///上传图片
+  Future uploadImage(String filePath) async {
     int ts = DateTime.now().millisecondsSinceEpoch;
     //先鉴权
     var authInfo = await _getAuthenticationInfo('$ts');

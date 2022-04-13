@@ -138,6 +138,9 @@ class LeftMenuPage extends StatelessWidget {
       widthFactor: 1,
       child: GestureDetector(
         onTap: () {
+          if (UniversalDashboard.isMobile()) {
+            Navigator.of(context).pop();
+          }
           if (itemChanged != null) {
             itemChanged!(secondItem);
           }

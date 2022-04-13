@@ -66,7 +66,7 @@ class _SettingPageState extends State<SettingPage> {
                   _showThemeDialog(context);
                 },
                 icon: Icon(
-                  Icons.replay,
+                  Icons.style_rounded,
                   size: 18,
                 ),
               ),
@@ -78,7 +78,9 @@ class _SettingPageState extends State<SettingPage> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  _showLogoutDialog(context);
+                },
                 icon: Icon(
                   Icons.logout,
                   size: 18,
@@ -161,5 +163,30 @@ class _SettingPageState extends State<SettingPage> {
         );
       },
     );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (c) {
+          return AlertDialog(
+            title: Text('提示'),
+            content: Text('确认退出吗？'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('取消'),
+                onPressed: () {
+                  Navigator.of(c).pop();
+                },
+              ),
+              TextButton(
+                child: Text('确认'),
+                onPressed: () {
+                  Navigator.of(c).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }

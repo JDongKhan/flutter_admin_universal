@@ -91,9 +91,6 @@ class _DashboardPageState extends State<DashboardPage> {
         selectedItem: _selectedMenuItem,
         itemChanged: (MenuItem item) {
           _selectedMenuItem = item;
-          if (UniversalDashboard.isMobile()) {
-            Navigator.of(context).pop();
-          }
           // if (item.route == '/to_login') {
           //   platformAdapter.login(environment.path.loginUrl);
           //   return;

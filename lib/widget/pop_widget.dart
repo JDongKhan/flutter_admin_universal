@@ -130,7 +130,7 @@ class PopRoute extends PopupRoute {
     return Material(
       color: Colors.transparent,
       child: GestureDetector(
-        onTapDown: (TapDownDetails details) {
+        onTap: () {
           Navigator.of(context).pop();
         },
         behavior: HitTestBehavior.opaque,

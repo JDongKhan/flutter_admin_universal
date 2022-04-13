@@ -68,10 +68,24 @@ class _SecondSectionState extends State<SecondSection>
             unselectedLabelColor: Colors.blue,
             tabs: [
               Tab(
-                text: '销售额',
+                child: Text(
+                  '销售额',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontFamily: 'FangZheng',
+                  ),
+                ),
               ),
               Tab(
-                text: '访问量',
+                child: Text(
+                  '访问量',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontFamily: 'FangZheng',
+                  ),
+                ),
               ),
             ],
           ),

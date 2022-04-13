@@ -4,7 +4,7 @@ export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 #获取上层目录
 cur_dir=$(dirname $(pwd))
 #cur_dir=$(dirname $cur_dir)
-useCanvasKit=0
+useCanvasKit=1
 
 #脚本目录
 flutter_module_path=$(pwd)
@@ -25,7 +25,7 @@ rm -rf $build_dir
 echo "开始打包..."
 if [ $useCanvasKit == 1 ]; then
   echo "build for canvaskit"
-  flutter build web --web-renderer=canvaskit --dart-define=FLUTTER_WEB_CANVASKIT_URL=http://dev.cnsuning.com:8000/package/bin/
+  flutter build web --web-renderer=canvaskit --dart-define=FLUTTER_WEB_CANVASKIT_URL=package/bin/
 else
   echo "build for html"
   flutter build web --web-renderer=html --release
@@ -40,8 +40,22 @@ fi
 echo "打包完成"
 
 if [ $useCanvasKit == 1 ]; then
-  echo "copy ${target_web_package} to $build_dir"
-  cp -r $target_web_package $build_dir
+  find canvaskit-wasm-*
+#  echo "copy ${target_web_package} to $build_dir"
+#  cp -r $target_web_package $build_dir
+  echo 'copy canvaskit-wasm to $build_dir'
+  find . -name canvaskit-wasm-* -exec cp {} $build_dir \;
+  find . -name KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf -exec cp {} $build_dir \;
+  cd $build_dir
+  echo 'unzip canvaskit-wasm'
+  tar -zxvf canvaskit-wasm-*
+  echo 'clean canvaskit-wasm'
+  rm  canvaskit-wasm-*
+
+  echo '替换google样式来源'
+  sed -i '' 's/fonts.googleapis.com/fonts.loli.net/g' main.dart.js
+  echo '替换字体'
+  sed -i '' 's/https:\/\/fonts.gstatic.com\/s\/roboto\/v20\///g' main.dart.js
   if [ $? -ne 0 ]; then
       echo "拷贝失败"
       exit 0

@@ -79,14 +79,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-     - family: FangZheng
-       fonts:
-         - asset: assets/fonts/FangZheng-Regular.ttf
-         - asset: assets/fonts/FangZheng-Bold.ttf
-           weight: 700
-         - asset: assets/fonts/FangZheng-Medium.ttf
-           weight: 500
+#  fonts:
+#     - family: FangZheng
+#       fonts:
+#         - asset: assets/fonts/FangZheng-Regular.ttf
+#         - asset: assets/fonts/FangZheng-Bold.ttf
+#           weight: 700
+#         - asset: assets/fonts/FangZheng-Medium.ttf
+#           weight: 500
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

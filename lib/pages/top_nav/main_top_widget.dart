@@ -117,29 +117,32 @@ class MainTopWidget extends StatelessWidget {
           onTap: () {
             _showUserMenu(context);
           },
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 3),
-            child: Row(
-              children: [
-                Text(
-                  'Admin',
-                  style: TextStyle(color: Colors.lightBlue, fontSize: 14),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 3),
+              child: Row(
+                children: [
+                  Text(
+                    'Admin',
+                    style: TextStyle(color: Colors.lightBlue, fontSize: 14),
                   ),
-                  child: Image.asset(
-                    'assets/images/3.0x/userHead.png',
-                    width: 30,
-                    height: 30,
+                  const SizedBox(
+                    width: 5,
                   ),
-                ),
-              ],
+                  Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Image.asset(
+                      'assets/images/3.0x/userHead.png',
+                      width: 30,
+                      height: 30,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );

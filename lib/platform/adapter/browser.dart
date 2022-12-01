@@ -109,11 +109,11 @@ class BrowserAdapter implements PlatformAdapter {
 
   ///获取认证url
   Future getAuthenticationInfo(String fileName) async {
-    String authUrl = 'https://apicarrefourlsy.suning.com';
+    String authUrl = 'https://apicarrefourlsy.xx.com';
     if (environment.environment == Environment.sit) {
-      authUrl = 'https://portalsit.cnsuning.com';
+      authUrl = 'https://portalsit.xx.com';
     } else if (environment.environment == Environment.pre) {
-      authUrl = 'https://portalpre.cnsuning.com';
+      authUrl = 'https://portalpre.xx.com';
     }
     authUrl = '$authUrl/carrbshop-web/settle/ossAuthentication';
 
@@ -136,13 +136,13 @@ class BrowserAdapter implements PlatformAdapter {
       return null;
       // return {
       //   "downloadUrl":
-      //       'http://sdosspre.cnsuning.com/jlflserp/carrefour_common/1642413315',
+      //       'http://sdosspre.xx.com/jlflserp/carrefour_common/1642413315',
       //   "accessId": '219K004828O05N5T',
       //   "signature": 'F5gsbk6aU7wOw%2BIlCMzxYL%2FXlDM%3D',
       //   "expireTime": '1642414898',
       //   "authorization": 'SDOSS 219K004828O05N5T:QdDuMJGalFZ7HjserzSl4ePQuns=',
       //   "uploadUrl":
-      //       'http://sdossuppre.cnsuning.com/jlflserp/carrefour_common/1642413315',
+      //       'http://sdossuppre.xx.com/jlflserp/carrefour_common/1642413315',
       //   "currentDate": 'Mon, 17 Jan 2022 09:51:38 GMT',
       // };
     }

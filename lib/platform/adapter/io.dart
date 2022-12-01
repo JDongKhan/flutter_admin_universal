@@ -47,11 +47,11 @@ class IOAdapter implements PlatformAdapter {
   }
 
   Future _getAuthenticationInfo(String fileName) async {
-    String authUrl = 'https://apicarrefourlsy.suning.com';
+    String authUrl = 'https://apicarrefourlsy.xx.com';
     if (environment.environment == Environment.sit) {
-      authUrl = 'https://portalsit.cnsuning.com';
+      authUrl = 'https://portalsit.xx.com';
     } else if (environment.environment == Environment.pre) {
-      authUrl = 'https://portalpre.cnsuning.com';
+      authUrl = 'https://portalpre.xx.com';
     }
     authUrl = '$authUrl/carrbshop-web/settle/ossAuthentication';
     NetworkResponse response =

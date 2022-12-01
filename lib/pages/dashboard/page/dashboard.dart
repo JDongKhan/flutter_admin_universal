@@ -138,6 +138,6 @@ class _DashboardPageState extends State<DashboardPage> {
 
   void _callRequest() async {
     var res =
-        await Network.get('http://zr.cnsuning.com:8081/sample/test/authAccess');
+        await Network.get('http://zr.xx.com:8081/sample/test/authAccess');
   }
 }

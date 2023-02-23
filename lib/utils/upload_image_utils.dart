@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_admin_universal/network/network_utils.dart';
-import 'package:flutter_admin_universal/service/environment.dart';
+import 'package:flutter_core/flutter_core.dart';
 import 'package:http_parser/http_parser.dart';
+
+import '../service/environment.dart';
 
 ///@Description TODO
 ///@Author jd
@@ -16,9 +16,7 @@ class UploadImageUtils {
       authUrl = 'https://portalpre.xx.com';
     }
     authUrl = '$authUrl/carrbshop-web/settle/ossAuthentication';
-    NetworkResponse response =
-        await Network.post(authUrl, data: {'objectName': fileName});
-
+    await Network.post(authUrl, data: {'objectName': fileName});
     return null;
   }
 
@@ -30,7 +28,7 @@ class UploadImageUtils {
     if (authInfo == null) {
       return;
     }
-    String downloadUrl = authInfo['downloadUrl'];
+    // String downloadUrl = authInfo['downloadUrl'];
     String uploadUrl = authInfo['uploadUrl'];
     String accessId = authInfo['accessId'];
     String expireTime = authInfo['expireTime'];

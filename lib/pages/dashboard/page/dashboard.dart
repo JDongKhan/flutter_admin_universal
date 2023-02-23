@@ -1,40 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/network/network_utils.dart';
-import 'package:flutter_admin_universal/style/app_theme.dart';
-import 'package:flutter_admin_universal/widget/deferred_widget.dart';
-import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
-import '../../../platform/platform_adapter.dart';
-import '../../account/account_list_page.dart' deferred as account;
+import '../../../style/app_theme.dart';
+import '../../../widget/deferred_widget.dart';
+import '../../../widget/universal_dashboard.dart';
+import '../../app/app_list_page.dart' deferred as app;
 import '../../home/main_content_page.dart';
 import '../../left_menu/left_menu_page.dart';
-import '../../left_menu/model/menu_item.dart';
 import '../../setting/setting_page.dart';
 import '../../top_nav/main_top_widget.dart';
 import '../../user/user_list_page.dart' deferred as user;
 import '../../web/web_page.dart' deferred as web;
+import '../../log/log_list_page.dart' deferred as log;
+import '../../../pages/left_menu/model/menu_item.dart' as menu;
+import '../../../pages/dept/dept_page.dart' deferred as dept;
 
 /// @author jd
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
   @override
-  _DashboardPageState createState() => _DashboardPageState();
+  State createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
   Widget? _selectedPage;
-  MenuItem? _selectedMenuItem;
-  final List<MenuItem> menus = [
-    MenuItem.first('仪表盘', Icons.home_outlined, [
-      MenuItem.second(
+  menu.MenuItem? _selectedMenuItem;
+  final List<menu.MenuItem> menus = [
+    menu.MenuItem.first('仪表盘', Icons.home_outlined, [
+      menu.MenuItem.second(
         '首页',
         '/home',
-        builder: (_) => MainContentPage(),
+        builder: (_) => const MainContentPage(),
       ),
-      MenuItem.second(
+      menu.MenuItem.second(
+        '应用列表',
+        '/app_list',
+        builder: (_) => DeferredWidget(
+          future: app.loadLibrary(),
+          builder: () => app.AppListPage(),
+        ),
+      ),
+      menu.MenuItem.second(
         '用户列表',
         '/user_list',
         builder: (_) => DeferredWidget(
@@ -42,54 +48,46 @@ class _DashboardPageState extends State<DashboardPage> {
           builder: () => user.UserListPage(),
         ),
       ),
-      MenuItem.second(
-        'Account',
-        '/account',
+    ]),
+    menu.MenuItem.first('监控', Icons.report_gmailerrorred_outlined, [
+      menu.MenuItem.second(
+        '操作日志',
+        '/log',
         builder: (_) => DeferredWidget(
-          future: account.loadLibrary(),
-          builder: () => account.AccountListPage(),
+          future: log.loadLibrary(),
+          builder: () => log.LogPage(),
         ),
       ),
-      MenuItem.second('登录', '/to_login'),
-      MenuItem.second('请求', '/to_request'),
-      MenuItem.second('cookie', '/to_cookie'),
-    ]),
-    MenuItem.first('异常页', Icons.report_gmailerrorred_outlined, [
-      MenuItem.second(
-        '菜单2-1',
+      menu.MenuItem.second(
+        '外边系统',
         '/web',
         builder: (_) => DeferredWidget(
           future: web.loadLibrary(),
-          builder: () => web.WebPage(),
+          builder: () => web.WebPage(
+            url: 'https://flutter.cn',
+          ),
         ),
       ),
-      MenuItem.second('菜单2-2', '/web'),
-      MenuItem.second('菜单2-3', '/web'),
-      MenuItem.second('菜单2-4', '/web'),
     ]),
-    MenuItem.first('设置', Icons.settings, [
-      MenuItem.second('菜单3-1', '/web'),
-      MenuItem.second('菜单3-2', '/web'),
-      MenuItem.second('菜单3-3', '/web'),
-      MenuItem.second('菜单3-4', '/web'),
+    menu.MenuItem.first('设置', Icons.settings, [
+      menu.MenuItem.second(
+        '部门设置',
+        '/dept',
+        builder: (_) => DeferredWidget(
+          future: dept.loadLibrary(),
+          builder: () => dept.DeptPage(),
+        ),
+      ),
     ]),
   ];
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-        BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height),
-        designSize: Size(360, 690),
-        context: context,
-        minTextAdapt: true,
-        orientation: Orientation.portrait);
     return UniversalDashboard(
       leftMenu: LeftMenuPage(
         items: menus,
         selectedItem: _selectedMenuItem,
-        itemChanged: (MenuItem item) {
+        itemChanged: (menu.MenuItem item) {
           _selectedMenuItem = item;
           // if (item.route == '/to_login') {
           //   platformAdapter.login(environment.path.loginUrl);
@@ -115,29 +113,20 @@ class _DashboardPageState extends State<DashboardPage> {
         },
       ),
       mainPage: Container(
-        constraints: BoxConstraints(minWidth: 1000),
+        constraints: const BoxConstraints(minWidth: 1000),
         color: context.watch<AppTheme>().theme.bgColor,
         child: Column(
           children: [
-            MainTopWidget(),
+            const MainTopWidget(),
             Expanded(
               child: _selectedPage ??
-                  (menus.first.items?.first?.builder?.call(context) ??
+                  (menus.first.items?.first.builder?.call(context) ??
                       Container()),
             ),
           ],
         ),
       ),
-      endDrawer: SettingPage(),
+      endDrawer: const SettingPage(),
     );
-  }
-
-  void _callJS() {
-    platformAdapter.log('haha');
-  }
-
-  void _callRequest() async {
-    var res =
-        await Network.get('http://zr.xx.com:8081/sample/test/authAccess');
   }
 }

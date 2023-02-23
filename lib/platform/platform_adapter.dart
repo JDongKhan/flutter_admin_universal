@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import 'adapter/create_adapter.dart'
     if (dart.library.html) 'adapter/browser.dart'
     if (dart.library.io) 'adapter/io.dart';
@@ -7,9 +9,10 @@ import 'adapter/create_adapter.dart'
 PlatformAdapter platformAdapter = createAdapter();
 
 abstract class PlatformAdapter {
-  void selectFileAndUpload();
+  @Deprecated("废弃了，请使用file_picker & dio")
+  Future<String?> selectFileAndUpload();
 
-  void downloadFile(String url);
+  Future<String?> downloadFile(String url);
 
   void log(String message);
 
@@ -17,7 +20,11 @@ abstract class PlatformAdapter {
 
   String? cookies();
 
+  void clearCookies();
+
   String userAgent();
 
   void alert(String message);
+
+  Widget createWebView(String url);
 }

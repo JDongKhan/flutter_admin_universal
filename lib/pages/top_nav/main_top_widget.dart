@@ -1,18 +1,24 @@
+import '/http/user_service.dart';
+import '/utils/login_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/pages/dashboard/model/dashboard_model.dart';
-import 'package:flutter_admin_universal/platform/platform_adapter.dart';
-import 'package:flutter_admin_universal/widget/pop_widget.dart';
-import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
+import 'package:flutter_core/flutter_core.dart';
 import 'package:provider/provider.dart';
+import '../../utils/navigation_util.dart';
+import '../../widget/universal_dashboard.dart';
+import '../dashboard/model/dashboard_model.dart';
+import '../../http/model/user.dart';
+import '../notification/notification_page.dart';
 
 /// @author jd
 
 class MainTopWidget extends StatelessWidget {
+  const MainTopWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 3),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           bottom: BorderSide(
@@ -31,13 +37,13 @@ class MainTopWidget extends StatelessWidget {
       ),
       child: SafeArea(
         bottom: false,
-        child: Container(
-          height: UniversalDashboard.isMobile() ? 44 : 60,
+        child: SizedBox(
+          height: ScreenUtils.isMobile() ? 44 : 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                icon: Icon(Icons.menu),
+                icon: const Icon(Icons.menu),
                 onPressed: () {
                   UniversalDashboard.of(context)?.openOrCloseLeftMenu();
                 },
@@ -45,17 +51,28 @@ class MainTopWidget extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 100,
-                    height: 20,
                     child: TextField(
                       decoration: InputDecoration(
+                        isCollapsed: true,
                         hintText: '站内搜索',
+                        contentPadding: EdgeInsets.only(
+                            left: 5, bottom: 10, right: 5, top: 10),
                       ),
                       style: TextStyle(fontSize: 10),
                     ),
                   ),
                   _buildUserHead(),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.notifications_none,
+                      size: 16,
+                    ),
+                    onPressed: () {
+                      _showNotificationPage(context);
+                    },
+                  ),
                   IconButton(
                     icon: Icon(
                       context.watch<DashboardModel>().openFullScreen
@@ -70,16 +87,7 @@ class MainTopWidget extends StatelessWidget {
                     },
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.notifications_none,
-                      size: 16,
-                    ),
-                    onPressed: () {
-                      _openFile();
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.settings,
                       size: 16,
                     ),
@@ -95,22 +103,31 @@ class MainTopWidget extends StatelessWidget {
       ),
     );
   }
+  //
+  // void _openFile() async {
+  //   platformAdapter.selectFileAndUpload();
+  //   // FilePickerResult? result = await FilePicker.platform.pickFiles();
+  //   //
+  //   // if (result != null) {
+  //   //   debugPrint('${result.files.length}');
+  //   //   PlatformFile file = result.files.single;
+  //   //   File srcfile = File(file.bytes!.toList(), file.name);
+  //   //   debugPrint('${srcfile}');
+  //   // } else {
+  //   //   // User canceled the picker
+  //   // }
+  // }
 
-  void _openFile() async {
-    platformAdapter.selectFileAndUpload();
-    // FilePickerResult? result = await FilePicker.platform.pickFiles();
-    //
-    // if (result != null) {
-    //   debugPrint('${result.files.length}');
-    //   PlatformFile file = result.files.single;
-    //   File srcfile = File(file.bytes!.toList(), file.name);
-    //   debugPrint('${srcfile}');
-    // } else {
-    //   // User canceled the picker
-    // }
+  void _fetchUserById(int? id) {
+    if (id == null) {
+      return;
+    }
+    UserService.queryById(id);
   }
 
   _buildUserHead() {
+    User? user = LoginUtil.getUserInfo();
+    _fetchUserById(user?.id);
     return Builder(
       builder: (BuildContext context) {
         return GestureDetector(
@@ -124,8 +141,9 @@ class MainTopWidget extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'Admin',
-                    style: TextStyle(color: Colors.lightBlue, fontSize: 14),
+                    user?.name ?? '',
+                    style:
+                        const TextStyle(color: Colors.lightBlue, fontSize: 14),
                   ),
                   const SizedBox(
                     width: 5,
@@ -136,7 +154,7 @@ class MainTopWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Image.asset(
-                      'assets/images/3.0x/userHead.png',
+                      'assets/images/3.0x/user_head.png',
                       width: 30,
                       height: 30,
                     ),
@@ -152,35 +170,42 @@ class MainTopWidget extends StatelessWidget {
 
   ///下拉菜单
   void _showUserMenu(BuildContext context) {
-    showPopMenu(
+    showContextMenu(
       context: context,
-      axis: Axis.vertical,
-      offset: Offset(10, 5),
-      builder: (c) => Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: const Color(0xffeeeeee)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                offset: Offset(2.0, 3.0), //阴影xy轴偏移量
-                blurRadius: 5.0, //阴影模糊程度
-                spreadRadius: 1.0, //阴影扩散程度
-              ),
-            ]),
+      position: Position.belowRight,
+      offset: const Offset(0, 5),
+      builder: (c) => SizedBox(
         width: 80,
         child: Column(
           children: [
             TextButton(
-              child: Text('退出'),
+              child: const Text('退出'),
               onPressed: () {
                 Navigator.of(c).pop();
+                _logoutAction(c);
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _showNotificationPage(BuildContext context) {
+    showModalRightSheet(
+      context: context,
+      builder: (c) {
+        return const NotificationPage();
+      },
+    );
+  }
+
+  ///退出登录
+  void _logoutAction(BuildContext context) {
+    UserService.logout().then((value) {
+      NavigationUtil.go("/login");
+    }).catchError((error) {
+      ToastUtils.toastError(error);
+    });
   }
 }

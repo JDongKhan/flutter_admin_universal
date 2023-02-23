@@ -15,17 +15,12 @@ class MenuItem {
     this.builder,
   });
 
-  const MenuItem.first(String title, IconData iconData, List<MenuItem> items)
-      : title = title,
-        iconData = iconData,
-        items = items,
-        route = null,
+  const MenuItem.first(
+      String this.title, IconData this.iconData, List<MenuItem> this.items)
+      : route = null,
         builder = null;
 
-  const MenuItem.second(String title, String route, {WidgetBuilder? builder})
-      : title = title,
-        iconData = null,
-        items = null,
-        builder = builder,
-        route = route;
+  const MenuItem.second(String this.title, String this.route, {this.builder})
+      : iconData = null,
+        items = null;
 }

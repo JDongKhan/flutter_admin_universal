@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../model/sales_data.dart';
+import 'chart/line_chart_sample1.dart';
 
 /// @author jd
 
 class SecondSection extends StatefulWidget {
+  const SecondSection({Key? key}) : super(key: key);
+
   @override
   State<SecondSection> createState() => _SecondSectionState();
 }
@@ -30,23 +34,24 @@ class _SecondSectionState extends State<SecondSection>
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 3, right: 3),
-        child: Card(
-          color: Colors.white,
-          child: Container(
-            height: 200,
-            // margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: Column(
-              children: [
-                _topWidget(),
-                const Divider(
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 3),
+      child: Card(
+        color: Colors.white,
+        child: SizedBox(
+          height: 200,
+          // margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+          child: Column(
+            children: [
+              _topWidget(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Divider(
                   height: 1,
                 ),
-                Expanded(child: _contentWidget()),
-              ],
-            ),
+              ),
+              Expanded(child: _contentWidget()),
+            ],
           ),
         ),
       ),
@@ -63,17 +68,18 @@ class _SecondSectionState extends State<SecondSection>
           child: TabBar(
             controller: _tabController,
             labelColor: Colors.black87,
-            labelStyle: TextStyle(fontSize: 12),
+            labelStyle: const TextStyle(fontSize: 12),
             indicatorSize: TabBarIndicatorSize.label,
             unselectedLabelColor: Colors.blue,
-            tabs: [
+            tabs: const [
               Tab(
                 child: Text(
                   '销售额',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'FangZheng',
+                    fontWeight: FontWeight.bold,
+                    // fontFamily: 'FangZheng',
                   ),
                 ),
               ),
@@ -83,7 +89,8 @@ class _SecondSectionState extends State<SecondSection>
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
-                    fontFamily: 'FangZheng',
+                    fontWeight: FontWeight.bold,
+                    // fontFamily: 'FangZheng',
                   ),
                 ),
               ),
@@ -96,16 +103,17 @@ class _SecondSectionState extends State<SecondSection>
             reverse: true,
             child: Container(
               alignment: Alignment.centerRight,
+              margin: const EdgeInsets.only(right: 10),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextButton(
                     onPressed: () {},
                     style: TextButton.styleFrom(
-                      minimumSize: Size(1, 1),
+                      minimumSize: const Size(1, 1),
                       padding: const EdgeInsets.only(left: 8, right: 8),
                     ),
-                    child: Text(
+                    child: const Text(
                       '今日',
                       style: TextStyle(
                         color: Colors.black87,
@@ -116,10 +124,10 @@ class _SecondSectionState extends State<SecondSection>
                   TextButton(
                     onPressed: () {},
                     style: TextButton.styleFrom(
-                      minimumSize: Size(1, 1),
+                      minimumSize: const Size(1, 1),
                       padding: const EdgeInsets.only(left: 8, right: 8),
                     ),
-                    child: Text(
+                    child: const Text(
                       '本周',
                       style: TextStyle(
                         color: Colors.black87,
@@ -130,10 +138,10 @@ class _SecondSectionState extends State<SecondSection>
                   TextButton(
                     onPressed: () {},
                     style: TextButton.styleFrom(
-                      minimumSize: Size(1, 1),
+                      minimumSize: const Size(1, 1),
                       padding: const EdgeInsets.only(left: 8, right: 8),
                     ),
-                    child: Text(
+                    child: const Text(
                       '本月',
                       style: TextStyle(
                         color: Colors.black87,
@@ -144,10 +152,10 @@ class _SecondSectionState extends State<SecondSection>
                   TextButton(
                     onPressed: () {},
                     style: TextButton.styleFrom(
-                      minimumSize: Size(1, 1),
+                      minimumSize: const Size(1, 1),
                       padding: const EdgeInsets.only(left: 8, right: 8),
                     ),
-                    child: Text(
+                    child: const Text(
                       '全年',
                       style: TextStyle(
                         color: Colors.black87,
@@ -171,7 +179,7 @@ class _SecondSectionState extends State<SecondSection>
                         children: [
                           Text(
                             _dateSelectText ?? '2018-01-01 2018-12-31',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 12,
                             ),
@@ -179,7 +187,7 @@ class _SecondSectionState extends State<SecondSection>
                           const SizedBox(
                             width: 10,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.date_range_outlined,
                             size: 12,
                             color: Colors.grey,
@@ -199,7 +207,7 @@ class _SecondSectionState extends State<SecondSection>
 
   void _showDateSelect() async {
     DateTime start = DateTime.now();
-    DateTime end = start.add(Duration(days: 7));
+    DateTime end = start.add(const Duration(days: 7));
 
     // showDialog<DateTimeRange>(
     //   context: context,
@@ -250,45 +258,46 @@ class _SecondSectionState extends State<SecondSection>
     //   },
     // );
     //
-    // DateTimeRange selectTimeRange = await showDateRangePicker(
-    //   context: context,
-    //   // locale: Locale('zh', 'CH'),
-    //   initialEntryMode: DatePickerEntryMode.calendarOnly,
-    //   firstDate: DateTime(2021, 1),
-    //   lastDate: DateTime(2022, 12),
-    //   cancelText: '取消',
-    //   confirmText: '确定',
-    //   initialDateRange: DateTimeRange(start: start, end: end),
-    // );
-    //
-    // /// 此处时间需要格式化一下
-    // String time = selectTimeRange.toString();
-    // if (time != null && time.isNotEmpty) {
-    //   DateTime startTime = selectTimeRange.start;
-    //   DateTime endTime = selectTimeRange.end;
-    //   DateFormat format = DateFormat('yyyy-MM-dd');
-    //   _dateSelectText = '${format.format(startTime)} ${format.format(endTime)}';
-    //   setState(() {});
-    // }
+    DateTimeRange? selectTimeRange = await showDateRangePicker(
+      context: context,
+      locale: const Locale(
+        'zh',
+      ),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      firstDate: DateTime(2021, 1),
+      lastDate: DateTime(2022, 12),
+      cancelText: '取消',
+      confirmText: '确定',
+      initialDateRange: DateTimeRange(start: start, end: end),
+      builder: (BuildContext context, Widget? child) {
+        return Dialog(
+          child: SizedBox(width: 400, child: child),
+        );
+      },
+    );
+
+    /// 此处时间需要格式化一下
+    String? time = selectTimeRange?.toString();
+    if (time != null && time.isNotEmpty) {
+      DateTime startTime = selectTimeRange!.start;
+      DateTime endTime = selectTimeRange.end;
+      DateFormat format = DateFormat('yyyy-MM-dd');
+      _dateSelectText = '${format.format(startTime)} ${format.format(endTime)}';
+      setState(() {});
+    }
   }
 
   Widget _contentWidget() {
     return TabBarView(
       controller: _tabController,
       children: [
-        Container(
-          child: Center(child: _chartStyle1Widget()),
-        ),
-        Container(
-          child: Center(child: Text('业余项目，不具备上线能力')),
-        ),
+        Center(child: _chartStyle1Widget()),
+        const Center(child: LineChartSample1(isShowingMainData: false)),
       ],
     );
   }
 
   Widget _chartStyle1Widget() {
-    return Container(
-      child: Text('没有图标库'),
-    );
+    return const LineChartSample1();
   }
 }

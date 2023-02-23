@@ -16,7 +16,7 @@ class DeferredWidget extends StatefulWidget {
   final DeferredWidgetBuilder builder;
   final Widget? placeholder;
   @override
-  _DeferredWidgetState createState() => _DeferredWidgetState();
+  State createState() => _DeferredWidgetState();
 }
 
 class _DeferredWidgetState extends State<DeferredWidget> {

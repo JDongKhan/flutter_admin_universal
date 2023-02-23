@@ -1,21 +1,33 @@
+import '/http/log_service.dart';
+import '/widget/row_or_column.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/style/constants.dart';
-import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
-
+import 'package:flutter_core/flutter_core.dart';
+import '../../style/constants.dart';
+import '../../widget/universal_dashboard.dart';
 import 'model/sales_data.dart';
+import 'widget/chart/pie_chart_sample1.dart';
+import 'widget/first_section.dart';
+import 'widget/forth_section.dart';
 import 'widget/info_card_widget.dart';
-import 'widget/info_list_card_widget.dart';
+import 'widget/chart_info_card_widget.dart';
+import 'widget/chart/line_chart_sample2.dart';
 import 'widget/second_section.dart';
+import 'widget/third_section.dart';
 
 /// @author jd
 class MainContentPage extends StatefulWidget {
+  const MainContentPage({super.key});
+
   @override
-  _MainContentPageState createState() => _MainContentPageState();
+  State createState() => _MainContentPageState();
 }
 
-class _MainContentPageState extends State<MainContentPage> {
-  ScrollController _scrollController = ScrollController();
+class _MainContentPageState extends State<MainContentPage>
+    with WidgetsBindingObserver {
+  final ScrollController _scrollController = ScrollController();
   List<SalesData>? listData;
+  final GlobalKey _topWidgetKey = GlobalKey();
+  final GlobalKey _centerWidgetKey = GlobalKey();
   @override
   void initState() {
     listData = <SalesData>[
@@ -25,12 +37,26 @@ class _MainContentPageState extends State<MainContentPage> {
       SalesData('北京', 32),
       SalesData('南京', 40),
     ];
+
+    // 页面展示时进行prompt绘制，在此添加observer监听等待渲染完成后挂载prompt
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!SpUtils.getBool('kShowPrompt')) {
+        List<PromptItem> prompts = [];
+        prompts.add(PromptItem(_topWidgetKey, "这是线上热门搜索"));
+        prompts.add(PromptItem(_centerWidgetKey, "这是运营活动效果"));
+        PromptBuilder.promptToWidgets(prompts);
+        SpUtils.putBool('kShowPrompt', true);
+      }
+    });
+
     super.initState();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -39,136 +65,35 @@ class _MainContentPageState extends State<MainContentPage> {
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
-        _firstSection(),
-        SecondSection(),
-        _thirdSection(),
+        FutureBuilder(
+          future: LogService.statisticsUrl(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) =>
+              FirstSection(
+            data: snapshot.data,
+            anchorKey: _centerWidgetKey,
+          ),
+        ),
+        _buildSelfAdaptionWidget(),
       ],
     );
   }
 
-  Widget _firstSection() {
+  Widget _buildSelfAdaptionWidget() {
     List<Widget> children = [];
-    children.add(InfoCardStyle1Widget(
-      title: '总销售额',
-      tip: '销售额',
-      data: '￥726,689',
-      bottomWidget: Text(
-        '日销售额 ￥42,245',
-        style: TextStyle(color: Colors.black45, fontSize: 12),
-      ),
-    ));
-    children.add(InfoCardStyle2Widget(
-      title: '访问量',
-      tip: '访问量',
-      data: '826,167',
-      bottomWidget: Text(
-        '日访问量 7,205',
-        style: TextStyle(color: Colors.black45, fontSize: 12),
-      ),
-    ));
-    children.add(InfoCardStyle2Widget(
-      title: '支付笔数',
-      tip: '支付笔数',
-      data: '52,745',
-      chartWidget: _chartStyle4Widget(),
-      bottomWidget: Text(
-        '转化率 60%',
-        style: TextStyle(color: Colors.black45, fontSize: 12),
-      ),
-    ));
-    children.add(InfoCardStyle2Widget(
-      title: '运营活动效果',
-      tip: '运营活动效果',
-      data: '86%',
-      chartWidget: Center(
-        child: LinearProgressIndicator(
-          value: 0.86,
-          backgroundColor: Colors.grey.withAlpha(100),
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+    children.add(Column(
+      children: [
+        const SecondSection(),
+        ThirdSection(
+          anchorKey: _topWidgetKey,
         ),
-      ),
-      bottomWidget: Text(
-        '周同比 12%',
-        style: TextStyle(color: Colors.black45, fontSize: 12),
-      ),
+      ],
     ));
-    int column = UniversalDashboard.isMobile() ? 2 : 4;
-    double leftMenu = UniversalDashboard.isMobile() ? 0 : kMenuWidth;
-    double cellWidth = (MediaQuery.of(context).size.width - leftMenu) / column;
-    double cellHeight = 150;
-    double childAspectRatio = cellWidth / cellHeight;
-    return SliverPadding(
-      padding: const EdgeInsets.only(left: 3, right: 3),
-      sliver: SliverGrid(
-        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-          return children[index];
-        }, childCount: children.length),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: column,
-          childAspectRatio: childAspectRatio,
-        ),
-      ),
-    );
-  }
-
-  Widget _thirdSection() {
+    children.add(const ForthSection());
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 3),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              child: InfoListCardWidget(
-                title: '线上热门搜索',
-                tip: '线上热门搜索',
-                content: Container(
-                  height: 200,
-                  child: _chartStyle1Widget(),
-                ),
-              ),
-            ),
-            Expanded(
-              child: InfoListCardWidget(
-                title: '销售额类别占比',
-                tip: '销售额类别占比',
-                content: Container(
-                  height: 200,
-                  child: _chartStyle3Widget(),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _chartStyle1Widget() {
-    return Container(
-      alignment: Alignment.center,
-      child: Text('没有引入图表库'),
-    );
-  }
-
-  Widget _chartStyle2Widget() {
-    return Container(
-      alignment: Alignment.center,
-      child: Text('没有引入图表库'),
-    );
-  }
-
-  Widget _chartStyle3Widget() {
-    return Container(
-      alignment: Alignment.center,
-      child: Text('没有引入图表库'),
-    );
-  }
-
-  Widget _chartStyle4Widget() {
-    return Container(
-      alignment: Alignment.center,
-      child: Text('没有引入图表库'),
-    );
+        child: RowOrColumn(
+      flexList: [3, 1],
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
+    ));
   }
 }

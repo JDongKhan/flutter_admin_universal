@@ -1,43 +1,55 @@
-# flutter_admin_universal
+# app_dispatcher
 
-后台管理系统
+本项目是基于flutter+spring boot开发，支持数据/文件保存与查询，目前可以满足大部分需求场景，因功能较简单，可作为脚手架使用，需要再次开发，不支持直接商用。
 
-## Getting Started
+环境
 
-![demo png](1.gif "demo")
-
-
-
-![demo png](1_1.png "demo")
-
-
-
-**使用的组件：**
-
-自研ResizeWidget 组件：内部区域使用MouseRegion识别鼠标，然后GestureDetector的pan手势进行大小拖拽
-
-第三方bitsdojo_window组件：可对窗口进行最大最小设置，设置window风格等，可参照swift代码中的NSWindow
-
-
-
-**开发环境**
-
-```
-[✓] Flutter (Channel stable, 2.10.4, on macOS 12.2 21D5025f darwin-x64, locale zh-Hans-CN)
-    • Flutter version 2.10.4 at /Users/jd/Documents/sdk/flutter/flutter
+```shell
+[✓] Flutter (Channel stable, 3.3.10, on macOS 13.0 22A380 darwin-x64, locale zh-Hans-CN)
+    • Flutter version 3.3.10 on channel stable at /Users/xx/fvm/versions/3.3.10
     • Upstream repository https://github.com/flutter/flutter.git
-    • Framework revision c860cba910 (12 天前), 2022-03-25 00:23:12 -0500
-    • Engine revision 57d3bac3dd
-    • Dart version 2.16.2
-    • DevTools version 2.9.2
+    • Framework revision 135454af32 (8 weeks ago), 2022-12-15 07:36:55 -0800
+    • Engine revision 3316dd8728
+    • Dart version 2.18.6
+    • DevTools version 2.15.0
     • Pub download mirror https://pub.flutter-io.cn
     • Flutter download mirror https://storage.flutter-io.cn
 
-[✓] Xcode - develop for iOS and macOS (Xcode 13.0)
+
+[✓] Xcode - develop for iOS and macOS (Xcode 14.2)
     • Xcode at /Applications/Xcode.app/Contents/Developer
-    • CocoaPods version 1.11.2
+    • Build 14C18
+    • CocoaPods version 1.11.3
 
 [✓] Chrome - develop for the web
     • Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+
+[✓] Android Studio (version 2021.2)
+    • Android Studio at /Applications/Android Studio.app/Contents
+    • Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    • Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    • Java version OpenJDK Runtime Environment (build 11.0.12+0-b1504.28-7817840)
+
+
 ```
 
+
+![demo png](1.png "demo")
+![demo png](2.png "demo")
+![demo png](3.png "demo")
+![demo png](4.png "demo")
+
+
+### 现有功能
+
+1、登录
+
+1、首页 
+
+6、应用列表
+
+7、日志
+
+8、设置

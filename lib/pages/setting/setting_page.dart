@@ -1,21 +1,27 @@
+import '/utils/login_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/style/app_theme.dart';
-import 'package:flutter_admin_universal/style/theme.dart';
-import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+
+import '../../style/app_theme.dart';
+import '../../style/theme.dart';
+import '../../utils/navigation_util.dart';
+import '../../widget/universal_dashboard.dart';
 
 /// @author jd
 
 class SettingPage extends StatefulWidget {
+  const SettingPage({super.key});
+
   @override
-  _SettingPageState createState() => _SettingPageState();
+  State createState() => _SettingPageState();
 }
 
 class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
           left: BorderSide(
@@ -34,16 +40,17 @@ class _SettingPageState extends State<SettingPage> {
       ),
       child: SafeArea(
         bottom: false,
-        child: Container(
+        child: SizedBox(
           width: 60,
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
+                height: 60,
                 child: Center(
                   child: IconButton(
                     highlightColor: Colors.transparent,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close,
                       size: 20,
                     ),
@@ -52,11 +59,12 @@ class _SettingPageState extends State<SettingPage> {
                     },
                   ),
                 ),
-                height: 60,
               ),
               IconButton(
-                onPressed: () {},
-                icon: Icon(
+                onPressed: () {
+                  _showUserInfo(context);
+                },
+                icon: const Icon(
                   Icons.people_alt_outlined,
                   size: 18,
                 ),
@@ -65,14 +73,14 @@ class _SettingPageState extends State<SettingPage> {
                 onPressed: () {
                   _showThemeDialog(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.style_rounded,
                   size: 18,
                 ),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.subject_outlined,
                   size: 18,
                 ),
@@ -81,7 +89,7 @@ class _SettingPageState extends State<SettingPage> {
                 onPressed: () {
                   _showLogoutDialog(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.logout,
                   size: 18,
                 ),
@@ -120,13 +128,14 @@ class _SettingPageState extends State<SettingPage> {
       builder: (c) {
         return Dialog(
           child: Container(
-            padding: EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
             color: Colors.white,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   '更改主题',
                   style: TextStyle(fontSize: 20, color: Colors.black87),
                 ),
@@ -148,7 +157,7 @@ class _SettingPageState extends State<SettingPage> {
                         height: 40,
                         color: value,
                         child: _selectedColor == value
-                            ? Icon(
+                            ? const Icon(
                                 Icons.done,
                                 color: Colors.white,
                               )
@@ -165,24 +174,50 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
+  void _showUserInfo(BuildContext context) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String appName = packageInfo.appName;
+    String packageName = packageInfo.packageName;
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return Dialog(
+          child: SizedBox(
+            width: 500,
+            child: LicensePage(
+              applicationName: appName,
+              applicationVersion: version,
+              applicationLegalese: "",
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void _showLogoutDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (c) {
           return AlertDialog(
-            title: Text('提示'),
-            content: Text('确认退出吗？'),
+            title: const Text('提示'),
+            content: const Text('确认退出吗？'),
             actions: <Widget>[
               TextButton(
-                child: Text('取消'),
+                child: const Text('取消'),
                 onPressed: () {
                   Navigator.of(c).pop();
                 },
               ),
               TextButton(
-                child: Text('确认'),
+                child: const Text('确认'),
                 onPressed: () {
                   Navigator.of(c).pop();
+                  LoginUtil.logout();
+                  NavigationUtil.go("/login");
                 },
               ),
             ],

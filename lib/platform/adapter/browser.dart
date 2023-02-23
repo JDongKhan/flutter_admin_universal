@@ -1,9 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:js' as js;
-
+import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/platform/platform_adapter.dart';
-import 'package:flutter_admin_universal/service/environment.dart';
+
+import '../../pages/web/src/web_view_for_web.dart';
+import '../../service/environment.dart';
+import '../platform_adapter.dart';
 
 /// @author jd
 
@@ -25,7 +29,7 @@ class BrowserAdapter implements PlatformAdapter {
 
   @override
   void login(String url) {
-    String currentUrl = html.window.location.href + '/';
+    String currentUrl = '${html.window.location.href}/';
     currentUrl = Uri.encodeComponent(currentUrl);
     String loginUrl = '$url?service=$currentUrl';
     html.window.location.replace(loginUrl);
@@ -42,24 +46,30 @@ class BrowserAdapter implements PlatformAdapter {
   }
 
   @override
-  void selectFileAndUpload() {
+  Future<String?> selectFileAndUpload() {
+    Completer<String> completer = Completer<String>();
     html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
     uploadInput.multiple = false; // 是否允许选择多文件
     uploadInput.draggable = true;
     uploadInput.click();
     uploadInput.onChange.listen((e) {
-      _upload(uploadInput, e);
+      _upload1(uploadInput, e, completer);
       // var fileItem = UploadFileItem(files[0]);
     });
+    return completer.future;
   }
 
   @override
-  void downloadFile(String url) {
+  Future<String?> downloadFile(String url) async {
     debugPrint('下载$url');
-    html.AnchorElement downloadElemment = html.AnchorElement(href: url);
-    downloadElemment.download = url;
+    String fileName = p.basename(url);
+    String downUrl =
+        "${environment.path.fileDownUrl}?fileName=$fileName&filePath=$url";
+    html.AnchorElement downloadElemment = html.AnchorElement(href: downUrl);
+    downloadElemment.download = downUrl;
     downloadElemment.click();
     downloadElemment.onClick.listen((event) {});
+    return '';
   }
 
   @override
@@ -67,8 +77,49 @@ class BrowserAdapter implements PlatformAdapter {
     return html.window.navigator.userAgent;
   }
 
-  Future _upload(
-      html.FileUploadInputElement uploadInput, html.Event event) async {
+  Future _upload1(html.FileUploadInputElement uploadInput, html.Event event,
+      Completer<String> completer) async {
+    debugPrint('开始上传');
+    // html.FileUploadInputElement uploadInput = event.target;
+    final files = uploadInput.files;
+    debugPrint('选择文件:$files');
+    if (files != null && files.isNotEmpty) {
+      // int ts = DateTime.now().millisecondsSinceEpoch;
+      String uploadUrl = environment.path.fileUploadUrl;
+      String requestURL = uploadUrl;
+      debugPrint('上传的url:$requestURL');
+      html.File? file = files.single;
+      final html.FormData formData = html.FormData()
+        ..append('fileName', file.name)
+        ..append('mimeType', file.type)
+        ..appendBlob('file', file.slice(), file.name);
+      debugPrint('formData:$formData');
+      html.HttpRequest.request(
+        requestURL,
+        method: 'POST',
+        sendData: formData,
+      ).then((html.HttpRequest httpRequest) {
+        debugPrint('上传成功');
+        String? response = httpRequest.responseText;
+        Map? map = jsonDecode(response!);
+        int? code = map?['code'];
+        if (code == 0) {
+          Map? data = map?['data'];
+          String filePath = data?['fileName'];
+          completer.complete(filePath);
+        } else {
+          String msg = map?['msg'];
+          completer.completeError(msg);
+        }
+      }).catchError((e) {
+        debugPrint('上传失败:$e');
+        completer.completeError(e);
+      });
+    }
+  }
+
+  Future _upload(html.FileUploadInputElement uploadInput, html.Event event,
+      Completer<String> completer) async {
     // html.FileUploadInputElement uploadInput = event.target;
     final files = uploadInput.files;
     debugPrint('选择文件:$files');
@@ -79,7 +130,7 @@ class BrowserAdapter implements PlatformAdapter {
       if (authInfo == null) {
         return;
       }
-      String downloadUrl = authInfo['downloadUrl'];
+      // String downloadUrl = authInfo['downloadUrl'];
       String uploadUrl = authInfo['uploadUrl'];
       String accessId = authInfo['accessId'];
       String expireTime = authInfo['expireTime'];
@@ -153,5 +204,17 @@ class BrowserAdapter implements PlatformAdapter {
       return result;
     }
     return null;
+  }
+
+  @override
+  void clearCookies() {
+    html.window.document.cookie = "";
+  }
+
+  @override
+  Widget createWebView(String url) {
+    return WebViewForWeb(
+      url: url,
+    );
   }
 }

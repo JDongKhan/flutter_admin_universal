@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_core/flutter_core.dart';
 
 /// @author jd
 
 class UniversalDashboard extends StatefulWidget {
   const UniversalDashboard({
+    super.key,
     required this.leftMenu,
     required this.mainPage,
     required this.endDrawer,
@@ -15,31 +17,24 @@ class UniversalDashboard extends StatefulWidget {
 
   final Widget endDrawer;
 
-  // This isMobile, isTablet, isDesktop helep us later
-  static bool isMobile() => 1.sw <= 700;
-
-  static bool isTablet() => 1.sw <= 1200 && 1.sw > 700;
-
-  static bool isDesktop() => 1.sw > 1200;
-
-  static _UniversalDashboardState? of(BuildContext context) {
-    _UniversalDashboardState? state =
-        context.findAncestorStateOfType<_UniversalDashboardState>();
+  static UniversalDashboardState? of(BuildContext context) {
+    UniversalDashboardState? state =
+        context.findAncestorStateOfType<UniversalDashboardState>();
     return state;
   }
 
   @override
-  State<UniversalDashboard> createState() => _UniversalDashboardState();
+  State<UniversalDashboard> createState() => UniversalDashboardState();
 }
 
-class _UniversalDashboardState extends State<UniversalDashboard> {
+class UniversalDashboardState extends State<UniversalDashboard> {
   bool _openSetting = false;
   bool _openLeftMenu = true;
 
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   void openOrCloseLeftMenu({bool? open}) {
-    bool isMobile = UniversalDashboard.isMobile();
+    bool isMobile = ScreenUtils.isMobile();
     if (isMobile) {
       ScaffoldState? state = _scaffoldKey.currentState;
       if (state?.isDrawerOpen ?? false) {
@@ -61,7 +56,7 @@ class _UniversalDashboardState extends State<UniversalDashboard> {
   }
 
   void openOrCloseSetting({bool? open}) {
-    bool isMobile = UniversalDashboard.isMobile();
+    bool isMobile = ScreenUtils.isMobile();
     if (isMobile) {
       ScaffoldState? state = _scaffoldKey.currentState;
       if (state?.isEndDrawerOpen ?? false) {
@@ -84,8 +79,10 @@ class _UniversalDashboardState extends State<UniversalDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> rows = [];
-    bool isMobile = UniversalDashboard.isMobile();
+    //TODO 不加此句 窗口变化时该widget不会刷新
+    MediaQuery.of(context);
+    // List<Widget> rows = [];
+    bool isMobile = ScreenUtils.isMobile();
     Widget contentWidget;
     debugPrint('UniversalDashboard build: [isMobile:$isMobile]');
     if (!isMobile) {
@@ -100,11 +97,14 @@ class _UniversalDashboardState extends State<UniversalDashboard> {
     } else {
       contentWidget = widget.mainPage;
     }
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: isMobile ? widget.leftMenu : null,
-      endDrawer: isMobile ? widget.endDrawer : null,
-      body: contentWidget,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        key: _scaffoldKey,
+        drawer: isMobile ? widget.leftMenu : null,
+        endDrawer: isMobile ? widget.endDrawer : null,
+        body: contentWidget,
+      ),
     );
   }
 }

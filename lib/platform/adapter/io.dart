@@ -1,9 +1,14 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_admin_universal/network/network_utils.dart';
-import 'package:flutter_admin_universal/platform/platform_adapter.dart';
-import 'package:flutter_admin_universal/service/environment.dart';
+import 'dart:io';
+
+import '/service/config/path_config.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_core/flutter_core.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:path/path.dart' as p;
+import '../../pages/web/src/web_view_for_platform.dart';
+import '../../service/environment.dart';
+import '../platform_adapter.dart';
 
 /// @author jd
 
@@ -31,13 +36,54 @@ class IOAdapter implements PlatformAdapter {
   }
 
   @override
-  void selectFileAndUpload() {
-    _uploadImage('');
+  Future<String?> selectFileAndUpload() {
+    return _uploadImage('');
   }
 
   @override
-  void downloadFile(String url) {
-    // TODO: implement downloadFile
+  Future<String?> downloadFile(String url) async {
+    Directory? directory = await PathUtils.getAppCacheDirectory();
+    String extension = p.extension(url);
+    String fileName = p.basename(url);
+    String newFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    String? savePath = directory?.path.appendUriPath("$newFileName$extension");
+    File file = File(savePath!);
+    if (file.existsSync()) {
+      file.deleteSync();
+    }
+    _DownProgress progressChangeNotifier = _DownProgress();
+
+    ToastUtils.showDialog(builder: (c) {
+      return ChangeNotifierWidget<_DownProgress>(
+        changeNotifier: progressChangeNotifier,
+        builder: <_DownProgress>(c, c2) {
+          return SizedBox(
+            width: 200,
+            child: LinearProgressIndicator(
+              value: progressChangeNotifier._progress,
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
+              backgroundColor: Colors.white,
+            ),
+          );
+        },
+      );
+    });
+    await Network.downloadFile(environment.path.fileDownUrl, savePath!,
+        queryParameters: {
+          "fileName": fileName,
+          "filePath": url,
+        },
+        options: Options(receiveTimeout: 0),
+        progressCallback: (int count, int total) {
+      double progress = count * 1.0 / total * 1.0;
+      print('contentLenght:$total');
+      print('下载进度:$progress');
+      progressChangeNotifier.update(progress);
+      if (progress == 1.0) {
+        ToastUtils.hiddenLoading();
+      }
+    });
+    return savePath;
   }
 
   @override
@@ -54,18 +100,16 @@ class IOAdapter implements PlatformAdapter {
       authUrl = 'https://portalpre.xx.com';
     }
     authUrl = '$authUrl/carrbshop-web/settle/ossAuthentication';
-    NetworkResponse response =
-        await Network.post(authUrl, data: {'objectName': fileName});
-
+    await Network.post(authUrl, data: {'objectName': fileName});
     return null;
   }
 
-  Future _uploadImage(String filePath) async {
+  Future<String?> _uploadImage(String filePath) async {
     int ts = DateTime.now().millisecondsSinceEpoch;
     //先鉴权
     var authInfo = await _getAuthenticationInfo('$ts');
     if (authInfo == null) {
-      return;
+      return null;
     }
     String downloadUrl = authInfo['downloadUrl'];
     String uploadUrl = authInfo['uploadUrl'];
@@ -86,5 +130,27 @@ class IOAdapter implements PlatformAdapter {
     });
 
     Network.put(requestURL, data: formData);
+    return downloadUrl;
+  }
+
+  @override
+  void clearCookies() {
+    CookiesManager.getInstance().deleteAll();
+  }
+
+  @override
+  Widget createWebView(String url) {
+    return WebViewForPlatform(
+      url: url,
+    );
+  }
+}
+
+class _DownProgress extends ChangeNotifier {
+  double _progress = 0;
+
+  void update(double progress) {
+    _progress = progress;
+    notifyListeners();
   }
 }

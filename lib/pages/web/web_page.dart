@@ -1,19 +1,14 @@
+import '/platform/platform_adapter.dart';
 import 'package:flutter/material.dart';
 
 /// @author jd
 
-class WebPage extends StatefulWidget {
-  @override
-  _WebPageState createState() => _WebPageState();
-}
+class WebPage extends StatelessWidget {
+  final String url;
+  const WebPage({super.key, required this.url});
 
-class _WebPageState extends State<WebPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('我是Web页'),
-      ),
-    );
+    return platformAdapter.createWebView(url);
   }
 }

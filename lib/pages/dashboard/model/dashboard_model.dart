@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_universal/widget/universal_dashboard.dart';
+
+import '../../../widget/universal_dashboard.dart';
 
 ///@Description TODO
 ///@Author jd

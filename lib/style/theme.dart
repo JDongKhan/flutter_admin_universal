@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 ///@Description TODO
@@ -49,7 +47,7 @@ class MyTheme {
     this.menuPrimaryTextColor = Colors.white,
     this.menuSelectedTextColor = Colors.white,
     this.menuSubTextColor = const Color(0xff999999),
-    this.menuSubBackgroundColor = const Color(0xff363e4),
+    this.menuSubBackgroundColor = const Color(0xff363e40),
     this.menuSubSelectedBackgroundColor = Colors.blueAccent,
   });
 

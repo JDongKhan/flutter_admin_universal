@@ -1,0 +1,268 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+
+import '../measure_size.dart';
+
+/// 从bruno组件库拷贝过来的，因为不喜欢bruno的前缀
+/// 构建指定索引的Widget
+typedef TabWidgetIndexedBuilder = Widget Function(
+    BuildContext context, int index);
+
+/// 构建指定索引的Tab
+typedef TabIndexedBuilder = Widget Function(BuildContext context, int index);
+
+class AnchorTab extends StatefulWidget {
+  // TabBar的样式
+  final AnchorTabBarStyle tabBarStyle;
+  final TabWidgetIndexedBuilder? widgetIndexedBuilder;
+  final TabIndexedBuilder tabIndexedBuilder;
+  final Widget? tabDivider;
+
+  //设置tab与widget的个数
+  final int itemCount;
+
+  const AnchorTab({
+    super.key,
+    required this.widgetIndexedBuilder,
+    required this.tabIndexedBuilder,
+    required this.itemCount,
+    this.tabDivider,
+    this.tabBarStyle = const AnchorTabBarStyle(),
+  });
+
+  @override
+  State createState() => _ScrollAnchorTabWidgetState();
+}
+
+class _ScrollAnchorTabWidgetState extends State<AnchorTab>
+    with SingleTickerProviderStateMixin {
+  //用于控制 滑动
+  late ScrollController _scrollController;
+
+  //用于控制tab
+  late TabController _tabController;
+
+  //滑动组件的 key
+  late GlobalKey _key;
+
+  //当前选中的索引
+  int currentIndex = 0;
+
+  //滑动组件的元素的key
+  late List<GlobalKey> _bodyKeyList;
+
+  //每个元素在滑动组件中的位置
+  late List<double> _cardOffsetList;
+
+  //是否点击滑动
+  bool tab = false;
+
+  //滑动组件在屏幕的位置
+  double listDy = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+
+    _key = GlobalKey();
+    _cardOffsetList = List.filled(widget.itemCount, -1.0);
+    _bodyKeyList = [];
+    currentIndex = 0;
+    _tabController = TabController(length: widget.itemCount, vsync: this);
+
+    fillKeyList();
+
+    WidgetsBinding.instance.addPostFrameCallback((da) {
+      fillOffset();
+      _scrollController.addListener(() {
+        _updateOffset();
+        currentIndex = createIndex(_scrollController.offset);
+        //防止再次 发送消息
+        if (!tab) {
+          _tabController.index = currentIndex;
+        }
+      });
+    });
+  }
+
+  @override
+  void didUpdateWidget(AnchorTab oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _cardOffsetList = List.filled(widget.itemCount, -1.0);
+    int sub = widget.itemCount - oldWidget.itemCount;
+    if (sub < 0) {
+      _bodyKeyList = _bodyKeyList.sublist(0, widget.itemCount);
+    } else if (sub > 0) {
+      for (int i = 0; i < sub; i++) {
+        _bodyKeyList.add(GlobalKey());
+      }
+    }
+    if (sub != 0) {
+      _tabController = TabController(length: widget.itemCount, vsync: this);
+    }
+    WidgetsBinding.instance.addPostFrameCallback((da) {
+      fillOffset();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        TabBar(
+          indicatorColor: widget.tabBarStyle.indicatorColor,
+          indicatorWeight: widget.tabBarStyle.indicatorWeight,
+          indicatorPadding: widget.tabBarStyle.indicatorPadding,
+          labelColor: widget.tabBarStyle.labelColor,
+          labelStyle: widget.tabBarStyle.labelStyle,
+          labelPadding: widget.tabBarStyle.labelPadding ?? EdgeInsets.zero,
+          unselectedLabelColor: widget.tabBarStyle.unselectedLabelColor,
+          unselectedLabelStyle: widget.tabBarStyle.unselectedLabelStyle,
+          dragStartBehavior: widget.tabBarStyle.dragStartBehavior,
+          controller: _tabController,
+          tabs: _fillTab(),
+          onTap: (index) {
+            currentIndex = index;
+            tab = true;
+            _scrollController
+                .animateTo(_cardOffsetList[index],
+                    duration: const Duration(milliseconds: 100),
+                    curve: Curves.linear)
+                .whenComplete(() {
+              tab = false;
+            });
+          },
+        ),
+        widget.tabDivider ?? const SizedBox.shrink(),
+        Expanded(
+          child: SingleChildScrollView(
+            key: _key,
+            controller: _scrollController,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: _fillList(),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  List<Widget> _fillList() {
+    List<Widget> tmpWidget = [];
+    if (widget.widgetIndexedBuilder != null) {
+      for (int i = 0, n = widget.itemCount; i < n; i++) {
+        Widget itemWidget = Container(
+            key: _bodyKeyList[i],
+            child: widget.widgetIndexedBuilder!(context, i));
+        itemWidget = MeasureSize(
+          onChange: (size) {
+            _updateOffset();
+          },
+          child: itemWidget,
+        );
+        tmpWidget.add(itemWidget);
+      }
+    }
+    return tmpWidget;
+  }
+
+  void fillKeyList() {
+    for (int i = 0, n = widget.itemCount; i < n; i++) {
+      _bodyKeyList.add(GlobalKey());
+    }
+  }
+
+  void fillOffset() {
+    Offset globalToLocal =
+        (_key.currentContext!.findRenderObject() as RenderBox)
+            .localToGlobal(Offset.zero);
+    listDy = globalToLocal.dy;
+
+    for (int i = 0, n = widget.itemCount; i < n; i++) {
+      if (_cardOffsetList[i] == -1.0 &&
+          _bodyKeyList[i].currentContext != null) {
+        double cardOffset =
+            (_bodyKeyList[i].currentContext!.findRenderObject() as RenderBox)
+                .localToGlobal(Offset.zero) //相对于原点 控件的位置
+                .dy; //y点坐标
+
+        _cardOffsetList[i] = cardOffset + _scrollController.offset - listDy;
+      }
+    }
+  }
+
+  List<Widget> _fillTab() {
+    List<Widget> tmp = [];
+    for (int i = 0, n = widget.itemCount; i < n; i++) {
+      tmp.add(widget.tabIndexedBuilder(context, i));
+    }
+    return tmp;
+  }
+
+  void _updateOffset() {
+    for (int i = 0, n = widget.itemCount; i < n; i++) {
+      if (_bodyKeyList[i].currentContext != null) {
+        double cardOffset =
+            (_bodyKeyList[i].currentContext!.findRenderObject() as RenderBox)
+                .localToGlobal(Offset.zero) //相对于原点 控件的位置
+                .dy; //y点坐标
+
+        _cardOffsetList[i] = cardOffset + _scrollController.offset - listDy;
+      }
+    }
+  }
+
+  //根据偏移量 确定tab索引
+  int createIndex(double offset) {
+    int index = widget.itemCount - 1;
+    ;
+    for (int i = 0; i < widget.itemCount - 1; i++) {
+      if (offset >= _cardOffsetList[i] && (offset <= _cardOffsetList[i + 1])) {
+        return i;
+      }
+    }
+    return index;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+    _scrollController.dispose();
+  }
+}
+
+class AnchorTabBarStyle {
+  final Color? indicatorColor;
+
+  final double indicatorWeight;
+
+  final EdgeInsetsGeometry indicatorPadding;
+
+  final Color? labelColor;
+
+  final Color? unselectedLabelColor;
+
+  final TextStyle? labelStyle;
+
+  final EdgeInsetsGeometry? labelPadding;
+
+  final TextStyle? unselectedLabelStyle;
+
+  final DragStartBehavior dragStartBehavior;
+
+  const AnchorTabBarStyle({
+    this.indicatorColor,
+    this.indicatorWeight = 2.0,
+    this.indicatorPadding = EdgeInsets.zero,
+    this.labelColor,
+    this.labelStyle,
+    this.labelPadding,
+    this.unselectedLabelColor,
+    this.unselectedLabelStyle,
+    this.dragStartBehavior = DragStartBehavior.start,
+  });
+}

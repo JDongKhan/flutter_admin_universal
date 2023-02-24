@@ -4,6 +4,7 @@ import '../../../style/app_theme.dart';
 import '../../../widget/deferred_widget.dart';
 import '../../../widget/universal_dashboard.dart';
 import '../../app/app_list_page.dart' deferred as app;
+import '../../account/account_list_page.dart' deferred as account;
 import '../../home/main_content_page.dart';
 import '../../left_menu/left_menu_page.dart';
 import '../../setting/setting_page.dart';
@@ -31,6 +32,14 @@ class _DashboardPageState extends State<DashboardPage> {
         '首页',
         '/home',
         builder: (_) => const MainContentPage(),
+      ),
+      menu.MenuItem.second(
+        '账户列表',
+        '/app_list',
+        builder: (_) => DeferredWidget(
+          future: account.loadLibrary(),
+          builder: () => account.AccountListPage(),
+        ),
       ),
       menu.MenuItem.second(
         '应用列表',

@@ -89,7 +89,21 @@ class MyTheme {
     this.menuPrimaryTextColor = Colors.white,
     this.menuSelectedTextColor = Colors.white,
     this.menuSubTextColor = const Color(0xffeeeeee),
-    this.menuSubBackgroundColor = Colors.deepOrangeAccent,
-    this.menuSubSelectedBackgroundColor = Colors.redAccent,
+    this.menuSubBackgroundColor = Colors.cyan,
+    this.menuSubSelectedBackgroundColor = Colors.orangeAccent,
+  });
+
+  MyTheme.whiteTheme({
+    this.primaryColor = Colors.blueAccent,
+    this.secondaryColor = Colors.white,
+    this.bgColor = const Color(0xfff0f0f0),
+    this.primaryTextColor = Colors.white,
+    this.secondaryTextColor = Colors.black54,
+    this.menuBackgroundColor = Colors.white,
+    this.menuPrimaryTextColor = Colors.black,
+    this.menuSelectedTextColor = Colors.grey,
+    this.menuSubTextColor = const Color(0xff666666),
+    this.menuSubBackgroundColor = Colors.white,
+    this.menuSubSelectedBackgroundColor = const Color(0xFFF5F5F5),
   });
 }

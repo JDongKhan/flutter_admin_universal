@@ -6,7 +6,7 @@ import 'theme.dart';
 ///@Author jd
 
 class AppTheme with ChangeNotifier {
-  MyTheme theme = MyTheme.defaultTheme();
+  MyTheme theme = MyTheme.whiteTheme();
 
   void changTheme(MyTheme theme) {
     debugPrint('改变主题颜色');

@@ -47,32 +47,34 @@ class _UserListPageState extends State<UserListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(3),
-      child: SingleChildScrollView(
-        controller: _scrollController,
-        child: SizedBox(
-          width: double.infinity,
-          child: PaginatedDataTable(
-            header: const Text('用户列表'),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  _addUserInfoDialog();
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {},
-              ),
-            ],
-            columns: const [
-              DataColumn(label: Text('姓名')),
-              DataColumn(label: Text('账号')),
-              DataColumn(label: Text('手机号')),
-            ],
-            source: MyDataTableSource(_data),
+    return SelectionArea(
+      child: Container(
+        padding: const EdgeInsets.all(3),
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: SizedBox(
+            width: double.infinity,
+            child: PaginatedDataTable(
+              header: const Text('用户列表'),
+              actions: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {
+                    _addUserInfoDialog();
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {},
+                ),
+              ],
+              columns: const [
+                DataColumn(label: Text('姓名')),
+                DataColumn(label: Text('账号')),
+                DataColumn(label: Text('手机号')),
+              ],
+              source: MyDataTableSource(_data),
+            ),
           ),
         ),
       ),

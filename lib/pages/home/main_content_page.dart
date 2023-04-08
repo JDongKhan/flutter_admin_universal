@@ -62,19 +62,21 @@ class _MainContentPageState extends State<MainContentPage>
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      controller: _scrollController,
-      slivers: [
-        FutureBuilder(
-          future: LogService.statisticsUrl(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) =>
-              FirstSection(
-            data: snapshot.data,
-            anchorKey: _centerWidgetKey,
+    return SelectionArea(
+      child: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          FutureBuilder(
+            future: LogService.statisticsUrl(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) =>
+                FirstSection(
+              data: snapshot.data,
+              anchorKey: _centerWidgetKey,
+            ),
           ),
-        ),
-        _buildSelfAdaptionWidget(),
-      ],
+          _buildSelfAdaptionWidget(),
+        ],
+      ),
     );
   }
 

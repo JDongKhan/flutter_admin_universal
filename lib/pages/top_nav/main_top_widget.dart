@@ -1,12 +1,13 @@
-import '/http/user_service.dart';
-import '/utils/login_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:provider/provider.dart';
+
+import '/http/user_service.dart';
+import '/utils/login_util.dart';
+import '../../http/model/user.dart';
 import '../../utils/navigation_util.dart';
 import '../../widget/universal_dashboard.dart';
 import '../dashboard/model/dashboard_model.dart';
-import '../../http/model/user.dart';
 import '../notification/notification_page.dart';
 
 /// @author jd
@@ -17,7 +18,7 @@ class MainTopWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 3),
+      margin: EdgeInsets.only(left: ScreenUtils.isMobile() ? 0 : 6, bottom: 3),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(

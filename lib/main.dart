@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_core/flutter_core.dart';
@@ -63,6 +65,7 @@ void _runApp() {
 }
 
 class MyApp extends StatelessWidget {
+  final controller = StreamController<void>();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -88,20 +91,6 @@ class MyApp extends StatelessWidget {
         return child!;
       }),
       theme: ThemeData(
-        //全局样式
-        inputDecorationTheme: const InputDecorationTheme(
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.blue,
-              width: 1,
-            ),
-          ),
-        ),
-        tabBarTheme: TabBarTheme.of(context).copyWith(
-          labelStyle: const TextStyle(
-            fontFamily: fontFamily,
-          ),
-        ),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -116,6 +105,22 @@ class MyApp extends StatelessWidget {
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
+        // useMaterial3: true,
+        // colorSchemeSeed: Colors.green,
+        //全局样式
+        inputDecorationTheme: const InputDecorationTheme(
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.blue,
+              width: 1,
+            ),
+          ),
+        ),
+        tabBarTheme: TabBarTheme.of(context).copyWith(
+          labelStyle: const TextStyle(
+            fontFamily: fontFamily,
+          ),
+        ),
       ),
     );
   }

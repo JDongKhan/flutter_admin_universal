@@ -118,37 +118,39 @@ class _AccountListPageState extends State<AccountListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      child: MediaQuery.removePadding(
-        //适配手机端
-        removeTop: true,
-        context: context,
-        child: PlutoGrid(
-            configuration: PlutoGridConfiguration(
-              style: PlutoGridStyleConfig(
-                oddRowColor: Colors.grey[50],
-                enableColumnBorderVertical: true,
-                enableColumnBorderHorizontal: true,
-                enableGridBorderShadow: false,
-                gridBorderRadius: BorderRadius.circular(10),
-                gridBorderColor: const Color(0xFFDDE2EB),
+    return SelectionArea(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+        child: MediaQuery.removePadding(
+          //适配手机端
+          removeTop: true,
+          context: context,
+          child: PlutoGrid(
+              configuration: PlutoGridConfiguration(
+                style: PlutoGridStyleConfig(
+                  oddRowColor: Colors.grey[50],
+                  enableColumnBorderVertical: true,
+                  enableColumnBorderHorizontal: true,
+                  enableGridBorderShadow: false,
+                  gridBorderRadius: BorderRadius.circular(10),
+                  gridBorderColor: const Color(0xFFDDE2EB),
+                ),
+                localeText: const PlutoGridLocaleText.china(),
               ),
-              localeText: const PlutoGridLocaleText.china(),
-            ),
-            createFooter: (PlutoGridStateManager stateManager) {
-              return PlutoPagination(stateManager);
-            },
-            // columnGroups: columnGroups,
-            columns: columns,
-            rows: rows!,
-            onChanged: (PlutoGridOnChangedEvent event) {
-              print(event);
-            },
-            onLoaded: (PlutoGridOnLoadedEvent event) {
-              stateManager = event.stateManager;
-              print(event);
-            }),
+              createFooter: (PlutoGridStateManager stateManager) {
+                return PlutoPagination(stateManager);
+              },
+              // columnGroups: columnGroups,
+              columns: columns,
+              rows: rows!,
+              onChanged: (PlutoGridOnChangedEvent event) {
+                print(event);
+              },
+              onLoaded: (PlutoGridOnLoadedEvent event) {
+                stateManager = event.stateManager;
+                print(event);
+              }),
+        ),
       ),
     );
   }

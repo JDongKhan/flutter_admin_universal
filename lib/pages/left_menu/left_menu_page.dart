@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../style/app_theme.dart';
 import '../../style/constants.dart';
-import '../../widget/universal_dashboard.dart';
 import 'model/menu_item.dart' as menu;
 
 /// @author jd
@@ -27,10 +26,21 @@ class LeftMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme model = context.watch<AppTheme>();
-    return SizedBox(
+    return Container(
       width: kMenuWidth,
+      padding: const EdgeInsets.only(right: 3),
       child: Container(
-        color: model.theme.menuBackgroundColor,
+        decoration: BoxDecoration(
+          color: model.theme.menuBackgroundColor,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(3.0, 0.0), //阴影xy轴偏移量
+              blurRadius: 5.0, //阴影模糊程度
+              spreadRadius: 1.0, //阴影扩散程度
+            ),
+          ],
+        ),
         child: Column(
           children: [
             _topTitleWidget(model),

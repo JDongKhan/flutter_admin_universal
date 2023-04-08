@@ -1,8 +1,8 @@
-import '/utils/login_util.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
+import '/utils/login_util.dart';
 import '../../style/app_theme.dart';
 import '../../style/theme.dart';
 import '../../utils/navigation_util.dart';
@@ -118,6 +118,10 @@ class _SettingPageState extends State<SettingPage> {
       'color': Colors.blueAccent,
       'theme': MyTheme.blueAccentTheme(),
     },
+    {
+      'color': Colors.white,
+      'theme': MyTheme.whiteTheme(),
+    },
   ];
 
   Color? _selectedColor;
@@ -130,7 +134,7 @@ class _SettingPageState extends State<SettingPage> {
           child: Container(
             padding:
                 const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
-            color: Colors.white,
+            color: Colors.grey[100],
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

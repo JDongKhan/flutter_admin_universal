@@ -24,8 +24,7 @@ class NetworkMockInterceptor extends Interceptor {
       }
       dynamic json = jsonDecode(jsonString);
       await Future<dynamic>.delayed(const Duration(milliseconds: 1000));
-      logger.i('本次模拟的数据来源:$jsonPath');
-      logger.i('本次模拟的数据为:$json');
+      logger.i('本次模拟的数据来源:$jsonPath\n$json');
       handler.resolve(
         Response<dynamic>(
           requestOptions: options,

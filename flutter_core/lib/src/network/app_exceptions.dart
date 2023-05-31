@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 ///@author JD
 /// 自定义异常
-class AppException implements Exception {
+class AppException extends DioError {
   static const cancel = '请求取消';
   static const connectTimeout = '连接超时';
   static const sendTimeout = '请求超时';
@@ -24,131 +24,186 @@ class AppException implements Exception {
   static const clientResponseError = '客户端响应处理异常';
   static const loginCookieInvalid = '登录超时';
 
-  AppException([
-    this._code,
-    this._message,
-  ]);
+  final int code;
+  AppException({
+    required super.requestOptions,
+    required this.code,
+    super.response,
+    super.error,
+    super.message,
+  });
 
   factory AppException.create(DioError error) {
     switch (error.type) {
       case DioErrorType.cancel:
         {
-          return BadRequestException(-1, cancel);
+          return AppException(
+            code: -1,
+            requestOptions: error.requestOptions,
+            message: cancel,
+            error: error.error,
+            response: error.response,
+          );
         }
-        break;
-      case DioErrorType.connectTimeout:
+      case DioErrorType.connectionTimeout:
         {
-          return BadRequestException(-1, connectTimeout);
+          return AppException(
+            code: -1,
+            requestOptions: error.requestOptions,
+            message: connectTimeout,
+            error: error.error,
+            response: error.response,
+          );
         }
-        break;
       case DioErrorType.sendTimeout:
         {
-          return BadRequestException(-1, sendTimeout);
+          return AppException(
+            code: -1,
+            requestOptions: error.requestOptions,
+            message: sendTimeout,
+            error: error.error,
+            response: error.response,
+          );
         }
-        break;
       case DioErrorType.receiveTimeout:
         {
-          return BadRequestException(-2, receiveTimeout);
+          return AppException(
+            code: -2,
+            requestOptions: error.requestOptions,
+            message: receiveTimeout,
+            error: error.error,
+            response: error.response,
+          );
         }
-        break;
-      case DioErrorType.response:
+      case DioErrorType.badResponse:
         {
-          try {
-            int errCode = error.response?.statusCode ?? -999;
-            // String errMsg = error.response.statusMessage;
-            // return ErrorEntity(code: errCode, message: errMsg);
-            switch (errCode) {
-              case 400:
-                {
-                  return BadRequestException(errCode, syntaxError);
-                }
-                break;
-              case 401:
-                {
-                  return UnauthorisedException(errCode, notAuthorized);
-                }
-                break;
-              case 403:
-                {
-                  return UnauthorisedException(errCode, serviceRefuse);
-                }
-                break;
-              case 404:
-                {
-                  return UnauthorisedException(errCode, notFoundService);
-                }
-                break;
-              case 405:
-                {
-                  return UnauthorisedException(errCode, requestForbidden);
-                }
-                break;
-              case 500:
-                {
-                  return UnauthorisedException(errCode, serverInternalError);
-                }
-                break;
-              case 502:
-                {
-                  return UnauthorisedException(errCode, requestInvalid);
-                }
-                break;
-              case 503:
-                {
-                  return UnauthorisedException(errCode, serverShutdown);
-                }
-                break;
-              case 505:
-                {
-                  return UnauthorisedException(
-                      errCode, unsupportedHTTPProtocol);
-                }
-                break;
-              default:
-                {
-                  // return ErrorEntity(code: errCode, message: "未知错误");
-                  return AppException(
-                      errCode, error.response?.statusMessage ?? unknownError);
-                }
-            }
-          } on Exception catch (_) {
-            return AppException(-1, unknownError);
+          int errCode = error.response?.statusCode ?? -999;
+          switch (errCode) {
+            case 400:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: syntaxError,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            case 401:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: notAuthorized,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            case 403:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: serviceRefuse,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            case 404:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: notFoundService,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            case 405:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: requestForbidden,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            case 500:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: serverInternalError,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            case 502:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: requestInvalid,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            case 503:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: serverShutdown,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            case 505:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  message: unsupportedHTTPProtocol,
+                  error: error.error,
+                  response: error.response,
+                );
+              }
+            default:
+              {
+                return AppException(
+                  code: errCode,
+                  requestOptions: error.requestOptions,
+                  error: error.error,
+                  message: error.response?.statusMessage ?? unknownError,
+                  response: error.response,
+                );
+              }
           }
         }
-        break;
       default:
         {
-          return AppException(-1, error.message);
+          return AppException(
+            code: -1,
+            requestOptions: error.requestOptions,
+            error: error.error,
+            response: error.response,
+            message: error.message ?? error.error.toString(),
+          );
         }
     }
   }
 
-  final String? _message;
-  final int? _code;
-
   @override
   String toString() {
-    return '[$_code]$_message';
+    return '[$code]$message';
   }
-}
-
-/// 请求错误
-class BadRequestException extends AppException {
-  BadRequestException([int code = -1, String message = ''])
-      : super(code, message);
-}
-
-/// 未认证异常
-class UnauthorisedException extends AppException {
-  UnauthorisedException([int code = -1, String message = ''])
-      : super(code, message);
 }
 
 /// 网络不可达
 class UnreachableNetworkException extends AppException {
-  UnreachableNetworkException() : super(-99, '网络连接失败');
-}
-
-class BadClientException extends AppException {
-  BadClientException() : super(-999, '客户端逻辑出错');
+  UnreachableNetworkException(
+      {super.code = -999,
+      required super.requestOptions,
+      super.message = '网络连接失败'});
 }

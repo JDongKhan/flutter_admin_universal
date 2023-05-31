@@ -1,0 +1,45 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "flutter_admin_universal",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_admin_universal (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_admin_universal (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "flutter_core",
+            "cwd": "flutter_core",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "flutter_core (profile mode)",
+            "cwd": "flutter_core",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "flutter_core (release mode)",
+            "cwd": "flutter_core",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

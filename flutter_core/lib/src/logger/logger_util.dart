@@ -78,9 +78,9 @@ class PrinterLogManager extends PrettyPrinter {
       stackTraceStr = formatStackTrace(event.stackTrace, errorMethodCount);
     }
 
-    // var errorStr = event.error?.toString();
+    // var errorStr = event_list.error?.toString();
 
-    String timeStr = getTime();
+    String timeStr = getTime(DateTime.now());
     return [
       '$timeStr(${event.level})\n${stackTraceStr!}\n【$messageStr】\n',
     ];
@@ -135,9 +135,6 @@ class FileLoggerOut extends LogOutput {
       if (value == null) {
         return;
       }
-      if (kIsWeb) {
-        return;
-      }
       DateTime dateTime = DateTime.now();
       String logDirectory = '${value.path}/logger';
       String fileName =
@@ -153,7 +150,13 @@ class FileLoggerOut extends LogOutput {
         List<FileSystemEntity> fileList = logDir.listSync();
         for (FileSystemEntity element in fileList) {
           String elementFileName = basename(element.path);
-          if (elementFileName != fileName) {
+          DateTime modifiedDateTime = element.statSync().modified;
+          bool canDelete = elementFileName != fileName;
+          //用天比较，超出6天差距就删除
+          if ((dateTime.day - modifiedDateTime.day) < 6) {
+            canDelete = false;
+          }
+          if (canDelete) {
             element.delete();
           }
         }

@@ -25,7 +25,7 @@ class CookiesManager {
     return _cookieJar?.loadForRequest(uri);
   }
 
-  void deleteAll() {
-    _cookieJar?.deleteAll();
+  Future deleteAll() async {
+    return await _cookieJar?.deleteAll();
   }
 }

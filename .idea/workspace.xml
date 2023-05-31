@@ -5,21 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23125eb9-612f-4bb2-9970-3ce35e6f0032" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/fonts/Roboto-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/k3kXo84MPvpLmixcA63oeALhL4iJ-Q7m8w.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/generated/assets.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/flutter_admin_universal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/flutter_admin_universal.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/logger/logger_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/logger/logger_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/network/app_exceptions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/network/app_exceptions.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/network/cookie_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/network/cookie_manager.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/network/error_interceptor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/network/error_interceptor.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/network/mock_interceptor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/network/mock_interceptor.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/network/my_log_interceptor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/network/my_log_interceptor.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/network/network_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/network/network_utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/network/retry_interceptor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/network/retry_interceptor.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/account/account_list_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/account/account_list_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/main_content_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/main_content_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/left_menu/left_menu_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/left_menu/left_menu_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/setting/setting_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/setting/setting_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/top_nav/main_top_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/top_nav/main_top_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/user/user_list_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/user/user_list_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/style/app_theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/style/app_theme.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/style/theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/style/theme.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/platform/adapter/io.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/platform/adapter/io.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/favicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/icons/Icon-192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/icons/Icon-512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/icons/Icon-maskable-192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/icons/Icon-maskable-512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index_backup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/manifest.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,24 +42,39 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/dio-4.0.6/lib/src/form_data.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/dio-4.0.6/lib/src/multipart_file.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/file_picker-5.2.5/lib/src/file_picker.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/file_picker-5.2.5/lib/src/file_picker_result.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/file_picker-5.2.5/lib/src/platform_file.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/fvm/versions/3.7.10/bin/cache/pkg/sky_engine/lib/core/iterable.dart" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/fvm/versions/3.7.10/packages/flutter/lib/src/material/colors.dart" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2M8dboVx5MqlktfTMLC75qfFPx3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
-    <property name="cidr.known.project.marker" value="true" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/pages" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="show.migrate.to.gradle.popup" value="false" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "io.flutter.reload.alreadyRun": "true",
+    "last_opened_file_path": "/Users/sn/Documents/Github/flutter/flutter_admin_universal/assets",
+    "show.migrate.to.gradle.popup": "false"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
+      <recent name="$PROJECT_DIR$/flutter_core/lib/src/logger" />
+      <recent name="$PROJECT_DIR$/flutter_core/lib/src" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/lib/pages" />
     </key>
   </component>
@@ -78,6 +106,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -2,13 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dio/dio.dart';
-import 'package:dio/adapter.dart';
+import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/foundation.dart';
-import '../utils/toast_utils.dart';
-import 'cookie_manager.dart';
+import 'package:flutter_core/src/network/my_log_interceptor.dart';
+
+import '../../flutter_core.dart';
 import 'error_interceptor.dart';
 import 'mock_interceptor.dart';
 import 'retry_interceptor.dart';
@@ -42,8 +41,9 @@ class Network {
     //https://github.com/flutterchina/dio/issues/1027 cookie
     final BaseOptions options = BaseOptions(
       extra: {"withCredentials": true},
-      connectTimeout: 20000,
-      receiveTimeout: 3000,
+      connectTimeout: const Duration(milliseconds: 10000),
+      receiveTimeout: const Duration(milliseconds: 10000),
+      sendTimeout: const Duration(milliseconds: 10000),
       //请求的contentType,默认值是'application/json;charset=utf-8'
       //自动编码请求体，防止有汉字
       contentType: Headers.jsonContentType,
@@ -54,10 +54,10 @@ class Network {
     _dio!.interceptors
       ..add(NetworkMockInterceptor())
       ..add(ErrorInterceptor())
-      ..add(DioCacheManager(CacheConfig()).interceptor as Interceptor)
-      ..add(LogInterceptor(
+      ..add(MyLogInterceptor(
         requestBody: true,
         responseBody: true,
+        logPrint: logger.v,
         error: true,
       ));
     if (kIsWeb) {
@@ -67,7 +67,7 @@ class Network {
         CookieManager(CookiesManager.getInstance().cookieJar),
       );
     }
-    (_dio!.transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
+    (_dio!.transformer as SyncTransformer).jsonDecodeCallback = parseJson;
     //重试逻辑
     if (retryEnable) {
       _dio!.interceptors.add(
@@ -94,13 +94,14 @@ class Network {
   //是否是魔客
   static const bool _mock = true;
   static String? _proxyIpAddress;
+  static String userAgent = 'MyApp';
 
   String? getProxyIpAddress() => _proxyIpAddress;
 
   void setProxyIpAddress(String ip) {
     _proxyIpAddress = ip;
     if (_proxyIpAddress != null) {
-      (_dio!.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (_dio!.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
           return 'PROXY ${_proxyIpAddress!}';
@@ -113,23 +114,34 @@ class Network {
     }
   }
 
-  static void addInterceptor(Interceptor interceptor) {
-    Network.getInstance()._dio?.interceptors.add(interceptor);
+  static void addInterceptor(
+    Interceptor interceptor, {
+    bool beforeLog = false,
+  }) {
+    if (beforeLog) {
+      Interceptors? interceptors = Network.getInstance()._dio?.interceptors;
+      int logIndex =
+          interceptors?.indexWhere((element) => element is MyLogInterceptor) ??
+              0;
+      Network.getInstance()._dio?.interceptors.insert(logIndex, interceptor);
+    } else {
+      Network.getInstance()._dio?.interceptors.add(interceptor);
+    }
   }
 
   /// get请求
   static Future<NetworkResponse> get(
     String url, {
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    String? contentType,
     bool cache = false,
     bool mock = false,
     ProgressCallback? progressCallback,
   }) async {
-    return await Network.getInstance()._fetch(
+    return await fetch(
       url,
       queryParameters: queryParameters,
-      options: options,
+      contentType: contentType,
       cache: cache,
       mock: mock,
       progressCallback: progressCallback,
@@ -137,21 +149,23 @@ class Network {
   }
 
   /// post请求
+  /// queryParameters url拼接的参数
+  /// data body里面的内容 一般是json
   static Future<NetworkResponse> post(
     String url, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    String? contentType,
     bool cache = false,
     bool mock = false,
     ProgressCallback? progressCallback,
   }) async {
-    return await Network.getInstance()._fetch(
+    return await fetch(
       url,
       method: 'post',
       data: data,
       queryParameters: queryParameters,
-      options: options,
+      contentType: contentType,
       cache: cache,
       mock: mock,
       progressCallback: progressCallback,
@@ -159,21 +173,23 @@ class Network {
   }
 
   /// put请求
+  /// queryParameters url拼接的参数
+  //  data body里面的内容 一般是json
   static Future<NetworkResponse> put(
     String url, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    String? contentType,
     bool cache = false,
     bool mock = false,
     ProgressCallback? progressCallback,
   }) async {
-    return await Network.getInstance()._fetch(
+    return await fetch(
       url,
       method: 'put',
       data: data,
       queryParameters: queryParameters,
-      options: options,
+      contentType: contentType,
       cache: cache,
       mock: mock,
       progressCallback: progressCallback,
@@ -185,17 +201,17 @@ class Network {
     String url, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    String? contentType,
     bool cache = false,
     bool mock = false,
     ProgressCallback? progressCallback,
   }) async {
-    return await Network.getInstance()._fetch(
+    return await fetch(
       url,
       method: 'patch',
       data: data,
       queryParameters: queryParameters,
-      options: options,
+      contentType: contentType,
       cache: cache,
       mock: mock,
       progressCallback: progressCallback,
@@ -207,17 +223,17 @@ class Network {
     String url, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    String? contentType,
     bool cache = false,
     bool mock = false,
     ProgressCallback? progressCallback,
   }) async {
-    return await Network.getInstance()._fetch(
+    return await fetch(
       url,
       method: 'delete',
       data: data,
       queryParameters: queryParameters,
-      options: options,
+      contentType: contentType,
       cache: cache,
       mock: mock,
       progressCallback: progressCallback,
@@ -229,17 +245,17 @@ class Network {
     String url, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    String? contentType,
     bool cache = false,
     bool mock = false,
     ProgressCallback? progressCallback,
   }) async {
-    return await Network.getInstance()._fetch(
+    return await fetch(
       url,
       method: 'head',
       data: data,
       queryParameters: queryParameters,
-      options: options,
+      contentType: contentType,
       cache: cache,
       mock: mock,
       progressCallback: progressCallback,
@@ -272,12 +288,13 @@ class Network {
   }
 
   /// 上传文件
-  static Future<Response> uploadFile(
+  static Future<NetworkResponse> uploadFile(
     String urlPath,
     String filePath, {
+    Map<String, dynamic>? form,
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
-    Options? options,
+    String? contentType,
     ProgressCallback? progressCallback,
   }) async {
     //进度
@@ -287,7 +304,10 @@ class Network {
 
     // 单个文件上传
     var formData = FormData.fromMap(
-        {'file': await MultipartFile.fromFile(filePath, filename: 'file')});
+      {
+        'file': await MultipartFile.fromFile(filePath),
+      }..addAll(form ?? {}),
+    );
 // 多个文件上传
 //     var formData =  FormData.fromMap({
 //       'files': [
@@ -297,12 +317,52 @@ class Network {
 //             filename: 'upload.txt'),
 //       ]
 //     });
-    Response response = await Network.getInstance()._dio!.post(urlPath,
-        queryParameters: queryParameters,
-        cancelToken: cancelToken,
-        data: formData,
-        options: options,
-        onReceiveProgress: callback);
+    NetworkResponse response = await Network.post(
+      urlPath,
+      queryParameters: queryParameters,
+      data: formData,
+      contentType: contentType,
+      progressCallback: callback,
+    );
+    return response;
+  }
+
+  static Future<NetworkResponse> uploadFileBytes(
+    String urlPath,
+    List<int> value, {
+    Map<String, dynamic>? form,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    String? contentType,
+    ProgressCallback? progressCallback,
+  }) async {
+    //进度
+    callback(int count, int total) {
+      progressCallback?.call(count, total);
+    }
+
+    // 单个文件上传
+    var formData = FormData.fromMap(
+      {
+        'file': MultipartFile.fromBytes(value),
+      }..addAll(form ?? {}),
+    );
+// 多个文件上传
+//     var formData =  FormData.fromMap({
+//       'files': [
+//         MultipartFile.fromFileSync('./example/upload.txt',
+//             filename: 'upload.txt'),
+//         MultipartFile.fromFileSync('./example/upload.txt',
+//             filename: 'upload.txt'),
+//       ]
+//     });
+    NetworkResponse response = await Network.post(
+      urlPath,
+      queryParameters: queryParameters,
+      data: formData,
+      contentType: contentType,
+      progressCallback: callback,
+    );
     return response;
   }
 
@@ -314,34 +374,44 @@ class Network {
   final Map<String, Function> _fetchTypes = {};
 
   ///请求处理
-  Future<NetworkResponse> _fetch(
+  /// queryParameters url拼接的参数
+  /// data body里面的内容 一般是json
+  static Future<NetworkResponse> fetch(
     String url, {
     String method = 'get',
     //data 可传FormData
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    Options? options,
     bool cache = false,
     bool mock = false,
+    String? contentType,
     ProgressCallback? progressCallback,
   }) async {
-    final ConnectivityResult connResult =
-        await Connectivity().checkConnectivity();
-    if (connResult == ConnectivityResult.none) {
-      ToastUtils.toast('网络连接失败');
-      // throw DioError(error: JDUnreachableNetworkException());
+    if (!(mock && _mock)) {
+      final ConnectivityResult connResult =
+          await Connectivity().checkConnectivity();
+      if (connResult == ConnectivityResult.none) {
+        ToastUtils.toast('网络连接失败');
+        throw UnreachableNetworkException(
+          requestOptions: RequestOptions(path: url, method: method),
+        );
+      }
     }
 
-    options = options ?? Options();
+    Options options = Options();
     //添加额外参数
     options.extra = (options.extra ?? {})
-      ..addAll(<String, dynamic>{'noCache': cache, 'mock': mock && _mock});
+      ..addAll(<String, dynamic>{
+        'noCache': cache,
+        'mock': mock && _mock,
+      });
     //添加公共参数
     options.headers = (options.headers ?? {})
       ..addAll({
-        'userAgent': 'MyApp',
+        'userAgent': userAgent,
       });
 
+    options.contentType = contentType;
     //进度
     callback(int count, int total) {
       progressCallback?.call(count, total);
@@ -349,22 +419,23 @@ class Network {
 
     // ignore: always_specify_types
     Response r;
-    if (method == 'get') {
+    String lowerMethod = method.toLowerCase();
+    if (lowerMethod == 'get') {
       //Get请求
       r = await Network.getInstance()._dio!.get<dynamic>(
             url,
             queryParameters: queryParameters,
             options: options,
-            cancelToken: cancelToken,
+            cancelToken: Network.getInstance().cancelToken,
             onReceiveProgress: callback,
           );
     } else {
       //Post等其他请求
-      r = await _fetchTypes[method]!<dynamic>(url,
+      r = await Network.getInstance()._fetchTypes[lowerMethod]!<dynamic>(url,
           data: data,
           queryParameters: queryParameters,
           options: options,
-          cancelToken: cancelToken,
+          cancelToken: Network.getInstance().cancelToken,
           onReceiveProgress: callback);
     }
     //r.data 响应体

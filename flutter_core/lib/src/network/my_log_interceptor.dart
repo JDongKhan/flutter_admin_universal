@@ -79,8 +79,6 @@ class MyLogInterceptor extends Interceptor {
       });
     }
     logPrint(logString);
-    logPrint('');
-
     handler.next(options);
   }
 
@@ -100,7 +98,6 @@ class MyLogInterceptor extends Interceptor {
         _printResponse(err.response!);
       }
       logPrint(logString);
-      logPrint('');
     }
 
     handler.next(err);
@@ -132,17 +129,16 @@ class MyLogInterceptor extends Interceptor {
       });
     }
     logPrint(logString);
-    logPrint('');
   }
 
   String _getKVString(String key, Object? v) {
     return '$key: $v \n';
   }
 
-  StringBuffer _longLogString(String? log) {
+  StringBuffer _longLogString(String log) {
     StringBuffer stringBuffer = StringBuffer();
     int maxLength = 800;
-    String? remainString = log;
+    String remainString = log;
     while (remainString != null && remainString.isNotEmpty) {
       int length = maxLength;
       if (remainString.length < maxLength) {
@@ -151,7 +147,7 @@ class MyLogInterceptor extends Interceptor {
       String subString = remainString.substring(0, length);
       stringBuffer.write(subString);
       remainString = remainString.substring(length, remainString.length);
-      if (remainString.isNotEmpty) {
+      if (remainString != null && remainString.isNotEmpty) {
         stringBuffer.write('\n');
       }
     }

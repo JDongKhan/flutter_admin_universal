@@ -40,7 +40,7 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
-<div id="loading">
+  <div id="loading">
   <style>
     body {
       inset: 0;
@@ -84,28 +84,28 @@
     }
     </style>
   <img src="icons/Icon-192.png" alt="Loading..."/>
-</div>
-
+  </div>
   <script>
+    var loading = document.querySelector("#loading");
     window.addEventListener('load', function(ev) {
-     var loading = document.querySelector("#loading");
+      loading.classList.add("main_done");
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          loading.classList.add("init_done");
+          engineInitializer.initializeEngine({
+            renderer: 'canvaskit',
+            canvasKitBaseUrl: './canvaskit/'
+          }).then(function(appRunner) {
+            appRunner.runApp();
+            window.setTimeout(function () {
+              loading.remove();
+            }, 200);
+          });
         }
-      }).then(function(engineInitializer) {
-        loading.classList.add("main_done");
-        return engineInitializer.initializeEngine();
-      }).then(function(appRunner) {
-        loading.classList.add("init_done");
-        return appRunner.runApp();
-      }).then(function (app) {
-        // Wait a few milliseconds so users can see the "zoooom" animation
-        // before getting rid of the "loading" div.
-        window.setTimeout(function () {
-          loading.remove();
-        }, 200);
       });
     });
   </script>

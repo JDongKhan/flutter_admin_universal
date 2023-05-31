@@ -91,6 +91,7 @@ class MyApp extends StatelessWidget {
         return child!;
       }),
       theme: ThemeData(
+        fontFamilyFallback: const ['Noto Sans SC'],
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the

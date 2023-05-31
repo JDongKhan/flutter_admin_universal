@@ -73,8 +73,7 @@ class IOAdapter implements PlatformAdapter {
           "fileName": fileName,
           "filePath": url,
         },
-        options: Options(receiveTimeout: 0),
-        progressCallback: (int count, int total) {
+        options: Options(), progressCallback: (int count, int total) {
       double progress = count * 1.0 / total * 1.0;
       print('contentLenght:$total');
       print('下载进度:$progress');

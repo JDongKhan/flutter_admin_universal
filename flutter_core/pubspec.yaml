@@ -13,32 +13,32 @@ dependencies:
 
   ################  网络 ##################
   #网络状态监听
-  dio: ^4.0.6
-  dio_http_cache: ^0.3.0
+  dio: ^5.1.2
+  #dio_http_cache: ^0.3.0
   dio_cookie_manager: ^2.0.0
   cookie_jar: ^3.0.1
-  connectivity_plus: ^3.0.2
+  connectivity_plus: ^3.0.3
 
   ################  图片 ################
-  cached_network_image: ^3.2.2
+  cached_network_image: ^3.2.3
 
   ################  能力  ################
 
   #日志
-  logger: ^1.1.0
+  logger: ^1.3.0
   path: 1.8.2
   #path
   path_provider: ^2.0.11
   #sp 本地存储
-  shared_preferences: ^2.0.15
+  shared_preferences: ^2.1.0
   #本地json对象存储
   localstorage: ^4.0.0+1
   #获取地址
   #geolocator: ^8.0.1
   #屏幕适配
-  flutter_screenutil: ^5.6.0
+  flutter_screenutil: ^5.7.0
   #dialog
-  flutter_smart_dialog: ^4.7.1
+  flutter_smart_dialog: ^4.9.0
 
 dev_dependencies:
   flutter_test:

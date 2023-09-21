@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graphic/graphic.dart';
+import 'package:flutter_chart_plus/flutter_chart.dart';
 
 class PieChartSample2 extends StatelessWidget {
   PieChartSample2({Key? key}) : super(key: key);
@@ -18,83 +18,23 @@ class PieChartSample2 extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10),
       width: 350,
       height: 300,
-      child: Chart(
-        data: basicData,
-        variables: {
-          'genre': Variable(
-            accessor: (Map map) => map['genre'] as String,
-          ),
-          'sold': Variable(
-            accessor: (Map map) => map['sold'] as num,
-          ),
-        },
-        transforms: [
-          Proportion(
-            variable: 'sold',
-            as: 'percent',
-          )
-        ],
-        elements: [
-          IntervalElement(
-            position: Varset('percent') / Varset('genre'),
-            label: LabelAttr(
-              encoder: (tuple) => Label(
-                tuple['sold'].toString(),
-                LabelStyle(style: Defaults.runeStyle),
-              ),
+      child: ChartWidget(
+        coordinateRender: ChartCircularCoordinateRender(
+          margin: const EdgeInsets.only(left: 50, top: 10, right: 40, bottom: 10),
+          charts: [
+            Pie(
+              data: basicData,
+              position: (item) => (double.parse(item['sold'].toString())),
+              holeRadius: 40,
+              valueTextOffset: 20,
+              showValue: true,
+              centerTextStyle: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+              valueFormatter: (item) => item['sold'].toString(),
+              legendFormatter: (item) => item['genre'].toString(),
             ),
-            color: ColorAttr(variable: 'genre', values: Defaults.colors10),
-            modifiers: [StackModifier()],
-          )
-        ],
-        coord: PolarCoord(
-          transposed: true,
-          dimCount: 1,
-          startRadius: 0.4,
+          ],
         ),
-        selections: {'tap': PointSelection()},
-        tooltip: TooltipGuide(renderer: centralPieLabel),
       ),
     );
-  }
-
-  List<Figure> centralPieLabel(
-    Size size,
-    Offset anchor,
-    Map<int, Tuple> selectedTuples,
-  ) {
-    final tuple = selectedTuples.values.last;
-
-    final titleSpan = TextSpan(
-      text: '${tuple['genre']}\n',
-      style: const TextStyle(
-        fontSize: 14,
-        color: Colors.black87,
-      ),
-    );
-
-    final valueSpan = TextSpan(
-      text: tuple['sold'].toString(),
-      style: const TextStyle(
-        fontSize: 28,
-        color: Colors.black87,
-      ),
-    );
-
-    final painter = TextPainter(
-      text: TextSpan(children: [titleSpan, valueSpan]),
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.center,
-    );
-    painter.layout();
-
-    final paintPoint = getPaintPoint(
-      const Offset(175, 150),
-      painter.width,
-      painter.height,
-      Alignment.center,
-    );
-
-    return [TextFigure(painter, paintPoint)];
   }
 }

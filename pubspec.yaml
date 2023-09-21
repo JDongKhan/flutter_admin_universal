@@ -20,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=2.18.2 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -51,19 +51,19 @@ dependencies:
   device_info_plus: ^8.0.0
   url_launcher: ^6.1.5
   #应用信息
-  package_info_plus: ^3.0.2
+  package_info_plus: ^4.1.0
   #权限
-  permission_handler: ^10.2.0
+  permission_handler: ^11.0.0
 
-  go_router: ^5.2.0
+  go_router: ^10.2.0
   flutter_svg: ^1.0.3
-  graphic: ^1.0.1
-  provider: ^6.0.4
-  pluto_grid: ^5.4.4
+  flutter_chart_plus: ^0.1.5
+  provider: ^6.0.5
+  pluto_grid: ^7.0.2
   app_installer: ^1.1.0
-  webview_flutter: ^3.0.4
-  file_picker: ^5.2.3
-  html_editor_enhanced: ^2.5.0
+  webview_flutter: ^4.2.4
+  file_picker: ^5.5.0
+  html_editor_enhanced: ^2.5.1
   #  common_utils: ^2.1.0
   #  quill_html_editor: ^0.1.5
   #  file_picker: ^4.5.1
@@ -72,7 +72,7 @@ dependencies:
 
 dependency_overrides:
   file_picker: ^5.2.3
-  webview_flutter: ^3.0.4
+  numberpicker: ^2.1.2
 
 dev_dependencies:
   flutter_test:

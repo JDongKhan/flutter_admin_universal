@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../style/app_theme.dart';
 import '../../../widget/deferred_widget.dart';
 import '../../../widget/universal_dashboard.dart';
+import '../../../widget/webview/web_page.dart';
 import '../../app/app_list_page.dart' deferred as app;
 import '../../account/account_list_page.dart' deferred as account;
 import '../../home/main_content_page.dart';
@@ -10,7 +11,6 @@ import '../../left_menu/left_menu_page.dart';
 import '../../setting/setting_page.dart';
 import '../../top_nav/main_top_widget.dart';
 import '../../user/user_list_page.dart' deferred as user;
-import '../../web/web_page.dart' deferred as web;
 import '../../log/log_list_page.dart' deferred as log;
 import '../../../pages/left_menu/model/menu_item.dart' as menu;
 import '../../../pages/dept/dept_page.dart' deferred as dept;
@@ -70,11 +70,8 @@ class _DashboardPageState extends State<DashboardPage> {
       menu.MenuItem.second(
         '外边系统',
         '/web',
-        builder: (_) => DeferredWidget(
-          future: web.loadLibrary(),
-          builder: () => web.WebPage(
-            url: 'https://flutter.cn',
-          ),
+        builder: (_) => const WebPage(
+          url: 'https://flutter.cn',
         ),
       ),
     ]),
@@ -128,9 +125,7 @@ class _DashboardPageState extends State<DashboardPage> {
           children: [
             const MainTopWidget(),
             Expanded(
-              child: _selectedPage ??
-                  (menus.first.items?.first.builder?.call(context) ??
-                      Container()),
+              child: _selectedPage ?? (menus.first.items?.first.builder?.call(context) ?? Container()),
             ),
           ],
         ),

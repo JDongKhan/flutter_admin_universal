@@ -13,8 +13,7 @@ class SecondSection extends StatefulWidget {
   State<SecondSection> createState() => _SecondSectionState();
 }
 
-class _SecondSectionState extends State<SecondSection>
-    with SingleTickerProviderStateMixin {
+class _SecondSectionState extends State<SecondSection> with SingleTickerProviderStateMixin {
   TabController? _tabController;
   String? _dateSelectText;
   List<SalesData>? listData;
@@ -173,8 +172,7 @@ class _SecondSectionState extends State<SecondSection>
                           color: Colors.grey.withAlpha(100),
                         ),
                       ),
-                      padding: const EdgeInsets.only(
-                          left: 5, right: 5, top: 2, bottom: 2),
+                      padding: const EdgeInsets.only(left: 5, right: 5, top: 2, bottom: 2),
                       child: Row(
                         children: [
                           Text(
@@ -290,14 +288,10 @@ class _SecondSectionState extends State<SecondSection>
   Widget _contentWidget() {
     return TabBarView(
       controller: _tabController,
-      children: [
-        Center(child: _chartStyle1Widget()),
-        const Center(child: LineChartSample1(isShowingMainData: false)),
+      children: const [
+        Center(child: LineChartSample1()),
+        Center(child: LineChartSample1(isShowingMainData: false)),
       ],
     );
-  }
-
-  Widget _chartStyle1Widget() {
-    return const LineChartSample1();
   }
 }

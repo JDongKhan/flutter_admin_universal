@@ -71,10 +71,10 @@ class PrinterLogManager extends PrettyPrinter {
 
     String? stackTraceStr = '';
     if (event.stackTrace == null) {
-      if (methodCount > 0) {
+      if (methodCount != null && methodCount! > 0) {
         stackTraceStr = formatStackTrace(StackTrace.current, methodCount);
       }
-    } else if (errorMethodCount > 0) {
+    } else if (errorMethodCount != null && errorMethodCount! > 0) {
       stackTraceStr = formatStackTrace(event.stackTrace, errorMethodCount);
     }
 
@@ -96,10 +96,7 @@ class LogOutputManager extends LogOutput {
   }
 
   ///日志
-  final List<LogOutput> _otherLogOutput = [
-    PlatformLoggerOutput.instance,
-    FileLoggerOut.getInstance()
-  ];
+  final List<LogOutput> _otherLogOutput = [PlatformLoggerOutput.instance, FileLoggerOut.getInstance()];
   void addLogOutput(LogOutput logOutput) {
     _otherLogOutput.add(logOutput);
   }
@@ -137,8 +134,7 @@ class FileLoggerOut extends LogOutput {
       }
       DateTime dateTime = DateTime.now();
       String logDirectory = '${value.path}/logger';
-      String fileName =
-          'log_${dateTime.year}_${dateTime.month}_${dateTime.day}.txt';
+      String fileName = 'log_${dateTime.year}_${dateTime.month}_${dateTime.day}.txt';
       String path = '$logDirectory/$fileName';
       logPath = path;
       debugPrint('日志文件地址:$path');
@@ -179,7 +175,7 @@ class FileLoggerOut extends LogOutput {
   }
 
   @override
-  void destroy() async {
+  Future<void> destroy() async {
     await _sink?.flush();
     await _sink?.close();
   }

@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as p;
-import '../../pages/web/src/web_view_for_platform.dart';
 import '../../service/environment.dart';
 import '../platform_adapter.dart';
 
@@ -115,8 +114,7 @@ class IOAdapter implements PlatformAdapter {
     String accessId = authInfo['accessId'];
     String expireTime = authInfo['expireTime'];
     String signature = authInfo['signature'];
-    String requestURL =
-        '$uploadUrl?SDOSSAccessKeyId=$accessId&Expires=$expireTime&Signature=$signature';
+    String requestURL = '$uploadUrl?SDOSSAccessKeyId=$accessId&Expires=$expireTime&Signature=$signature';
 
     // 单个文件上传
     var formData = FormData.fromMap({
@@ -135,13 +133,6 @@ class IOAdapter implements PlatformAdapter {
   @override
   void clearCookies() {
     CookiesManager.getInstance().deleteAll();
-  }
-
-  @override
-  Widget createWebView(String url) {
-    return WebViewForPlatform(
-      url: url,
-    );
   }
 }
 

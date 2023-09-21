@@ -5,7 +5,6 @@ import 'dart:js' as js;
 import 'package:path/path.dart' as p;
 import 'package:flutter/material.dart';
 
-import '../../pages/web/src/web_view_for_web.dart';
 import '../../service/environment.dart';
 import '../platform_adapter.dart';
 
@@ -63,8 +62,7 @@ class BrowserAdapter implements PlatformAdapter {
   Future<String?> downloadFile(String url) async {
     debugPrint('下载$url');
     String fileName = p.basename(url);
-    String downUrl =
-        "${environment.path.fileDownUrl}?fileName=$fileName&filePath=$url";
+    String downUrl = "${environment.path.fileDownUrl}?fileName=$fileName&filePath=$url";
     html.AnchorElement downloadElemment = html.AnchorElement(href: downUrl);
     downloadElemment.download = downUrl;
     downloadElemment.click();
@@ -77,8 +75,7 @@ class BrowserAdapter implements PlatformAdapter {
     return html.window.navigator.userAgent;
   }
 
-  Future _upload1(html.FileUploadInputElement uploadInput, html.Event event,
-      Completer<String> completer) async {
+  Future _upload1(html.FileUploadInputElement uploadInput, html.Event event, Completer<String> completer) async {
     debugPrint('开始上传');
     // html.FileUploadInputElement uploadInput = event.target;
     final files = uploadInput.files;
@@ -118,8 +115,7 @@ class BrowserAdapter implements PlatformAdapter {
     }
   }
 
-  Future _upload(html.FileUploadInputElement uploadInput, html.Event event,
-      Completer<String> completer) async {
+  Future _upload(html.FileUploadInputElement uploadInput, html.Event event, Completer<String> completer) async {
     // html.FileUploadInputElement uploadInput = event.target;
     final files = uploadInput.files;
     debugPrint('选择文件:$files');
@@ -135,8 +131,7 @@ class BrowserAdapter implements PlatformAdapter {
       String accessId = authInfo['accessId'];
       String expireTime = authInfo['expireTime'];
       String signature = authInfo['signature'];
-      String requestURL =
-          '$uploadUrl?SDOSSAccessKeyId=$accessId&Expires=$expireTime&Signature=$signature';
+      String requestURL = '$uploadUrl?SDOSSAccessKeyId=$accessId&Expires=$expireTime&Signature=$signature';
 
       debugPrint('上传的url:$requestURL');
 
@@ -169,9 +164,7 @@ class BrowserAdapter implements PlatformAdapter {
     authUrl = '$authUrl/carrbshop-web/settle/ossAuthentication';
 
     debugPrint('上传地址:$authUrl');
-    html.HttpRequest r = await html.HttpRequest.postFormData(
-        authUrl, {'objectName': fileName},
-        responseType: 'json');
+    html.HttpRequest r = await html.HttpRequest.postFormData(authUrl, {'objectName': fileName}, responseType: 'json');
     if (r.response is! Map) {
       debugPrint('鉴权格式异常');
       return null;
@@ -209,12 +202,5 @@ class BrowserAdapter implements PlatformAdapter {
   @override
   void clearCookies() {
     html.window.document.cookie = "";
-  }
-
-  @override
-  Widget createWebView(String url) {
-    return WebViewForWeb(
-      url: url,
-    );
   }
 }

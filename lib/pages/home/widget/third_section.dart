@@ -46,7 +46,7 @@ class ThirdSection extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
+            children: [
               Expanded(
                 flex: 3,
                 child: ChartInfoCardWidget(
@@ -60,7 +60,7 @@ class ThirdSection extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 flex: 2,
                 child: ChartInfoCardWidget(
                   title: '销售额类别占比',

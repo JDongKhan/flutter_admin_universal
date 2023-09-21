@@ -22,8 +22,7 @@ class MainContentPage extends StatefulWidget {
   State createState() => _MainContentPageState();
 }
 
-class _MainContentPageState extends State<MainContentPage>
-    with WidgetsBindingObserver {
+class _MainContentPageState extends State<MainContentPage> with WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
   List<SalesData>? listData;
   final GlobalKey _topWidgetKey = GlobalKey();
@@ -68,8 +67,7 @@ class _MainContentPageState extends State<MainContentPage>
         slivers: [
           FutureBuilder(
             future: LogService.statisticsUrl(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) =>
-                FirstSection(
+            builder: (BuildContext context, AsyncSnapshot snapshot) => FirstSection(
               data: snapshot.data,
               anchorKey: _centerWidgetKey,
             ),

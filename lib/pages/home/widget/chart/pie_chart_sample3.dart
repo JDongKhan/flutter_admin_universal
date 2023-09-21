@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graphic/graphic.dart';
+import 'package:flutter_chart_plus/flutter_chart.dart';
 
 import '../../model/data.dart';
 
@@ -11,31 +11,24 @@ class PieChartSample3 extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       height: 200,
-      child: Chart(
-        data: roseData,
-        padding: (size) => const EdgeInsets.all(10),
-        variables: {
-          'name': Variable(
-            accessor: (Map map) => map['name'] as String,
-          ),
-          'value': Variable(
-            accessor: (Map map) => map['value'] as num,
-            scale: LinearScale(min: 0, marginMax: 0.1),
-          ),
-        },
-        elements: [
-          IntervalElement(
-            label:
-                LabelAttr(encoder: (tuple) => Label(tuple['name'].toString())),
-            shape: ShapeAttr(
-                value: RectShape(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            )),
-            color: ColorAttr(variable: 'name', values: Defaults.colors10),
-            elevation: ElevationAttr(value: 5),
-          )
-        ],
-        coord: PolarCoord(startRadius: 0.15),
+      child: ChartWidget(
+        coordinateRender: ChartCircularCoordinateRender(
+          margin: const EdgeInsets.all(12),
+          charts: [
+            Radar(
+              max: 100,
+              data: roseData,
+              fillColors: colors10.map((e) => e.withOpacity(0.2)).toList(),
+              legendFormatter: () => roseData.map((e) => e['name']).toList(),
+              valueFormatter: (item) => [
+                item['value'],
+              ],
+              values: (item) => [
+                (double.parse(item['value'].toString())),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import 'adapter/create_adapter.dart'
-    if (dart.library.html) 'adapter/browser.dart'
-    if (dart.library.io) 'adapter/io.dart';
+import 'adapter/create_adapter.dart' if (dart.library.html) 'adapter/browser.dart' if (dart.library.io) 'adapter/io.dart';
 
 /// @author jd
 
@@ -25,6 +23,4 @@ abstract class PlatformAdapter {
   String userAgent();
 
   void alert(String message);
-
-  Widget createWebView(String url);
 }

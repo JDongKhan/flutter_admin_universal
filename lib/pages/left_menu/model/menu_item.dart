@@ -7,20 +7,33 @@ class MenuItem {
   final List<MenuItem>? items;
   final String? route;
   final WidgetBuilder? builder;
-  const MenuItem({
+  final bool delete;
+  MenuItem({
     required this.title,
     this.iconData,
     this.items,
     this.route,
     this.builder,
+    this.delete = true,
   });
 
-  const MenuItem.first(
-      String this.title, IconData this.iconData, List<MenuItem> this.items)
-      : route = null,
-        builder = null;
+  Widget? _widget;
 
-  const MenuItem.second(String this.title, String this.route, {this.builder})
+  Widget buildWidget(BuildContext context) {
+    WidgetBuilder? widgetBuilder = builder;
+    if (widgetBuilder != null) {
+      return _widget ??= widgetBuilder.call(context);
+    } else {
+      return Container();
+    }
+  }
+
+  MenuItem.first(this.title, this.iconData, this.items)
+      : route = null,
+        builder = null,
+        delete = false;
+
+  MenuItem.second(this.title, this.route, {this.builder, this.delete = true})
       : iconData = null,
         items = null;
 }

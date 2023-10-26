@@ -5,40 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23125eb9-612f-4bb2-9970-3ce35e6f0032" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/widget/webview/src/adapter/web_view_browser_adapter.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/widget/webview/src/adapter/web_view_io_adapter.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/widget/webview/src/web_view_adapter.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/widget/webview/src/widget/web_view_for_platform.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/widget/webview/src/widget/web_view_for_web.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/widget/webview/src/widget/web_view_progress.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/widget/webview/web_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_core/lib/src/logger/logger_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/lib/src/logger/logger_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/dashboard/model/dashboard_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/dashboard/model/dashboard_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/dashboard/page/dashboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/dashboard/page/dashboard.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/main_content_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/main_content_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/model/data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/model/data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/chart/bar_chart_sample1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/chart/bar_chart_sample1.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/chart/bar_chart_sample2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/chart/bar_chart_sample2.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/chart/line_chart_sample1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/chart/line_chart_sample1.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/chart/line_chart_sample2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/chart/line_chart_sample2.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/chart/pie_chart_sample1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/chart/pie_chart_sample1.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/chart/pie_chart_sample2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/chart/pie_chart_sample2.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/chart/pie_chart_sample3.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/chart/pie_chart_sample3.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/second_section.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/second_section.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/home/widget/third_section.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/home/widget/third_section.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/web/src/web_view_for_platform.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/web/src/web_view_for_web.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/web/web_page.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/platform/adapter/browser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/platform/adapter/browser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/platform/adapter/io.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/platform/adapter/io.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/platform/platform_adapter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/platform/platform_adapter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/left_menu/model/menu_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/left_menu/model/menu_item.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/top_nav/main_top_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/top_nav/main_top_widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +27,6 @@
     <setting file="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/file_picker-5.2.5/lib/src/file_picker.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/file_picker-5.2.5/lib/src/file_picker_result.dart" root0="SKIP_INSPECTION" />
     <setting file="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/file_picker-5.2.5/lib/src/platform_file.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$USER_HOME$/fvm/versions/3.7.10/bin/cache/pkg/sky_engine/lib/core/iterable.dart" root0="SKIP_INSPECTION" />
-    <setting file="file://$USER_HOME$/fvm/versions/3.7.10/packages/flutter/lib/src/material/colors.dart" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

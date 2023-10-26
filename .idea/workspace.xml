@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23125eb9-612f-4bb2-9970-3ce35e6f0032" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/dashboard/model/dashboard_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/dashboard/model/dashboard_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/dashboard/page/dashboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/dashboard/page/dashboard.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/left_menu/model/menu_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/left_menu/model/menu_item.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/top_nav/main_top_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/top_nav/main_top_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

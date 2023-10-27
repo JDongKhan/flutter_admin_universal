@@ -226,10 +226,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_chart_plus
-      sha256: efea96c81525df4a0b79c2fd91a3db7b9c649e40b90cf052c26a7fba5e3adad4
+      sha256: "5a0971c797fe6fe1caf6091632fbbf188faea1604f3cb28887d061bf6de32a9c"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.6"
   flutter_core:
     dependency: "direct main"
     description:

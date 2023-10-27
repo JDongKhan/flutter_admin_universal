@@ -57,7 +57,7 @@ dependencies:
 
   go_router: ^10.2.0
   flutter_svg: ^1.0.3
-  flutter_chart_plus: ^0.1.5
+  flutter_chart_plus: ^0.1.6
   provider: ^6.0.5
   pluto_grid: ^7.0.2
   app_installer: ^1.1.0

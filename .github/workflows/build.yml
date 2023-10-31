@@ -23,7 +23,7 @@ jobs:
         run: flutter pub get
         
       - name: Build and test
-        run: flutter build web --release
+        run: flutter build web --release --base-href /flutter_admin_universal/web/
     
       - name: Copy to docs/web
         run: |

@@ -36,5 +36,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./docs/web/
+          destination_dir: docs/web/
 
     

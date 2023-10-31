@@ -35,5 +35,5 @@ jobs:
       - name: Copy to docs/web
         run: |
           mkdir -p docs/web
-          cp -R build/web/* docs/web/
+          cp -R * docs/web/
           rm -rf .temp

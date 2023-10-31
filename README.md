@@ -1,4 +1,6 @@
-# app_dispatcher
+# flutter_admin_universal
+
+https://jdongkhan.github.io/flutter_admin_universal/web/
 
 本项目是基于flutter+spring boot开发，支持数据/文件保存与查询，目前可以满足大部分需求场景，因功能较简单，可作为脚手架使用，需要再次开发，不支持直接商用。
 

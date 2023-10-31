@@ -1,0 +1,1 @@
+{"net":{"http_server_properties":{"broken_alternative_services":[{"anonymization":[],"broken_count":2,"host":"fonts.gstatic.com","port":443,"protocol_str":"quic"}],"servers":[{"anonymization":[],"server":"https://fonts.gstatic.com","supports_spdy":true}],"version":5},"network_qualities":{"CAASABiAgICA+P////8B":"4G","CAESABiAgICA+P////8B":"4G"}}}

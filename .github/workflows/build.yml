@@ -24,16 +24,17 @@ jobs:
         
       - name: Build and test
         run: flutter build web --release
-        
+    
+      - name: Copy to docs/web
+        run: |
+          mkdir -p docs/web
+          cp -R build/web/* docs/web/
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./build/web/
+          publish_dir: docs/web/
 
-      - name: Copy to docs/web
-        run: |
-          mkdir -p docs/web
-          cp -R * docs/web/
-          rm -rf .temp
+    

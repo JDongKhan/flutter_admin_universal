@@ -31,3 +31,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./build/web/
+
+      - name: Copy to docs/web
+        run: |
+          mkdir -p docs/web
+          cp -R build/web/* docs/web/
+          rm -rf .temp

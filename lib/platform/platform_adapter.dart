@@ -23,4 +23,6 @@ abstract class PlatformAdapter {
   String userAgent();
 
   void alert(String message);
+
+  void requestFullscreen(bool fullscreen);
 }

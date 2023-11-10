@@ -203,4 +203,28 @@ class BrowserAdapter implements PlatformAdapter {
   void clearCookies() {
     html.window.document.cookie = "";
   }
+
+  @override
+  void requestFullscreen(bool fullscreen) {
+    if (fullscreen) {
+      html.document.addEventListener('fullscreenchange', (event) {
+        if (html.document.fullscreenElement != null) {
+          print('111');
+        } else {
+          print('222');
+        }
+      });
+      //no work
+      // html.document.documentElement?.onFullscreenChange.listen((event) {
+      //   if (html.document.fullscreenElement != null) {
+      //     print('333');
+      //   } else {
+      //     print('444');
+      //   }
+      // });
+      html.document.documentElement?.requestFullscreen();
+    } else {
+      html.document.exitFullscreen();
+    }
+  }
 }

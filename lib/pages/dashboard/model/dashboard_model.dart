@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_universal/platform/platform_adapter.dart';
 
 import '../../../widget/deferred_widget.dart';
 import '../../../widget/universal_dashboard.dart';
@@ -109,6 +110,7 @@ class DashboardModel with ChangeNotifier {
 
   void openOrCloseFullScreen(BuildContext context) {
     openFullScreen = !openFullScreen;
+    platformAdapter.requestFullscreen(openFullScreen);
     UniversalDashboard.of(context)?.openOrCloseLeftMenu(open: openFullScreen);
     UniversalDashboard.of(context)?.openOrCloseSetting(open: openFullScreen);
     notifyListeners();

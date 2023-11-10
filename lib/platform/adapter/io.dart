@@ -134,6 +134,9 @@ class IOAdapter implements PlatformAdapter {
   void clearCookies() {
     CookiesManager.getInstance().deleteAll();
   }
+
+  @override
+  void requestFullscreen(bool fullscreen) {}
 }
 
 class _DownProgress extends ChangeNotifier {

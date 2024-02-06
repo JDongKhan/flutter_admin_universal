@@ -133,8 +133,9 @@ flutter:
     - family: Roboto
       fonts:
         - asset: assets/fonts/Roboto-Regular.ttf
+	- asset: assets/fonts/Roboto-Bold.ttf
     - family: Noto Sans SC
       fonts:
-        - asset: assets/fonts/k3kXo84MPvpLmixcA63oeALhL4iJ-Q7m8w.otf
+        - asset: assets/fonts/NotoSansSC-Regular.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -59,49 +59,55 @@ class MainTopWidget extends StatelessWidget {
                       UniversalDashboard.of(context)?.openOrCloseLeftMenu();
                     },
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(
-                        width: 100,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            isCollapsed: true,
-                            hintText: '站内搜索',
-                            contentPadding: EdgeInsets.only(left: 5, bottom: 10, right: 5, top: 10),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            width: 100,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                isCollapsed: true,
+                                hintText: '站内搜索',
+                                contentPadding: EdgeInsets.only(left: 5, bottom: 10, right: 5, top: 10),
+                              ),
+                              style: TextStyle(fontSize: 10),
+                            ),
                           ),
-                          style: TextStyle(fontSize: 10),
-                        ),
+                          _buildUserHead(),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.notifications_none,
+                              size: 16,
+                            ),
+                            onPressed: () {
+                              _showNotificationPage(context);
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              context.watch<DashboardModel>().openFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
+                              size: 16,
+                            ),
+                            onPressed: () {
+                              context.read<DashboardModel>().openOrCloseFullScreen(context);
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.settings,
+                              size: 16,
+                            ),
+                            onPressed: () {
+                              UniversalDashboard.of(context)?.openOrCloseSetting();
+                            },
+                          ),
+                        ],
                       ),
-                      _buildUserHead(),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.notifications_none,
-                          size: 16,
-                        ),
-                        onPressed: () {
-                          _showNotificationPage(context);
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          context.watch<DashboardModel>().openFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
-                          size: 16,
-                        ),
-                        onPressed: () {
-                          context.read<DashboardModel>().openOrCloseFullScreen(context);
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.settings,
-                          size: 16,
-                        ),
-                        onPressed: () {
-                          UniversalDashboard.of(context)?.openOrCloseSetting();
-                        },
-                      ),
-                    ],
+                    ),
                   ),
                 ],
               ),

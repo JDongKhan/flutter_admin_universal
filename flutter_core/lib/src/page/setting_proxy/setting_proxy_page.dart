@@ -87,7 +87,6 @@ class _SettingProxyPageState extends State<SettingProxyPage> {
             height: 40,
             child: TextButton(
               style: TextButton.styleFrom(
-                primary: Colors.white,
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),

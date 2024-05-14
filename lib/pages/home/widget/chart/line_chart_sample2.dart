@@ -74,7 +74,6 @@ class LineChartSample2State extends State {
             YAxis(
               min: 0,
               max: 400,
-              left: 5,
               drawDivider: false,
               offset: (size) => Offset(size.width - 70, 0),
             ),

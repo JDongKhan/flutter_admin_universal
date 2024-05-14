@@ -59,7 +59,7 @@ dependencies:
   flutter_svg: ^1.0.3
   flutter_chart_plus: ^0.1.6
   provider: ^6.0.5
-  pluto_grid: ^7.0.2
+  pluto_grid: ^8.0.0
   app_installer: ^1.1.0
   webview_flutter: ^4.2.4
   file_picker: ^5.5.0
@@ -73,6 +73,7 @@ dependencies:
 dependency_overrides:
   file_picker: ^5.2.3
   numberpicker: ^2.1.2
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

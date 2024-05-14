@@ -232,7 +232,7 @@ class MainTopWidget extends StatelessWidget {
     showContextMenu(
       context: context,
       position: Position.belowRight,
-      offset: const Offset(0, 5),
+      offset: const Offset(-30, 5),
       builder: (c) => SizedBox(
         width: 80,
         child: Column(

@@ -11,7 +11,7 @@ import 'service/environment.dart';
 import 'style/app_theme.dart';
 import 'style/constants.dart';
 
-const fontFamily = 'FangZheng';
+const fontFamily = 'NotoSansSC';
 
 void main() {
   //https://docs.flutter.dev/development/ui/navigation/url-strategies

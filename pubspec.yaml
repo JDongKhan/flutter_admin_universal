@@ -63,7 +63,6 @@ dependencies:
   app_installer: ^1.1.0
   webview_flutter: ^4.2.4
   file_picker: ^5.5.0
-  html_editor_enhanced: ^2.5.1
   #  common_utils: ^2.1.0
   #  quill_html_editor: ^0.1.5
   #  file_picker: ^4.5.1

@@ -1,11 +1,9 @@
 import '/http/app_service.dart';
 import '/http/model/release_info.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_core/flutter_core.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import '../../service/environment.dart';
 import '../../widget/common_widget.dart';
@@ -163,8 +161,6 @@ class _AppListPageState extends State<AppListPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _pathController = TextEditingController();
-  final HtmlEditorController _htmlEditorController = HtmlEditorController();
-
   void _addReleaseInfoDialog() {
     showCommonDialog(
         context: context,
@@ -231,7 +227,6 @@ class _AppListPageState extends State<AppListPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    _buildHtmlWidget(),
                     Container(
                       margin: const EdgeInsets.only(
                           left: 40, right: 40, top: 20, bottom: 20),
@@ -259,123 +254,11 @@ class _AppListPageState extends State<AppListPage> {
         });
   }
 
-  Widget _buildHtmlWidget() {
-    return HtmlEditor(
-      controller: _htmlEditorController,
-      htmlEditorOptions: const HtmlEditorOptions(
-        hint: 'Your text here...',
-        shouldEnsureVisible: true,
-        //initialText: "<p>text content initial, if any</p>",
-      ),
-      htmlToolbarOptions: HtmlToolbarOptions(
-        buttonColor: Colors.black87,
-        toolbarPosition: ToolbarPosition.aboveEditor, //by default
-        toolbarType: ToolbarType.nativeExpandable, //by default
-        renderSeparatorWidget: false,
-        renderBorder: true,
-        onButtonPressed:
-            (ButtonType type, bool? status, Function? updateStatus) {
-          print(
-              "button '${describeEnum(type)}' pressed, the current selected status is $status");
-          return true;
-        },
-        onDropdownChanged: (DropdownType type, dynamic changed,
-            Function(dynamic)? updateSelectedItem) {
-          print("dropdown '${describeEnum(type)}' changed to $changed");
-          return true;
-        },
-        mediaLinkInsertInterceptor: (String url, InsertFileType type) {
-          print(url);
-          return true;
-        },
-        mediaUploadInterceptor: (PlatformFile file, InsertFileType type) async {
-          print(file.name); //filename
-          print(file.size); //size in bytes
-          print(file.extension); //file extension (eg jpeg or mp4)
-          return true;
-        },
-      ),
-      otherOptions: const OtherOptions(height: 250),
-      callbacks: Callbacks(onBeforeCommand: (String? currentHtml) {
-        print('html before change is $currentHtml');
-      }, onChangeContent: (String? changed) {
-        print('content changed to $changed');
-      }, onChangeCodeview: (String? changed) {
-        print('code changed to $changed');
-      }, onChangeSelection: (EditorSettings settings) {
-        print('parent element is ${settings.parentElement}');
-        print('font name is ${settings.fontName}');
-      }, onDialogShown: () {
-        print('dialog shown');
-      }, onEnter: () {
-        print('enter/return pressed');
-      }, onFocus: () {
-        print('editor focused');
-      }, onBlur: () {
-        print('editor unfocused');
-      }, onBlurCodeview: () {
-        print('codeview either focused or unfocused');
-      }, onInit: () {
-        print('init');
-      },
-          //this is commented because it overrides the default Summernote handlers
-          /*onImageLinkInsert: (String? url) {
-                      print(url ?? "unknown url");
-                    },
-                    onImageUpload: (FileUpload file) async {
-                      print(file.name);
-                      print(file.size);
-                      print(file.type);
-                      print(file.base64);
-                    },*/
-          onImageUploadError:
-              (FileUpload? file, String? base64Str, UploadError error) {
-        print(describeEnum(error));
-        print(base64Str ?? '');
-        if (file != null) {
-          print(file.name);
-          print(file.size);
-          print(file.type);
-        }
-      }, onKeyDown: (int? keyCode) {
-        print('$keyCode key downed');
-        print(
-            'current character count: ${_htmlEditorController.characterCount}');
-      }, onKeyUp: (int? keyCode) {
-        print('$keyCode key released');
-      }, onMouseDown: () {
-        print('mouse downed');
-      }, onMouseUp: () {
-        print('mouse released');
-      }, onNavigationRequestMobile: (String url) {
-        print(url);
-        return NavigationActionPolicy.ALLOW;
-      }, onPaste: () {
-        print('pasted into editor');
-      }, onScroll: () {
-        print('editor scrolled');
-      }),
-      plugins: [
-        SummernoteAtMention(
-            getSuggestionsMobile: (String value) {
-              var mentions = <String>['test1', 'test2', 'test3'];
-              return mentions
-                  .where((element) => element.contains(value))
-                  .toList();
-            },
-            mentionsWeb: ['test1', 'test2', 'test3'],
-            onSelect: (String value) {
-              print(value);
-            }),
-      ],
-    );
-  }
-
   void _save(BuildContext context) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    String text = await _htmlEditorController.getText();
+    String text = "";
     AppService.add(_nameController.text, _pathController.text, text)
         .then((value) {
       Navigator.of(context).pop();

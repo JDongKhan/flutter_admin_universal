@@ -15,7 +15,7 @@ class RetryOnConnectionChangeInterceptor extends Interceptor {
 
   @override
   Future onError(
-    DioError err,
+      DioException err,
     ErrorInterceptorHandler handler,
   ) async {
     if (_shouldRetry(err)) {
@@ -28,8 +28,8 @@ class RetryOnConnectionChangeInterceptor extends Interceptor {
     return err;
   }
 
-  bool _shouldRetry(DioError err) {
-    return err.type == DioErrorType.unknown &&
+  bool _shouldRetry(DioException err) {
+    return err.type == DioExceptionType.unknown &&
         err.error != null &&
         err.error is SocketException;
   }

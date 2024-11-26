@@ -89,7 +89,7 @@ class MyLogInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (error) {
       StringBuffer logString = StringBuffer('\n*** DioError ***: \n');
       logString.write('uri: ${err.requestOptions.uri}\n');
@@ -138,7 +138,7 @@ class MyLogInterceptor extends Interceptor {
   StringBuffer _longLogString(String log) {
     StringBuffer stringBuffer = StringBuffer();
     int maxLength = 800;
-    String remainString = log;
+    String? remainString = log;
     while (remainString != null && remainString.isNotEmpty) {
       int length = maxLength;
       if (remainString.length < maxLength) {
@@ -147,7 +147,7 @@ class MyLogInterceptor extends Interceptor {
       String subString = remainString.substring(0, length);
       stringBuffer.write(subString);
       remainString = remainString.substring(length, remainString.length);
-      if (remainString != null && remainString.isNotEmpty) {
+      if (remainString.isNotEmpty) {
         stringBuffer.write('\n');
       }
     }

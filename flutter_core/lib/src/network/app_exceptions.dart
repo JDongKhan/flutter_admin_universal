@@ -1,8 +1,18 @@
 import 'package:dio/dio.dart';
 
+class AppErrorMessage {
+  final int code;
+  final String? message;
+  const AppErrorMessage({required this.code,this.message});
+  @override
+  String toString() {
+    return "[$code]$message";
+  }
+}
+
 ///@author JD
 /// 自定义异常
-class AppException extends DioError {
+class AppException extends DioException {
   static const cancel = '请求取消';
   static const connectTimeout = '连接超时';
   static const sendTimeout = '请求超时';
@@ -33,9 +43,9 @@ class AppException extends DioError {
     super.message,
   });
 
-  factory AppException.create(DioError error) {
+  factory AppException.create(DioException error) {
     switch (error.type) {
-      case DioErrorType.cancel:
+      case DioExceptionType.cancel:
         {
           return AppException(
             code: -1,
@@ -45,7 +55,7 @@ class AppException extends DioError {
             response: error.response,
           );
         }
-      case DioErrorType.connectionTimeout:
+      case DioExceptionType.connectionTimeout:
         {
           return AppException(
             code: -1,
@@ -55,7 +65,7 @@ class AppException extends DioError {
             response: error.response,
           );
         }
-      case DioErrorType.sendTimeout:
+      case DioExceptionType.sendTimeout:
         {
           return AppException(
             code: -1,
@@ -65,7 +75,7 @@ class AppException extends DioError {
             response: error.response,
           );
         }
-      case DioErrorType.receiveTimeout:
+      case DioExceptionType.receiveTimeout:
         {
           return AppException(
             code: -2,
@@ -75,7 +85,7 @@ class AppException extends DioError {
             response: error.response,
           );
         }
-      case DioErrorType.badResponse:
+      case DioExceptionType.badResponse:
         {
           int errCode = error.response?.statusCode ?? -999;
           switch (errCode) {
@@ -134,7 +144,7 @@ class AppException extends DioError {
                 return AppException(
                   code: errCode,
                   requestOptions: error.requestOptions,
-                  message: serverInternalError,
+                  message: "$serverInternalError[${error.response?.data.toString()}]",
                   error: error.error,
                   response: error.response,
                 );
@@ -171,11 +181,16 @@ class AppException extends DioError {
               }
             default:
               {
+                dynamic errorContent = error.error;
+                if (errorContent == null) {
+                  String? responseString = error.response?.data.toString();
+                  errorContent = responseString;
+                }
                 return AppException(
                   code: errCode,
                   requestOptions: error.requestOptions,
                   error: error.error,
-                  message: error.response?.statusMessage ?? unknownError,
+                  message: errorContent ?? unknownError,
                   response: error.response,
                 );
               }
@@ -183,12 +198,18 @@ class AppException extends DioError {
         }
       default:
         {
+          dynamic errorContent = error.message;
+          errorContent ??= error.error.toString();
+          if (errorContent == null) {
+            String? responseString = error.response?.data.toString();
+            errorContent = responseString;
+          }
           return AppException(
             code: -1,
             requestOptions: error.requestOptions,
             error: error.error,
             response: error.response,
-            message: error.message ?? error.error.toString(),
+            message: errorContent,
           );
         }
     }

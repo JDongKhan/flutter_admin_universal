@@ -2,7 +2,7 @@ import 'package:flutter_core/flutter_core.dart';
 
 class ErrorInterceptor extends Interceptor {
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err is AppException) {
       handler.next(err);
       return;

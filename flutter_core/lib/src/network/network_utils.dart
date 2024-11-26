@@ -8,16 +8,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_core/src/network/my_log_interceptor.dart';
 
 import '../../flutter_core.dart';
+import '../logger/logger_util.dart';
 import 'error_interceptor.dart';
 import 'mock_interceptor.dart';
 import 'retry_interceptor.dart';
 
 /// @author jd
 class NetworkResponse {
-  NetworkResponse(this.code, {this.errorMsg, this.data});
+  NetworkResponse(this.code, {this.error, this.data});
   int code;
-  String? errorMsg;
+  dynamic error;
   dynamic data;
+  factory NetworkResponse.empty() => NetworkResponse(0);
+  factory NetworkResponse.error({dynamic error}) => NetworkResponse(-1, error: error);
+
+  bool get isSuccessed => code == 0;
 }
 
 _parseAndDecode(String response) {
@@ -57,7 +62,7 @@ class Network {
       ..add(MyLogInterceptor(
         requestBody: true,
         responseBody: true,
-        logPrint: logger.v,
+        logPrint: logger.i,
         error: true,
       ));
     if (kIsWeb) {
@@ -67,7 +72,9 @@ class Network {
         CookieManager(CookiesManager.getInstance().cookieJar),
       );
     }
-    (_dio!.transformer as SyncTransformer).jsonDecodeCallback = parseJson;
+    if (_dio!.transformer is SyncTransformer) {
+      (_dio!.transformer as SyncTransformer).jsonDecodeCallback = parseJson;
+    }
     //重试逻辑
     if (retryEnable) {
       _dio!.interceptors.add(
@@ -101,14 +108,13 @@ class Network {
   void setProxyIpAddress(String ip) {
     _proxyIpAddress = ip;
     if (_proxyIpAddress != null) {
-      (_dio!.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
-          (client) {
+      (_dio!.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+        final client = HttpClient()..idleTimeout = const Duration(seconds: 3);
         client.findProxy = (uri) {
           return 'PROXY ${_proxyIpAddress!}';
         };
         //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
+        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
         return client;
       };
     }
@@ -120,9 +126,7 @@ class Network {
   }) {
     if (beforeLog) {
       Interceptors? interceptors = Network.getInstance()._dio?.interceptors;
-      int logIndex =
-          interceptors?.indexWhere((element) => element is MyLogInterceptor) ??
-              0;
+      int logIndex = interceptors?.indexWhere((element) => element is MyLogInterceptor) ?? 0;
       Network.getInstance()._dio?.interceptors.insert(logIndex, interceptor);
     } else {
       Network.getInstance()._dio?.interceptors.add(interceptor);
@@ -277,8 +281,7 @@ class Network {
       progressCallback?.call(count, total);
     }
 
-    Response response = await Network.getInstance()._dio!.download(
-        urlPath, savePath,
+    Response response = await Network.getInstance()._dio!.download(urlPath, savePath,
         queryParameters: queryParameters,
         cancelToken: cancelToken,
         data: data,
@@ -388,8 +391,7 @@ class Network {
     ProgressCallback? progressCallback,
   }) async {
     if (!(mock && _mock)) {
-      final ConnectivityResult connResult =
-          await Connectivity().checkConnectivity();
+      final ConnectivityResult connResult = await Connectivity().checkConnectivity();
       if (connResult == ConnectivityResult.none) {
         ToastUtils.toast('网络连接失败');
         throw UnreachableNetworkException(
@@ -418,30 +420,58 @@ class Network {
     }
 
     // ignore: always_specify_types
-    Response r;
+    Response? r;
     String lowerMethod = method.toLowerCase();
-    if (lowerMethod == 'get') {
-      //Get请求
-      r = await Network.getInstance()._dio!.get<dynamic>(
-            url,
-            queryParameters: queryParameters,
-            options: options,
-            cancelToken: Network.getInstance().cancelToken,
-            onReceiveProgress: callback,
-          );
-    } else {
-      //Post等其他请求
-      r = await Network.getInstance()._fetchTypes[lowerMethod]!<dynamic>(url,
-          data: data,
+    try {
+      if (lowerMethod == 'get') {
+        //Get请求
+        r = await Network
+            .getInstance()
+            ._dio!
+            .get<dynamic>(
+          url,
           queryParameters: queryParameters,
           options: options,
-          cancelToken: Network.getInstance().cancelToken,
-          onReceiveProgress: callback);
+          cancelToken: Network
+              .getInstance()
+              .cancelToken,
+          onReceiveProgress: callback,
+        );
+      } else {
+        //Post等其他请求
+        r = await Network
+            .getInstance()
+            ._fetchTypes[lowerMethod]!<dynamic>(url,
+            data: data,
+            queryParameters: queryParameters,
+            options: options,
+            cancelToken: Network
+                .getInstance()
+                .cancelToken,
+            onReceiveProgress: callback);
+      }
+    } catch (e) {
+      dynamic error = e;
+      int code = -1;
+      if (e is Error) {
+        error = e;
+        debugPrint('请求失败:$e,${error.stackTrace.toString()}');
+      } else if (e is AppException){
+        error = e;
+        code = e.code;
+        debugPrint('请求失败:$e,${error.stackTrace.toString()}');
+      } else if (e is DioException && e.error is AppErrorMessage) {
+        AppErrorMessage errorMessage = e.error as AppErrorMessage;
+        error = e.error;
+        code = errorMessage.code;
+        debugPrint('请求失败:$e');
+      }
+      return NetworkResponse(code, error: error);
     }
     //r.data 响应体
     //r.header 响应头
     //r.request 请求体
     //r.statusCode 状态码
-    return NetworkResponse(0, data: r.data);
+    return NetworkResponse(0, data: r?.data);
   }
 }
